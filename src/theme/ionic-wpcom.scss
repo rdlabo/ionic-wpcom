@@ -1,5 +1,10 @@
 ng-component {
 
+  [padding] h1:first-child, [padding] h2:first-child, [padding] h3:first-child, [padding] h4:first-child, [padding] h5:first-child, [padding] h6:first-child {
+    margin-top: 0;
+  }
+
+
   // Headerを表示するために全体を56px移動
   .split-pane {
     top: 56px;
@@ -13,6 +18,12 @@ ng-component {
 
   ion-split-pane>ion-menu ion-content.content button:hover {
     color: color($colors,primary);
+  }
+
+  ion-note {
+    font-size: 12px;
+    align-self: flex-start;
+    margin-top: 14px;
   }
 }
 
