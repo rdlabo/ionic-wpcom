@@ -1,0 +1,10 @@
+<ion-list [virtualScroll]="posts">
+  <ion-item *virtualItem="let post">
+    <ion-avatar item-start>
+      <img src="{{post.post_thumbnail.URL|fileserver}}">
+    </ion-avatar>
+    <h2>{{ post.title }}</h2>
+    <p [innerHTML]="post.excerpt"></p>
+    <ion-note item-end>{{post.date|date}}</ion-note>
+  </ion-item>
+</ion-list>

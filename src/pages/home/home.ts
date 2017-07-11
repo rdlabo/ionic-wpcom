@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController,IonicPage } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
+import { InterfacePost } from '../../config/wordpress'
 
 @IonicPage()
 @Component({
@@ -10,19 +11,7 @@ import { WordpressProvider } from '../../providers/wordpress/wordpress';
 })
 export class HomePage {
 
-  posts: Array<{
-    ID : number,
-    title   : string,
-    excerpt : string,
-    content : string,
-    date    : string,
-    author : {
-      name: string
-    },
-    post_thumbnail : {
-      URL : string
-    }
-  }> = [];
+  posts: Array<InterfacePost> = [];
 
   constructor(
       public navCtrl: NavController,
@@ -34,7 +23,7 @@ export class HomePage {
         .subscribe(
             data => {
               console.log(data);
-              this.posts = data
+              this.posts = data;
             }
         );
   }
