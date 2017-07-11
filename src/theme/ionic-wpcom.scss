@@ -1,0 +1,18 @@
+ng-component {
+
+  // Headerを表示するために全体を56px移動
+  .split-pane {
+    top: 56px;
+  }
+
+  ion-split-pane>ion-menu ion-content.content,
+  ion-split-pane>ion-menu ion-content.content button{
+    background-color: color($colors,light);
+    font-size:1.4rem;
+  }
+
+  ion-split-pane>ion-menu ion-content.content button:hover {
+    color: color($colors,primary);
+  }
+}
+
