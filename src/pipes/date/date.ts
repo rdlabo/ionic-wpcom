@@ -17,9 +17,9 @@ export class DatePipe implements PipeTransform {
     let timeBefore;
     const date = new Date(value);
     timeBefore =
-        ('0' + date.getUTCFullYear()).slice(-2) + '年'
-        + ('0' + (date.getUTCMonth() + 1)).slice(-2) + '月'
-        + ('0' + date.getUTCDate()).slice(-2) + '日';
+        ('0' + date.getUTCFullYear()).slice(-2) + '/'
+        + ('0' + (date.getUTCMonth() + 1)).slice(-2) + '/'
+        + ('0' + date.getUTCDate()).slice(-2);
     return timeBefore;
   }
 }

@@ -9,4 +9,8 @@
 
 <ion-content padding>
   <post [posts]="posts"></post>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>

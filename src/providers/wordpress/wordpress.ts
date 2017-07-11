@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { wordpressURL } from '../../config/wordpress';
+import { wordpressURL, InterfacePost } from '../../config/wordpress';
 
 @Injectable()
 export class WordpressProvider {
@@ -10,9 +10,28 @@ export class WordpressProvider {
       public http: Http
   ) {}
 
-  getPostList()
+  getPostList(page:number)
   {
-    return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts/")
-        .map(res => res.json().posts);
+    let params = new URLSearchParams();
+    params.set('page', String(page));
+
+    return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts/",
+        { search:params })
+        .map(res => {
+          let returnData:Array<InterfacePost> = [];
+          let i:number = 0;
+          res.json().posts.forEach((val:InterfacePost) => {
+            returnData[i] = ((params) => {
+              if(params.post_thumbnail == null){
+                params.post_thumbnail = {
+                  URL : 'https://s.w.org/about/images/logos/wordpress-logo-notext-rgb.png'
+                }
+              }
+              return params;
+            })(val);
+            i++;
+          });
+          return returnData;
+        });
   }
 }

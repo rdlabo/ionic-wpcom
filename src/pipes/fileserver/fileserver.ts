@@ -10,9 +10,6 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'fileserver',
 })
 export class FileserverPipe implements PipeTransform {
-  /**
-   * Takes a value and makes it lowercase.
-   */
   transform(value: string) {
     return value.replace( /ja\.blog/g , "ja-blog" ) ;
   }

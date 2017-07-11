@@ -5,26 +5,49 @@ import { InterfacePost } from '../../config/wordpress'
 
 @IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
-  providers:[ WordpressProvider ]
+    selector: 'page-home',
+    templateUrl: 'home.html',
+    providers:[ WordpressProvider ]
 })
 export class HomePage {
 
-  posts: Array<InterfacePost> = [];
+    page:number = 1;
+    posts: Array<InterfacePost> = [];
 
-  constructor(
-      public navCtrl: NavController,
-      public wp: WordpressProvider
-  ) {}
+    constructor(
+        public navCtrl: NavController,
+        public wp: WordpressProvider
+    ) {}
 
-  ionViewDidLoad(){
-    this.wp.getPostList()
-        .subscribe(
+    ionViewDidLoad(){
+        this.getPostList();
+    }
+
+    doInfinite(infiniteScroll) {
+        this.getPostList().then(
             data => {
-              console.log(data);
-              this.posts = data;
+                infiniteScroll.complete();
+            },
+            error => {
+                infiniteScroll.enable(false);
             }
         );
-  }
+    }
+
+    private getPostList() {
+        return new Promise ((resolve, reject) => {
+            this.wp.getPostList(this.page)
+                .subscribe(
+                    data => {
+                        this.page++;
+                        this.posts = this.posts.concat(data);
+                        console.log(this.posts);
+                        resolve(data)
+                    },
+                    error => {
+                        reject(error);
+                    }
+                );
+        });
+    }
 }
