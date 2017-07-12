@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { PostComponent } from './post';
+import { PostsComponent } from './posts';
 import { PipesModule } from '../../pipes/pipes.module'
 
 @NgModule({
   declarations: [
-    PostComponent,
+    PostsComponent,
   ],
   imports: [
     IonicModule,
     PipesModule
   ],
   exports: [
-    PostComponent
+    PostsComponent
   ]
 })
-export class PostComponentModule {}
+export class PostsComponentModule {}

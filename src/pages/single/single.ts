@@ -5,15 +5,15 @@ import { InterfacePost } from '../../interface/wordpress'
 import { facebookAppID } from '../../wp_config';
 
 @IonicPage({
-    segment: 'article/:postID',
-    defaultHistory: ['HomePage']
+    segment: 'single/:postID',
+    defaultHistory: ['Archive']
 })
 @Component({
-    selector: 'page-article',
-    templateUrl: 'article.html',
+    selector: 'single',
+    templateUrl: 'single.html',
     providers: [ WordpressProvider ]
 })
-export class ArticlePage {
+export class Single {
 
     constructor(
         public navCtrl: NavController,

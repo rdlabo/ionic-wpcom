@@ -3,14 +3,13 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>最近の更新</ion-title>
+    <ion-title>ページ一覧</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <post [posts]="posts"></post>
+  <posts [posts]="posts"></posts>
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
   </ion-infinite-scroll>
-
 </ion-content>

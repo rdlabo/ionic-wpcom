@@ -4,7 +4,7 @@
       <img src="{{post.post_thumbnail.URL|fileserver}}?w=300">
     </ion-avatar>
     <h2>{{ post.title }}</h2>
-    <div [innerHTML]="post.excerpt"></div>
+    <div><p [innerHTML]="post.excerpt"></p></div>
     <ion-note item-end>{{post.date | mydate}}</ion-note>
   </ion-item>
 </ion-list>

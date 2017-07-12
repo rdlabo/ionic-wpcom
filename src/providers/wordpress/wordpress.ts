@@ -13,9 +13,10 @@ export class WordpressProvider {
       public sanitizer: DomSanitizer
   ) {}
 
-  getPostList(page:number) {
+  getPostList(page:number, type:string = 'post') {
     let params = new URLSearchParams();
     params.set('page', String(page));
+      params.set('type', type);
       params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
 
     return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts/",
@@ -51,6 +52,27 @@ export class WordpressProvider {
             }
         }
         params.content = <string>this.sanitizer.bypassSecurityTrustHtml(params.content);
+        params.excerpt = <string>this.removeTag(params.excerpt);
+        if(params.excerpt.length > 80){
+            params.excerpt = params.excerpt.substr(0, 80) + '…';
+        }
+
         return params;
+    }
+
+    private removeTag(str, arrowTag = null)
+    {
+        if ((Array.isArray ?
+                Array.isArray(arrowTag)
+                : Object.prototype.toString.call(arrowTag) === '[object Array]')
+        ) {
+            arrowTag = arrowTag.join('|');
+        }
+
+        arrowTag = arrowTag ? arrowTag : '';
+        let pattern = new RegExp('(?!<\\/?(' + arrowTag + ')(>|\\s[^>]*>))<("[^"]*"|\\\'[^\\\']*\\\'|[^\\\'">])*>', 'gim');
+
+        str = str.replace(pattern, '');
+        return str.replace(/\s+/g, "");
     }
 }

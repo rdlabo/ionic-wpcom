@@ -3,10 +3,10 @@ import { NavController } from 'ionic-angular';
 import { InterfacePost } from '../../interface/wordpress'
 
 @Component({
-  selector: 'post',
-  templateUrl: 'post.html'
+  selector: 'posts',
+  templateUrl: 'posts.html'
 })
-export class PostComponent {
+export class PostsComponent {
 
   @Input() posts: Array<InterfacePost> = [];
 

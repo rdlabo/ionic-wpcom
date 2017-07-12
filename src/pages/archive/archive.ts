@@ -5,11 +5,11 @@ import { InterfacePost } from '../../interface/wordpress'
 
 @IonicPage()
 @Component({
-    selector: 'page-home',
-    templateUrl: 'home.html',
+    selector: 'archive',
+    templateUrl: 'archive.html',
     providers:[ WordpressProvider ]
 })
-export class HomePage {
+export class Archive {
 
     page:number = 1;
     posts: Array<InterfacePost> = [];

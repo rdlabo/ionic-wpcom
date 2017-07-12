@@ -14,8 +14,7 @@
   <article padding class="article-content" *ngIf="article">
     <picture>
       <source media="(max-width: 300px)" srcset="{{article?.post_thumbnail.URL | fileserver}}?w=300 1x, {{article?.post_thumbnail.URL | fileserver}}?w=720 2x">
-      <source media="(max-width: 720px)" srcset="{{article?.post_thumbnail.URL | fileserver}}?w=720,{{article?.post_thumbnail.URL | fileserver}}?w=865">
-      <img src="{{article?.post_thumbnail.URL | fileserver}}" class="thumbnail">
+      <img src="{{article?.post_thumbnail.URL | fileserver}}?w=720" class="thumbnail">
     </picture>
     <section class="main" [innerHTML]="article?.content"></section>
     <div>

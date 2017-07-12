@@ -24,10 +24,10 @@ export class MyApp {
   ) {
     this.initializeApp();
     this.pages = [
-      { title: '最近の更新', component: 'HomePage' },
-      { title: 'ページ一覧', component: 'PagesPage'},
-      { title: 'カテゴリ別', component: 'CategoryPage'},
-      { title: 'タグ別', component: 'TagPage'}
+      { title: '最近の更新', component: 'Archive' },
+      { title: 'ページ一覧', component: 'ListPages'},
+      { title: 'カテゴリ', component: 'CategoryPage'},
+      { title: 'タグ', component: 'TagPage'}
     ];
   }
 
