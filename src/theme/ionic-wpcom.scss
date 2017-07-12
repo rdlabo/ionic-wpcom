@@ -13,6 +13,10 @@ ng-component {
     }
   }
 
+  .clickeble {
+    cursor: pointer;
+  }
+
   ion-item{
     ion-label h2, p{
       white-space:pre-wrap;
@@ -114,13 +118,7 @@ ng-component {
           margin:0;padding:0;
 
           li {
-            background-color:color($colors,primary);
-            color:color($colors,white);
-            font-size:1.3rem;
-            padding: 4px 10px 2px;
-            border-radius:2px;
             margin: 0 2px 2px;
-            cursor: pointer;
           }
         }
       }

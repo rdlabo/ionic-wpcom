@@ -26,20 +26,20 @@
       </dl>
       <dl class="attribute">
         <dt><ion-icon name="person"></ion-icon> 執筆者</dt>
-        <dd class="profile" (tap)="hoge(article.author.ID)">
+        <dd class="profile clickeble" (tap)="hoge(article.author.ID)">
           <img src="{{article.author.avatar_URL}}" class="radius" /><a>{{article.author.name}}</a>
         </dd>
       </dl>
       <dl class="attribute">
         <dt><ion-icon name="square"></ion-icon> カテゴリ</dt>
         <dd>
-          <ul><li *ngFor="let cat of article.categories | key;" (tap)="viewCategory(cat.value)">{{cat.key}}</li></ul>
+          <ul><li *ngFor="let cat of article.categories | key;" (tap)="viewCategory(cat.value)" ion-button small>{{cat.key}}</li></ul>
         </dd>
       </dl>
       <dl class="attribute">
         <dt><ion-icon name="pricetag"></ion-icon> タグ</dt>
         <dd>
-          <ul><li *ngFor="let tag of article.tags | key;" (tap)="hoge(tag.value.ID)">{{tag.key}}</li></ul>
+          <ul><li *ngFor="let tag of article.tags | key;" (tap)="hoge(tag.value.ID)" ion-button small>{{tag.key}}</li></ul>
         </dd>
       </dl>
     </div>
