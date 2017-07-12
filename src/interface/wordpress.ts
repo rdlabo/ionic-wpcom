@@ -1,7 +1,4 @@
 
-// URL of WordPress.com
-export const wordpressURL = 'ja.blog.wordpress.com';
-
 export interface InterfacePost {
     ID: number,
     title: string,

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController,IonicPage } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { InterfacePost } from '../../config/wordpress'
+import { InterfacePost } from '../../interface/wordpress'
 
 @IonicPage()
 @Component({
@@ -41,7 +41,6 @@ export class HomePage {
                     data => {
                         this.page++;
                         this.posts = this.posts.concat(data);
-                        console.log(this.posts);
                         resolve(data)
                     },
                     error => {
