@@ -15,7 +15,7 @@ export class PostsComponent {
   ) {}
 
   viewArticle(post): void {
-    this.nav.push('ArticlePage',
-        { postID: post.ID ,postTitle: post.title});
+    this.nav.push('Single',
+        { postID: post.ID ,title: post.title});
   }
 }

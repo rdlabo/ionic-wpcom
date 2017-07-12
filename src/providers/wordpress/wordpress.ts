@@ -3,7 +3,7 @@ import { Http, Headers, URLSearchParams } from '@angular/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 import { wordpressURL, dummyImageURL } from '../../wp_config';
-import { InterfacePost } from '../../interface/wordpress';
+import { InterfacePost, InterfaceCategory } from '../../interface/wordpress';
 
 @Injectable()
 export class WordpressProvider {
@@ -13,16 +13,19 @@ export class WordpressProvider {
       public sanitizer: DomSanitizer
   ) {}
 
-  getPostList(page:number, type:string = 'post') {
+  getPostList(page:number, type:string = 'post', categorySlug:number = null) {
     let params = new URLSearchParams();
     params.set('page', String(page));
       params.set('type', type);
       params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
+      if(categorySlug){
+          params.set('category', String(categorySlug));
+      }
 
-    return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts/",
+    return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts",
         { search:params })
         .map(
-            res => this.loopPosts(res.json().posts)
+            res => <Array<InterfacePost>>this.loopPosts(res.json().posts)
         );
   }
 
@@ -33,7 +36,21 @@ export class WordpressProvider {
         return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts/" + pageID,
             { search:params })
             .map(
-                res => this.createArticle(res.json())
+                res => <InterfacePost>this.createArticle(res.json())
+            );
+    }
+
+    getCategoryList(){
+        return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/categories")
+            .map(
+                res => <Array<InterfaceCategory>>res.json().categories
+            );
+    }
+
+    getCategory(slug:string){
+        return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/categories/slug:" + slug)
+            .map(
+                res => <InterfaceCategory>res.json()
             );
     }
 

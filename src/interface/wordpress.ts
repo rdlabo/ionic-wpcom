@@ -12,5 +12,13 @@ export interface InterfacePost {
         URL: string
     },
     short_URL: string,
+    categories: Array<InterfaceCategory>
+}
 
+export interface InterfaceCategory {
+    ID: number,
+    name: string,
+    post_count:number,
+    parent:number,
+    slug:string
 }

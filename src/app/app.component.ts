@@ -3,44 +3,93 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { WordpressProvider } from '../providers/wordpress/wordpress';
+import { InterfacePost, InterfaceCategory } from '../interface/wordpress';
+
 export interface InterfacePage {
   title: string,
   component: any,
+    params:any
 };
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers:[ WordpressProvider ]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage = 'HomePage';
+  rootPage = 'Archive';
   pages: Array<InterfacePage>;
+    categories: Array<InterfacePage>;
 
   constructor(
       public platform: Platform,
       public statusBar: StatusBar,
-      public splashScreen: SplashScreen
+      public splashScreen: SplashScreen,
+      public wp:WordpressProvider
   ) {
     this.initializeApp();
-    this.pages = [
-      { title: '最近の更新', component: 'Archive' },
-      { title: 'ページ一覧', component: 'ListPages'},
-      { title: 'カテゴリ', component: 'CategoryPage'},
-      { title: 'タグ', component: 'TagPage'}
-    ];
+    this.setMenu();
   }
 
-  initializeApp() {
+  private initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+  private setMenu() {
+      this.pages = [
+          { title: '最近の投稿', component: 'Archive', params: {} },
+      ];
+
+      this.categories = [];
+
+      this.wp.getPostList(0, 'page')
+          .subscribe(
+              data => {
+                  Array.prototype.forEach.call(data, (page:InterfacePost) => {
+                      this.pages.push({
+                          title: page.title,
+                          component: 'Single',
+                          params: {
+                              postID:page.ID,
+                              title: page.title
+                          }
+                      });
+                  });
+              },
+              error => {
+
+              }
+          );
+
+
+      this.wp.getCategoryList()
+          .subscribe(
+              data => {
+                  Array.prototype.forEach.call(data, (cat:InterfaceCategory) => {
+                      if(cat.post_count > 0 && cat.parent == 0) {
+                          this.categories.push({
+                              title: cat.name,
+                              component: 'Category',
+                              params: {
+                                  title: cat.name,
+                                  slug:cat.slug,
+                              }
+                          });
+                      }
+                  });
+              },
+              error => {
+
+              }
+          );
+  }
+
+  openPage(page:InterfacePage):void {
+    this.nav.setRoot(page.component, page.params);
   }
 }

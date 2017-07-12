@@ -76,6 +76,11 @@ ng-component {
       font-size:1.6rem;
       color:color($colors,black);
       line-height: 2.6rem;
+
+      img {
+        border:1px solid color($colors,light);
+        margin:5px 0;
+      }
     }
 
     .attribute {

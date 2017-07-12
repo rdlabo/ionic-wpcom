@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { InterfacePost } from '../../interface/wordpress'
+import { InterfacePost, InterfaceCategory } from '../../interface/wordpress'
 import { facebookAppID } from '../../wp_config';
 
 @IonicPage({
@@ -31,22 +31,26 @@ export class Single {
     };
 
     ionViewDidLoad() {
-        if(this.navParams.get('post')){
-            this.title = this.navParams.get('post').title;
-        }else{
-            this.wp.getPostArticle(this.navParams.get('postID'))
-                .subscribe(
-                    data => {
-                        console.log(data);
-                        this.title = (!this.title)?data.title:this.title;
-                        this.article = data;
-                        this.shareURL = this.createShareURL(this.url, data);
-                        setTimeout(()=>{
-                            this.trimArticle();
-                        }, 100);
-                    }
-                );
+        if(this.navParams.get('title')){
+            this.title = this.navParams.get('title');
         }
+
+        this.wp.getPostArticle(this.navParams.get('postID'))
+            .subscribe(
+                data => {
+                    this.title = (!this.title)?data.title:this.title;
+                    this.article = data;
+                    this.shareURL = this.createShareURL(this.url, data);
+                    setTimeout(()=>{
+                        this.trimArticle();
+                    }, 100);
+                }
+            );
+    }
+
+    viewCategory(category:InterfaceCategory):void
+    {
+        this.navCtrl.setRoot('Category',{ title: category.name, slug: category.slug});
     }
 
     addClipboard():void
