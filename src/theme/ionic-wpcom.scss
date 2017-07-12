@@ -51,7 +51,7 @@ ng-component {
 
   header.article-header{
     border-bottom: 1px solid color($colors,dark);
-    max-width:600px;
+    max-width:740px;
     margin:8px auto -10px;
     color:color($colors,black);
 
@@ -67,7 +67,7 @@ ng-component {
   }
 
   article.article-content {
-    max-width:600px;
+    max-width:740px;
     margin:auto;
 
     .thumbnail {
@@ -90,6 +90,7 @@ ng-component {
     .attribute {
       display:flex;
       flex-wrap:wrap;
+      align-items: center;
       dt,a {
         display:block;
         font-size:1.3rem;

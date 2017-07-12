@@ -1,21 +1,62 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { InterfacePost } from '../../interface/wordpress'
+import { InterfacePost, InterfacePostParams } from '../../interface/wordpress'
+import { WordpressProvider } from '../../providers/wordpress/wordpress';
+
 
 @Component({
-  selector: 'posts',
-  templateUrl: 'posts.html'
+    selector: 'posts',
+    templateUrl: 'posts.html',
+    providers:[ WordpressProvider ]
 })
-export class PostsComponent {
+export class PostsComponent implements OnChanges {
 
-  @Input() posts: Array<InterfacePost> = [];
+    @Input() search: InterfacePostParams;
+    ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+        if(this.search.type != 'wait'){
+            this.getPostList();
+        }
+    }
 
-  constructor(
-      public nav:NavController
-  ) {}
+    constructor(
+        public nav:NavController,
+        public wp: WordpressProvider
+    ) {}
 
-  viewArticle(post): void {
-    this.nav.push('Single',
-        { postID: post.ID ,title: post.title});
-  }
+    page:number = 1;
+    posts: Array<InterfacePost> = [];
+
+    doInfinite(infiniteScroll) {
+        this.getPostList().then(
+            data => {
+                infiniteScroll.complete();
+            },
+            error => {
+                infiniteScroll.enable(false);
+            }
+        );
+    }
+
+    viewArticle(post): void {
+        this.nav.push('Single',
+            { postID: post.ID ,title: post.title});
+    }
+
+    private getPostList() {
+        return new Promise ((resolve, reject) => {
+            console.log(this.search);
+            this.wp.getPostList(this.page, this.search)
+                .subscribe(
+                    data => {
+                        console.log(data);
+                        this.page++;
+                        this.posts = this.posts.concat(data);
+                        resolve(data)
+                    },
+                    error => {
+                        reject(error);
+                    }
+                );
+        });
+    }
 }

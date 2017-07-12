@@ -17,7 +17,7 @@
       <ion-list>
         <ion-item-divider>メイン</ion-item-divider>
         <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          {{p.title}}
+          <span [innerHTML]="p.title"></span>
         </button>
       </ion-list>
       <ion-list>

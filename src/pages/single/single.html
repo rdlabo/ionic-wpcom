@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{title}}</ion-title>
+    <ion-title><span [innerHTML]="title"></span></ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <header class="article-header" padding>
-    <h2>{{title}}</h2>
-    <ul>
+    <h2 [innerHTML]="title"></h2>
+    <ul *ngIf="article">
       <li>{{article?.date | mydate}}</li>
     </ul>
   </header>
@@ -19,7 +19,7 @@
     <section class="main" [innerHTML]="article?.content"></section>
     <div>
       <dl class="attribute">
-        <dt><ion-icon name="person"></ion-icon> 元記事</dt>
+        <dt><ion-icon name="globe"></ion-icon> 元記事</dt>
         <dd>
           <a href="{{article.short_URL}}" target="_blank">{{article.short_URL}}</a>
         </dd>

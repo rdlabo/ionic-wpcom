@@ -1,23 +1,21 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, NavParams } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
+import { InterfacePostParams } from '../../interface/wordpress'
 
 @IonicPage({
-    segment: 'category/:slug',
+    segment: 'tag/:slug',
 })
 @Component({
-    selector: 'category',
-    templateUrl: 'category.html',
+    selector: 'tag',
+    templateUrl: 'tag.html',
     providers:[ WordpressProvider ]
 })
-export class Category {
+export class Tag {
 
-    type:string = 'カテゴリ';
     title:string;
-    search: any = {
-        type : 'wait',
-        slug : this.navParams.get('slug')
-    }
+    type:string = 'タグ';
+    search:InterfacePostParams;
 
     constructor(
         public navCtrl: NavController,
@@ -42,13 +40,6 @@ export class Category {
                         );
                 }
             );
-        }
-
-        this.search = {
-            type: 'post',
-            params: {
-                slug : this.navParams.get('slug')
-            }
         }
     }
 }

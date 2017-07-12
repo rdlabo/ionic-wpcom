@@ -2,32 +2,33 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
-import { wordpressURL, dummyImageURL } from '../../wp_config';
-import { InterfacePost, InterfaceCategory } from '../../interface/wordpress';
+import { wordpressURL, dummyImageURL } from '../../wp-config';
+import { InterfacePost, InterfaceCategory,InterfacePostParams } from '../../interface/wordpress';
 
 @Injectable()
 export class WordpressProvider {
 
-  constructor(
-      public http: Http,
-      public sanitizer: DomSanitizer
-  ) {}
+    constructor(
+        public http: Http,
+        public sanitizer: DomSanitizer
+    ) {}
 
-  getPostList(page:number, type:string = 'post', categorySlug:number = null) {
-    let params = new URLSearchParams();
-    params.set('page', String(page));
-      params.set('type', type);
-      params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
-      if(categorySlug){
-          params.set('category', String(categorySlug));
-      }
+    getPostList(page:number, search:InterfacePostParams) {
+        let params = new URLSearchParams();
+        params.set('page', String(page));
+        params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
 
-    return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts",
-        { search:params })
-        .map(
-            res => <Array<InterfacePost>>this.loopPosts(res.json().posts)
-        );
-  }
+        params.set('type', search.type);
+        if(search.slug){
+            params.set('category', search.slug);
+        }
+
+        return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts",
+            { search:params })
+            .map(
+                res => <Array<InterfacePost>>this.loopPosts(res.json().posts)
+            );
+    }
 
     getPostArticle(pageID:number) {
         let params = new URLSearchParams();
@@ -68,8 +69,9 @@ export class WordpressProvider {
                 URL : dummyImageURL
             }
         }
+        params.title = <string>this.sanitizer.bypassSecurityTrustHtml(params.title);
         params.content = <string>this.sanitizer.bypassSecurityTrustHtml(params.content);
-        params.excerpt = <string>this.removeTag(params.excerpt);
+        params.excerpt = <string>this.sanitizer.bypassSecurityTrustHtml(this.removeTag(params.excerpt));
         if(params.excerpt.length > 80){
             params.excerpt = params.excerpt.substr(0, 80) + '…';
         }

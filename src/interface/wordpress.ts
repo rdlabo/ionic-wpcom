@@ -22,3 +22,8 @@ export interface InterfaceCategory {
     parent:number,
     slug:string
 }
+
+export interface InterfacePostParams {
+    type?: string,
+    slug?: string
+}

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePost, InterfaceCategory } from '../../interface/wordpress'
-import { facebookAppID } from '../../wp_config';
+import { facebookAppID } from '../../wp-config';
 
 @IonicPage({
     segment: 'single/:postID',

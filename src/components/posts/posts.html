@@ -3,8 +3,11 @@
     <ion-avatar item-start>
       <img src="{{post.post_thumbnail.URL|fileserver}}?w=300">
     </ion-avatar>
-    <h2>{{ post.title }}</h2>
+    <h2 [innerHTML]="post.title"></h2>
     <div><p [innerHTML]="post.excerpt"></p></div>
     <ion-note item-end>{{post.date | mydate}}</ion-note>
   </ion-item>
 </ion-list>
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
