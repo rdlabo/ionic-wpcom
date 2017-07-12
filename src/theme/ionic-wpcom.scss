@@ -4,10 +4,29 @@ ng-component {
     margin-top: 0;
   }
 
+  img {
+    height:auto;
+    display:block;
 
-  // Headerを表示するために全体を56px移動
+    &.radius {
+      border-radius:100%;
+    }
+  }
+
+  ion-item{
+    ion-label h2, p{
+      white-space:pre-wrap;
+    }
+  }
+
   .split-pane {
-    top: 56px;
+    &.split-pane-md {
+      top: 52px;
+    }
+
+    &.split-pane-ios {
+      top: 52px;
+    }
   }
 
   ion-split-pane>ion-menu ion-content.content,
@@ -21,9 +40,117 @@ ng-component {
   }
 
   ion-note {
-    font-size: 12px;
+    font-size: 1.2rem;
     align-self: flex-start;
-    margin-top: 14px;
+    padding-top: 5px;
+  }
+
+  header.article-header{
+    border-bottom: 1px solid color($colors,dark);
+    max-width:600px;
+    margin:8px auto -10px;
+    color:color($colors,black);
+
+    ul {
+      display:flex;
+      list-style-type:none;
+      margin:0;padding:0;
+
+      li {
+        margin-right:10px;
+      }
+    }
+  }
+
+  article.article-content {
+    max-width:600px;
+    margin:auto;
+
+    .thumbnail {
+      margin-top:10px;
+    }
+
+    .main {
+      border-bottom: 1px solid color($colors,dark);
+      margin-bottom:20px;
+      font-size:1.6rem;
+      color:color($colors,black);
+      line-height: 2.6rem;
+    }
+
+    .attribute {
+      display:flex;
+      flex-wrap:wrap;
+      dt,a {
+        display:block;
+        font-size:1.3rem;
+        padding: 4px 0 2px;
+        min-width:100px;
+
+        ion-icon {
+          position:relative;top:1px;
+          margin-right:2px;
+        }
+      }
+      dd {
+        min-width: 300px;
+        &.profile {
+          display:flex;
+          align-items: center;
+          img {
+            width:40px;height:40px;
+            margin-right:10px;
+          }
+        }
+        ul {
+          display:flex;
+          flex-wrap:wrap;
+          list-style-type:none;
+          margin:0;padding:0;
+
+          li {
+            background-color:color($colors,primary);
+            color:color($colors,white);
+            font-size:1.3rem;
+            padding: 4px 10px 2px;
+            border-radius:2px;
+            margin: 0 2px 2px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  ul.social-share {
+    list-style-type:none;
+    display:flex;
+    margin:0;padding:0;
+
+    li {
+      width:50%;
+      border-right: 1px solid color($colors,white);
+
+      &:last-child{
+        border-right: none;
+      }
+
+      button {
+        border-radius:0;
+        font-size:1.3rem;
+        margin:0;
+        min-height:42px;
+        ion-icon{
+          position:relative;
+          top:1px;
+          margin-right:0.5rem;
+        }
+      }
+
+      a {
+        text-decoration:none;
+      }
+    }
   }
 }
 

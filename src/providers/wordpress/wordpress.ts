@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
+import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 import { wordpressURL, dummyImageURL } from '../../wp_config';
 import { InterfacePost } from '../../interface/wordpress';
@@ -8,49 +9,48 @@ import { InterfacePost } from '../../interface/wordpress';
 export class WordpressProvider {
 
   constructor(
-      public http: Http
+      public http: Http,
+      public sanitizer: DomSanitizer
   ) {}
 
-  getPostList(page:number)
-  {
+  getPostList(page:number) {
     let params = new URLSearchParams();
     params.set('page', String(page));
-      params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, tags');
+      params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
 
     return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts/",
         { search:params })
         .map(
-            res => this.setThumbnail(res.json().posts)
+            res => this.loopPosts(res.json().posts)
         );
   }
 
-    getPostArticle(pageID:number)
-    {
+    getPostArticle(pageID:number) {
         let params = new URLSearchParams();
-        params.set('fields','ID, content, date, excerpt, post_thumbnail, title, categories, author');
+        params.set('fields','ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
 
         return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts/" + pageID,
             { search:params })
             .map(
-                res => this.setThumbnail(res.json().posts)
+                res => this.createArticle(res.json())
             );
     }
 
-    private setThumbnail(params:Array<InterfacePost>){
-
+    private loopPosts(params:Array<InterfacePost>){
         let returnData:Array<InterfacePost> = [];
-        let i:number = 0;
         params.forEach((val:InterfacePost) => {
-            returnData[i] = ((params) => {
-                if(params.post_thumbnail == null){
-                    params.post_thumbnail = {
-                        URL : dummyImageURL
-                    }
-                }
-                return params;
-            })(val);
-            i++;
+            returnData.push(this.createArticle(val));
         });
         return returnData;
+    }
+
+    private createArticle(params:InterfacePost){
+        if(params.post_thumbnail == null){
+            params.post_thumbnail = {
+                URL : dummyImageURL
+            }
+        }
+        params.content = <string>this.sanitizer.bypassSecurityTrustHtml(params.content);
+        return params;
     }
 }

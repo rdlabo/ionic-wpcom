@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { FileserverPipe } from './fileserver/fileserver';
-import { DatePipe } from './date/date';
+import { MydatePipe } from './mydate/mydate';
+import { KeyPipe } from './key/key';
 
 @NgModule({
   declarations: [
     FileserverPipe,
-    DatePipe
+    MydatePipe,
+    KeyPipe
   ],
   exports: [
     FileserverPipe,
-    DatePipe
+    MydatePipe,
+    KeyPipe
   ]
 })
 export class PipesModule {}

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { InterfacePost } from '../../config/wordpress'
+import { NavController } from 'ionic-angular';
+import { InterfacePost } from '../../interface/wordpress'
 
 @Component({
   selector: 'post',
@@ -9,7 +10,12 @@ export class PostComponent {
 
   @Input() posts: Array<InterfacePost> = [];
 
-  constructor() {
-  }
+  constructor(
+      public nav:NavController
+  ) {}
 
+  viewArticle(post): void {
+    this.nav.push('ArticlePage',
+        { postID: post.ID ,postTitle: post.title});
+  }
 }

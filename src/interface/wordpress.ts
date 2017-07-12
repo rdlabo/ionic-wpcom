@@ -10,5 +10,7 @@ export interface InterfacePost {
     },
     post_thumbnail: {
         URL: string
-    }
+    },
+    short_URL: string,
+
 }

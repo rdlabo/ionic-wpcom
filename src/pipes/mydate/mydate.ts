@@ -7,9 +7,9 @@ import { Pipe, PipeTransform } from '@angular/core';
  * Angular Pipes.
  */
 @Pipe({
-  name: 'date',
+  name: 'mydate',
 })
-export class DatePipe implements PipeTransform {
+export class MydatePipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
