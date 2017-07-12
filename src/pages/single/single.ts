@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { InterfacePost, InterfaceCategory } from '../../interface/wordpress'
+import { InterfacePost, InterfaceCategory, InterfaceTag } from '../../interface/wordpress'
 import { facebookAppID } from '../../wp-config';
 
 @IonicPage({
@@ -51,6 +51,11 @@ export class Single {
     viewCategory(category:InterfaceCategory):void
     {
         this.navCtrl.setRoot('Category',{ title: category.name, slug: category.slug});
+    }
+
+    viewTag(tag:InterfaceTag):void
+    {
+        this.navCtrl.setRoot('Tag',{ title: tag.name, slug: tag.slug});
     }
 
     addClipboard():void

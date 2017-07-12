@@ -3,7 +3,7 @@ import { Http, Headers, URLSearchParams } from '@angular/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 import { wordpressURL, dummyImageURL } from '../../wp-config';
-import { InterfacePost, InterfaceCategory,InterfacePostParams } from '../../interface/wordpress';
+import { InterfacePost, InterfaceCategory, InterfacePostParams, InterfaceTag } from '../../interface/wordpress';
 
 @Injectable()
 export class WordpressProvider {
@@ -19,8 +19,13 @@ export class WordpressProvider {
         params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
 
         params.set('type', search.type);
-        if(search.slug){
-            params.set('category', search.slug);
+
+        if(search.categorySlug){
+            params.set('category', search.categorySlug);
+        }
+
+        if(search.tagSlug){
+            params.set('tag', search.tagSlug);
         }
 
         return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts",
@@ -52,6 +57,13 @@ export class WordpressProvider {
         return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/categories/slug:" + slug)
             .map(
                 res => <InterfaceCategory>res.json()
+            );
+    }
+
+    getTag(slug:string){
+        return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/tags/slug:" + slug)
+            .map(
+                res => <InterfaceTag>res.json()
             );
     }
 

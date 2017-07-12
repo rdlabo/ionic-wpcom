@@ -39,7 +39,7 @@
       <dl class="attribute">
         <dt><ion-icon name="pricetag"></ion-icon> タグ</dt>
         <dd>
-          <ul><li *ngFor="let tag of article.tags | key;" (tap)="hoge(tag.value.ID)" ion-button small>{{tag.key}}</li></ul>
+          <ul><li *ngFor="let tag of article.tags | key;" (tap)="viewTag(tag.value)" ion-button small>{{tag.key}}</li></ul>
         </dd>
       </dl>
     </div>

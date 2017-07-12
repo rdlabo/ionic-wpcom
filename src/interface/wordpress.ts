@@ -15,6 +15,12 @@ export interface InterfacePost {
     categories: Array<InterfaceCategory>
 }
 
+export interface InterfacePostParams {
+    type?: string,
+    categorySlug?: string
+    tagSlug?: string
+}
+
 export interface InterfaceCategory {
     ID: number,
     name: string,
@@ -23,7 +29,9 @@ export interface InterfaceCategory {
     slug:string
 }
 
-export interface InterfacePostParams {
-    type?: string,
-    slug?: string
+export interface InterfaceTag {
+    ID: number,
+    name: string,
+    post_count:number,
+    slug:string
 }
