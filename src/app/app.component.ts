@@ -2,8 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Rx';
+import { REGISTER } from '../store/search';
 
 import { WordpressProvider } from '../providers/wordpress/wordpress';
+import { AppState } from '../interface/store';
 
 
 @Component({
@@ -19,7 +23,8 @@ export class MyApp {
       public platform: Platform,
       public statusBar: StatusBar,
       public splashScreen: SplashScreen,
-      public wp:WordpressProvider
+      public wp:WordpressProvider,
+      public store:Store<AppState>,
   ) {
     this.initializeApp();
   }
@@ -28,8 +33,20 @@ export class MyApp {
     this.nav.setRoot($event.component, $event.params);
   }
 
-  handlesetSearchKeyword($event){
-    console.log($event);
+  handlesetSearchKeyword(keyword:string){
+    console.log(keyword);
+    this.store.dispatch({type: REGISTER, payload: keyword});
+  }
+
+  handlestartSearch()
+  {
+    if(this.nav.getActive().name !== 'Search'){
+      this.nav.setRoot('Search');
+    }
+  }
+
+  handlecancelSearch($event) {
+    this.nav.setRoot('Archive');
   }
 
   private initializeApp() {

@@ -19,6 +19,7 @@ export interface InterfacePostParams {
     categorySlug?: string
     tagSlug?: string
     authorID?: number
+    search?:string
 }
 
 export interface InterfaceCategory {

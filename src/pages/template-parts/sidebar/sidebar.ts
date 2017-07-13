@@ -33,7 +33,7 @@ export class SidebarComponent {
 
         this.categories = [];
 
-        this.wp.getPostList(0, 'page')
+        this.wp.getPostList(0, { type: 'page' })
             .subscribe(
                 data => {
                     Array.prototype.forEach.call(data, (page:InterfacePost) => {

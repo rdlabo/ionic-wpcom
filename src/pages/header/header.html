@@ -8,6 +8,6 @@
         <ion-icon name="logo-github"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-searchbar (input)="search($event)" ></ion-searchbar>
+    <ion-searchbar (input)="searching($event)" (ionCancel)="searchCancel($event)" [(ngModel)]="searchKeyword" (ionFocus)="searchStart()"></ion-searchbar>
   </ion-toolbar>
 </header>

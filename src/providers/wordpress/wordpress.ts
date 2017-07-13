@@ -35,6 +35,10 @@ export class WordpressProvider {
             params.set('author', String(search.authorID));
         }
 
+        if(search.search){
+            params.set('search', search.search);
+        }
+
         return this.http.get(wordpressAPI + wordpressURL + "/posts",
             { search:params })
             .map(

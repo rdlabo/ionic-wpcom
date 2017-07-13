@@ -1,11 +1,5 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Nav } from 'ionic-angular';
-
-export interface InterfacePage {
-    title: string,
-    component: any,
-    params:any
-}
+import { Nav, Searchbar } from 'ionic-angular';
 
 @Component({
     selector: 'wp-header',
@@ -13,15 +7,32 @@ export interface InterfacePage {
 })
 export class HeaderComponent {
     @ViewChild(Nav) nav: Nav;
+    @ViewChild(Searchbar) searchbar: Searchbar;
+
+    @Output() startSearch = new EventEmitter();
+    @Output() cancelSearch = new EventEmitter();
     @Output() setSearchKeyword = new EventEmitter();
 
-    pages: Array<InterfacePage>;
-    categories: Array<InterfacePage>;
+    searchKeyword:string;
 
     constructor(
     ) {}
 
-    search(ev):void {
-        this.setSearchKeyword.emit(ev.data);
+    searchStart():void {
+        console.log('focus search');
+        this.startSearch.emit();
+
+        setTimeout(() => {
+            this.searchbar.setFocus();
+        },10);
+    };
+
+    searchCancel(ev):void {
+        this.setSearchKeyword.emit(ev);
     }
+
+    searching(ev):void {
+        this.setSearchKeyword.emit(this.searchKeyword);
+    }
+
 }

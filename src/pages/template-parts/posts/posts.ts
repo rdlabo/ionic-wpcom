@@ -14,7 +14,13 @@ export class PostsComponent implements OnChanges {
     @Input() search: InterfacePostParams;
     ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
         if(this.search.type != 'wait'){
-            this.getPostList();
+            console.log('get_article');
+            this.getPostList().then(
+                (data:Array<InterfacePost>) => {
+                    this.page = 1;
+                    this.posts = data;
+                }
+            );
         }
     }
 
@@ -29,6 +35,8 @@ export class PostsComponent implements OnChanges {
     doInfinite(infiniteScroll) {
         this.getPostList().then(
             (data:Array<InterfacePost>) => {
+                this.page++;
+                this.posts = this.posts.concat(data);
                 if(data.length > 0) {
                     infiniteScroll.complete();
                 }else{
@@ -53,8 +61,6 @@ export class PostsComponent implements OnChanges {
                 .subscribe(
                     data => {
                         console.log(data);
-                        this.page++;
-                        this.posts = this.posts.concat(data);
                         resolve(data)
                     },
                     error => {

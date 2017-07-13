@@ -1,4 +1,7 @@
-<wp-header (setSearchKeyword)="handlesetSearchKeyword($event)"></wp-header>
+<wp-header
+        (setSearchKeyword)="handlesetSearchKeyword($event)"
+        (startSearch)="handlestartSearch()"
+        (cancelSearch)="handlecancelSearch($event)"></wp-header>
 <ion-split-pane>
 
   <ion-menu [content]="content"><sidebar (setRootPage)="handlesetRootPage($event)"></sidebar></ion-menu>
