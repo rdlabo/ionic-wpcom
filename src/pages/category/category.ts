@@ -27,27 +27,24 @@ export class Category {
     ) {}
 
     ionViewDidLoad(){
-        if(this.navParams.get('title')){
-            this.title = this.navParams.get('title');
-        }else{
-            const f = () => new Promise(
-                (resolve)=>{
-                    resolve(this.navParams.get('key'));
-                }
-            );
-            f().then(
-                (slug:string) => {
-                    this.wp.getCategory(slug)
-                        .subscribe(
-                            (data:InterfaceCategory) => this.title = data.name
-                        );
-                }
-            );
-        }
+        this.title = this.navParams.get('title');
+        const f = () => new Promise(
+            (resolve)=>{
+                resolve(this.navParams.get('key'));
+            }
+        );
+        f().then(
+            (slug:string) => {
+                this.wp.getCategory(slug)
+                    .subscribe(
+                        (data:InterfaceCategory) => this.title = data.name
+                    );
 
-        this.search = {
-            type: 'post',
-            categorySlug : this.navParams.get('key')
-        }
+                this.search = {
+                    type: 'post',
+                    categorySlug : slug
+                }
+            }
+        );
     }
 }

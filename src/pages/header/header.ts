@@ -10,7 +10,7 @@ export class HeaderComponent {
     @ViewChild(Searchbar) searchbar: Searchbar;
 
     @Output() startSearch = new EventEmitter();
-    @Output() cancelSearch = new EventEmitter();
+    @Output() cancelSearchKeyword = new EventEmitter();
     @Output() setSearchKeyword = new EventEmitter();
 
     searchKeyword:string;
@@ -27,12 +27,11 @@ export class HeaderComponent {
         },10);
     };
 
-    searchCancel(ev):void {
-        this.setSearchKeyword.emit(ev);
-    }
-
     searching(ev):void {
         this.setSearchKeyword.emit(this.searchKeyword);
     }
 
+    cancelKeyword($event){
+        this.cancelSearchKeyword.emit();
+    }
 }

@@ -27,30 +27,29 @@ export class Author {
     ) {}
 
     ionViewDidLoad(){
-        if(this.navParams.get('title')){
-            this.title = this.navParams.get('title');
-        }else{
-            const f = () => new Promise(
-                (resolve)=>{
-                    resolve(this.navParams.get('key'));
-                }
-            );
-            f().then(
-                (ID:number) => {
-                    // use not require auth resource.
-                    this.wp.getPostList(0, { 'authorID': ID})
-                        .subscribe(
-                            (data:Array<InterfacePost>) => {
-                                this.title = data[0].author.name;
-                            }
-                        );
-                }
-            );
-        }
+        this.title = this.navParams.get('title');
 
-        this.search = {
-            type: 'post',
-            authorID : this.navParams.get('key')
-        }
+        const f = () => new Promise(
+            (resolve)=>{
+                resolve(this.navParams.get('key'));
+            }
+        );
+        f().then(
+            (ID:number) => {
+                // use not require auth resource.
+                this.wp.getPostList(0, { 'authorID': ID})
+                    .subscribe(
+                        (data:Array<InterfacePost>) => {
+                            this.title = data[0].author.name;
+                        }
+                    );
+
+                this.search = {
+                    type: 'post',
+                    authorID : this.navParams.get('key')
+                }
+            }
+        );
+
     }
 }

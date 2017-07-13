@@ -63,7 +63,7 @@ export class SidebarComponent {
                                 component: 'Category',
                                 params: {
                                     title: cat.name,
-                                    slug:cat.slug,
+                                    key  :cat.slug,
                                 }
                             });
                         }

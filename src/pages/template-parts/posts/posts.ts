@@ -14,7 +14,6 @@ export class PostsComponent implements OnChanges {
     @Input() search: InterfacePostParams;
     ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
         if(this.search.type != 'wait'){
-            console.log('get_article');
             this.getPostList().then(
                 (data:Array<InterfacePost>) => {
                     this.page = 1;
@@ -60,7 +59,6 @@ export class PostsComponent implements OnChanges {
             this.wp.getPostList(this.page, this.search)
                 .subscribe(
                     data => {
-                        console.log(data);
                         resolve(data)
                     },
                     error => {

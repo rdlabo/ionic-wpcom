@@ -27,27 +27,25 @@ export class Tag {
     ) {}
 
     ionViewDidLoad(){
-        if(this.navParams.get('title')){
-            this.title = this.navParams.get('title');
-        }else{
-            const f = () => new Promise(
-                (resolve)=>{
-                    resolve(this.navParams.get('key'));
-                }
-            );
-            f().then(
-                (slug:string) => {
-                    this.wp.getCategory(slug)
-                        .subscribe(
-                            (data:InterfaceTag) => this.title = data.name
-                        );
-                }
-            );
-        }
+        this.title = this.navParams.get('title');
+        const f = () => new Promise(
+            (resolve)=>{
+                resolve(this.navParams.get('key'));
+            }
+        );
+        f().then(
+            (slug:string) => {
+                this.wp.getCategory(slug)
+                    .subscribe(
+                        (data:InterfaceTag) => this.title = data.name
+                    );
 
-        this.search = {
-            type: 'post',
-            tagSlug : this.navParams.get('key')
-        }
+                this.search = {
+                    type: 'post',
+                    tagSlug : this.navParams.get('key')
+                }
+            }
+        );
+
     }
 }
