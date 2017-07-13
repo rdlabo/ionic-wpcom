@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { Tag } from './tag';
-
-import { PostsComponentModule } from '../../components/posts/posts.module';
+import { PostsComponentModule } from '../template-parts/posts/posts.module';
 
 @NgModule({
   declarations: [

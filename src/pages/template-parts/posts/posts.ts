@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { InterfacePost, InterfacePostParams } from '../../interface/wordpress'
-import { WordpressProvider } from '../../providers/wordpress/wordpress';
+import { InterfacePost, InterfacePostParams } from '../../../interface/wordpress'
+import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 
 
 @Component({

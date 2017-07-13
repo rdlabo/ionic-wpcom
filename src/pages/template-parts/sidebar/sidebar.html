@@ -1,0 +1,15 @@
+
+<ion-content>
+  <ion-list>
+    <ion-item-divider>メイン</ion-item-divider>
+    <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+      <span [innerHTML]="p.title"></span>
+    </button>
+  </ion-list>
+  <ion-list>
+    <ion-item-divider>カテゴリ</ion-item-divider>
+    <button menuClose ion-item *ngFor="let p of categories" (click)="openPage(p)">
+      {{p.title}}
+    </button>
+  </ion-list>
+</ion-content>

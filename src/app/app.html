@@ -12,22 +12,8 @@
     </ion-toolbar>
 </header>
 <ion-split-pane>
-  <ion-menu [content]="content">
-    <ion-content>
-      <ion-list>
-        <ion-item-divider>メイン</ion-item-divider>
-        <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-          <span [innerHTML]="p.title"></span>
-        </button>
-      </ion-list>
-      <ion-list>
-        <ion-item-divider>カテゴリ</ion-item-divider>
-        <button menuClose ion-item *ngFor="let p of categories" (click)="openPage(p)">
-          {{p.title}}
-        </button>
-      </ion-list>
-    </ion-content>
-  </ion-menu>
+
+  <ion-menu [content]="content"><sidebar (setRootPage)="handlesetRootPage($event)"></sidebar></ion-menu>
 
   <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
   <ion-nav [root]="rootPage" #content main swipeBackEnabled="false"></ion-nav>

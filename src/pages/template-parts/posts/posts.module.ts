@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
 import { PostsComponent } from './posts';
-import { PipesModule } from '../../pipes/pipes.module'
+import { PipesModule } from '../../../pipes/pipes.module'
 
 @NgModule({
   declarations: [
