@@ -11,18 +11,6 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4e8ef7">
 
-  <style type="text/css">
-    .loading {
-      height:100%;
-      background-color: #4e8ef7;
-      display: flex;
-      text-align:center;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-    }
-  </style>
-
   <!-- cordova.js required for cordova apps -->
   <!--<script src="cordova.js"></script>-->
 
@@ -39,8 +27,16 @@
 
   <!-- Ionic's root component and where the app will load -->
   <ion-app>
-    <section class="loading">
-      <p style="font-size:1.4rem;">building...</p>
+    <section style="
+      height:100%;
+      background-color: #4e8ef7;
+      display: flex;
+      text-align:center;
+      justify-content: center;
+      align-items: center;
+      font-size:1.4rem;
+      color: #fff;">
+      <p>building...</p>
     </section>
   </ion-app>
 
