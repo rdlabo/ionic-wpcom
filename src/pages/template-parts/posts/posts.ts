@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Subject } from 'rxjs';
+
 import { InterfacePost, InterfacePostParams } from '../../../interface/wordpress'
 import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 
@@ -14,22 +16,20 @@ export class PostsComponent implements OnChanges {
     @Input() search: InterfacePostParams;
     ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
         if(this.search.type != 'wait'){
-            this.getPostList().then(
-                (data:Array<InterfacePost>) => {
-                    this.page = 1;
-                    this.posts = data;
-                }
-            );
+            this.subject.next();
         }
     }
 
     constructor(
         public nav:NavController,
-        public wp: WordpressProvider
-    ) {}
+        public wp: WordpressProvider,
+    ) {
+        this.setSubject();
+    }
 
     page:number = 1;
     posts: Array<InterfacePost> = [];
+    subject = new Subject();
 
     doInfinite(infiniteScroll) {
         this.getPostList().then(
@@ -51,6 +51,19 @@ export class PostsComponent implements OnChanges {
     viewArticle(post): void {
         this.nav.push('Single',
             { postID: post.ID ,title: post.title});
+    }
+
+    private setSubject(){
+        this.subject
+            .switchMap(obj => {
+                return this.getPostList()
+            })
+            .subscribe(
+                (data:Array<InterfacePost>) => {
+                    this.page = 1;
+                    this.posts = data;
+                }
+            )
     }
 
     private getPostList() {
