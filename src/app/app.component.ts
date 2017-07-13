@@ -37,8 +37,8 @@ export class MyApp {
   }
 
   handlestartSearch() {
-    if(this.nav.getActive().name != 'Search'){
-      console.log(this.nav.getActive().name);
+    if(this.nav.getActive().id != 'Search'){
+      console.log(this.nav.getActive());
       this.nav.setRoot('Search');
     }
   }
