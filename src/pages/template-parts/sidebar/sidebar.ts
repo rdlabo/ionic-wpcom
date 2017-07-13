@@ -43,7 +43,7 @@ export class SidebarComponent {
                     Array.prototype.forEach.call(data, (page:InterfacePost) => {
                         this.pages.push({
                             title: page.title,
-                            component: 'Single',
+                            component: 'Page',
                             params: {
                                 postID:page.ID,
                                 title: page.title
