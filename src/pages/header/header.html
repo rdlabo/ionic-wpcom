@@ -1,12 +1,12 @@
 <header>
   <ion-toolbar color="primary">
     <ion-buttons start>
-      <button ion-button icon-only color="royal">
+      <a href="https://ionicframework.com/" target="_blank" ion-button icon-only color="royal">
         <ion-icon name="ionic"></ion-icon>
-      </button>
-      <button ion-button icon-only color="royal">
+      </a>
+      <a href="https://github.com/rdlabo/ionic-wpcom" target="_blank" ion-button icon-only color="royal">
         <ion-icon name="logo-github"></ion-icon>
-      </button>
+      </a>
     </ion-buttons>
     <ion-searchbar (input)="searching($event)" (ionClear)="cancelKeyword($event)" [(ngModel)]="searchKeyword" (ionFocus)="searchStart()"></ion-searchbar>
   </ion-toolbar>

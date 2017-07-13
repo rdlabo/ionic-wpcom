@@ -1,5 +1,5 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Nav } from 'ionic-angular';
+import { Nav, LoadingController } from 'ionic-angular';
 import { InterfacePost, InterfaceCategory } from '../../../interface/wordpress'
 import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 
@@ -22,17 +22,21 @@ export class SidebarComponent {
     categories: Array<InterfacePage>;
 
     constructor(
-        public wp: WordpressProvider
+        public wp: WordpressProvider,
+        public loadingCtrl: LoadingController
     ) {}
 
     ngOnInit(){
-        console.log('sidebar');
+        this.initializeMenu();
+    }
+
+    private initializeMenu(){
+
         this.pages = [
             { title: '最近の投稿', component: 'Archive', params: {} },
         ];
 
         this.categories = [];
-
         this.wp.getPostList(0, { type: 'page' })
             .subscribe(
                 data => {
@@ -51,7 +55,6 @@ export class SidebarComponent {
 
                 }
             );
-
 
         this.wp.getCategoryList()
             .subscribe(

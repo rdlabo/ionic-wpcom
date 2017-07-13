@@ -18,7 +18,7 @@ import { WordpressProvider } from '../../providers/wordpress/wordpress';
 export class Search {
 
     title:string;
-    keywordStore$:Observable<InterfaceSearch >;
+    keywordStore$:Observable<InterfaceSearch>;
     search: InterfacePostParams = {
         type : 'wait',
         search : ''
@@ -32,7 +32,6 @@ export class Search {
     ) {}
 
     ionViewDidLoad(){
-
         this.keywordStore$ = this.store.select('search');
         this.keywordStore$.subscribe(
             (keyword) => {

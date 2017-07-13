@@ -24,12 +24,12 @@ export class PostsComponent implements OnChanges {
         public nav:NavController,
         public wp: WordpressProvider,
     ) {
-        this.setSubject();
+        this.initializeSubject();
     }
 
     page:number = 1;
     posts: Array<InterfacePost> = [];
-    subject = new Subject();
+    subject;
 
     doInfinite(infiniteScroll) {
         this.getPostList().then(
@@ -48,12 +48,13 @@ export class PostsComponent implements OnChanges {
         );
     }
 
-    viewArticle(post): void {
+    viewSingle(post): void {
         this.nav.push('Single',
             { postID: post.ID ,title: post.title});
     }
 
-    private setSubject(){
+    private initializeSubject(){
+        this.subject = new Subject();
         this.subject
             .switchMap(obj => {
                 return this.getPostList()
