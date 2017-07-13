@@ -1,3 +1,17 @@
+.loading {
+  height:100%;
+  background-color: color($colors,primary);
+  display: flex;
+  text-align:center;
+  justify-content: center;
+  align-items: center;
+  color: color($colors,white);
+
+  p {
+    color: color($colors,white);
+  }
+}
+
 ng-component {
 
   [padding] h1:first-child, [padding] h2:first-child, [padding] h3:first-child, [padding] h4:first-child, [padding] h5:first-child, [padding] h6:first-child {
@@ -43,10 +57,11 @@ ng-component {
     color: color($colors,primary);
   }
 
-  ion-note {
+  ion-note.note-md,ion-note.note-ios {
     font-size: 1.2rem;
     align-self: flex-start;
     padding-top: 5px;
+    color: color($colors,dark);
   }
 
   header.article-header{

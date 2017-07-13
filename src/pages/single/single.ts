@@ -92,6 +92,7 @@ export class Single {
 
         Array.prototype.forEach.call(document.querySelectorAll('article a'), function(node) {
             node.setAttribute('target','_blank');
+            node.setAttribute('rel','noopener');
         });
 
         Array.prototype.forEach.call(document.querySelectorAll('article div[data-shortcode=caption]'), function(node) {

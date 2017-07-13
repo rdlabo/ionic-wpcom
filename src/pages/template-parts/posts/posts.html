@@ -1,7 +1,7 @@
 <ion-list>
   <ion-item class="clickeble" *ngFor="let post of posts;trackBy:post?.ID" (tap)="viewSingle(post)">
     <ion-avatar item-start>
-      <img src="{{post.post_thumbnail.URL|fileserver}}?w=300">
+      <img src="{{post.post_thumbnail.URL|fileserver}}?w=300" alt="thumbnail">
     </ion-avatar>
     <h2 [innerHTML]="post.title"></h2>
     <div><p [innerHTML]="post.excerpt"></p></div>
