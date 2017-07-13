@@ -27,7 +27,7 @@
       <dl class="attribute">
         <dt><ion-icon name="person"></ion-icon> 執筆者</dt>
         <dd class="profile clickeble" (tap)="viewAuthor(article.author)">
-          <img src="{{article.author.avatar_URL}}" class="radius" /><a>{{article.author.name}}</a>
+          <img src="{{article.author.avatar_URL}}" class="radius" alt="{{article.author.name}}" /><a>{{article.author.name}}</a>
         </dd>
       </dl>
       <dl class="attribute">
@@ -48,8 +48,8 @@
 
 <ion-footer>
   <ul class="social-share">
-    <li><a href="{{shareURL?.facebook}}" title="シェア" target="_blank"><button ion-button block><ion-icon name="logo-facebook"></ion-icon> シェア</button></a></li>
-    <li><a href="{{shareURL?.twitter}}" title="ツイート" target="_blank"><button ion-button block><ion-icon name="logo-twitter"></ion-icon> ツイート</button></a></li>
+    <li><a href="{{shareURL?.facebook}}" title="シェア" target="_blank" rel="noopener"><button ion-button block><ion-icon name="logo-facebook"></ion-icon> シェア</button></a></li>
+    <li><a href="{{shareURL?.twitter}}" title="ツイート" target="_blank" rel="noopener"><button ion-button block><ion-icon name="logo-twitter"></ion-icon> ツイート</button></a></li>
     <li><button ion-button (tap)="addClipboard();" block><ion-icon name="clipboard"></ion-icon> URLコピー</button></li>
   </ul>
 </ion-footer>
