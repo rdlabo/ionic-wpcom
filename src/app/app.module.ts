@@ -8,6 +8,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { MyApp } from './app.component';
 import { WordpressProvider } from '../providers/wordpress/wordpress';
+
+import { HeaderComponentModule } from '../pages/header/header.module';
 import { SidebarComponentModule} from '../pages/template-parts/sidebar/sidebar.module';
 
 @NgModule({
@@ -18,6 +20,7 @@ import { SidebarComponentModule} from '../pages/template-parts/sidebar/sidebar.m
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    HeaderComponentModule,
     SidebarComponentModule
   ],
   bootstrap: [IonicApp],

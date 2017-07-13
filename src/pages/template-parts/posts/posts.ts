@@ -28,11 +28,15 @@ export class PostsComponent implements OnChanges {
 
     doInfinite(infiniteScroll) {
         this.getPostList().then(
-            data => {
-                infiniteScroll.complete();
+            (data:Array<InterfacePost>) => {
+                if(data.length > 0) {
+                    infiniteScroll.complete();
+                }else{
+                    infiniteScroll.enable(false);
+                }
             },
             error => {
-                infiniteScroll.enable(false);
+                infiniteScroll.complete();
             }
         );
     }

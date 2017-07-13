@@ -28,6 +28,10 @@ export class MyApp {
     this.nav.setRoot($event.component, $event.params);
   }
 
+  handlesetSearchKeyword($event){
+    console.log($event);
+  }
+
   private initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();

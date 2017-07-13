@@ -16,7 +16,7 @@ export interface InterfacePage {
 })
 export class SidebarComponent {
     @ViewChild(Nav) nav: Nav;
-    @Output() setRootPage = new EventEmitter<{}>();
+    @Output() setRootPage = new EventEmitter();
 
     pages: Array<InterfacePage>;
     categories: Array<InterfacePage>;
