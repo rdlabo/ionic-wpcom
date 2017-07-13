@@ -85,6 +85,27 @@ ng-component {
       img {
         border:1px solid color($colors,light);
         margin:5px 0;
+        max-width:100%;
+      }
+
+      .alignright {
+        float: right;
+        margin-left:30px;
+      }
+
+      .alignleft {
+        float: left;
+        margin-right:30px;
+      }
+
+      .aligncenter {
+        margin:auto;
+      }
+
+
+      figure {
+        max-width:100%;
+        margin:0;
       }
     }
 
