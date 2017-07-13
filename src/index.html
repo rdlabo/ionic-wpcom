@@ -14,6 +14,14 @@
   <!-- cordova.js required for cordova apps -->
   <!--<script src="cordova.js"></script>-->
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('service worker installed'))
+        .catch(err => console.error('Error', err));
+    }
+  </script>
+
 </head>
 <body>
 
@@ -33,14 +41,6 @@
   </ion-app>
 
   <link href="build/main.css" rel="stylesheet">
-
-  <script>
-      if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('service-worker.js')
-              .then(() => console.log('service worker installed'))
-              .catch(err => console.error('Error', err));
-      }
-  </script>
 
   <!-- The polyfills js is generated during the build process -->
   <script src="build/polyfills.js"></script>

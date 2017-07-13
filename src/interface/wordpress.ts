@@ -11,7 +11,12 @@ export interface InterfacePost {
     },
     short_URL: string,
     categories: Array<InterfaceCategory>
-    tags: Array<InterfaceTag>
+    tags: Array<InterfaceTag>,
+
+    origin: {
+        title: string,
+        excerpt: string,
+    }
 }
 
 export interface InterfacePostParams {

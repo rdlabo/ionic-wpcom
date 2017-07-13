@@ -102,8 +102,8 @@ export class Single {
 
     private createShareURL(url, params:InterfacePost)
     {
-        if(params.excerpt && params.excerpt.length > 0){
-            params.excerpt = params.excerpt.replace(/\s|&nbsp;/g, '')
+        if(params.origin.excerpt && params.origin.excerpt.length > 0){
+            params.origin.excerpt = params.origin.excerpt.replace(/\s|&nbsp;/g, '')
         }
 
         return {
@@ -112,14 +112,14 @@ export class Single {
             "&display=popup" +
             "&href=" + encodeURIComponent(url) +
             "&picture=" + encodeURIComponent(params.post_thumbnail.URL) +
-            "&title="+ encodeURIComponent(params.title) +
-            "&caption=" + encodeURIComponent(params.excerpt) +
+            "&title="+ encodeURIComponent(params.origin.title) +
+            "&caption=" + encodeURIComponent(params.origin.excerpt) +
             "&redirect_uri=" + encodeURIComponent(url) +
             "&hashtag = AreaInnovationReview" +
             "&display=page",
 
             twitter :  "https://twitter.com/intent/tweet?url=" + encodeURIComponent(url) +
-            "&text=" + encodeURIComponent(params.title)
+            "&text=" + encodeURIComponent(params.origin.title)
         }
     }
 }

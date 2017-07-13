@@ -103,6 +103,11 @@ export class WordpressProvider {
                 URL : noImageURL
             }
         }
+
+        params.origin = {
+            title : params.title,
+            excerpt: params.excerpt
+        }
         params.title = <string>this.sanitizer.bypassSecurityTrustHtml(params.title);
         params.content = <string>this.sanitizer.bypassSecurityTrustHtml(params.content);
         params.excerpt = <string>this.sanitizer.bypassSecurityTrustHtml(this.removeTag(params.excerpt));
