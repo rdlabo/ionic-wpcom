@@ -3,7 +3,10 @@ import { Http, Headers, URLSearchParams } from '@angular/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 import { wordpressURL, dummyImageURL } from '../../wp-config';
-import { InterfacePost, InterfaceCategory, InterfacePostParams, InterfaceTag } from '../../interface/wordpress';
+import {
+    InterfacePost, InterfaceCategory, InterfacePostParams, InterfaceTag,
+    InterfaceAuthor
+} from '../../interface/wordpress';
 
 @Injectable()
 export class WordpressProvider {
@@ -26,6 +29,10 @@ export class WordpressProvider {
 
         if(search.tagSlug){
             params.set('tag', search.tagSlug);
+        }
+
+        if(search.authorID){
+            params.set('author', String(search.authorID));
         }
 
         return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/posts",
@@ -53,17 +60,26 @@ export class WordpressProvider {
             );
     }
 
-    getCategory(slug:string){
-        return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/categories/slug:" + slug)
+    getCategory(key:string){
+        return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/categories/slug:" + key)
             .map(
                 res => <InterfaceCategory>res.json()
             );
     }
 
-    getTag(slug:string){
-        return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/tags/slug:" + slug)
+    getTag(key:string){
+        return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/tags/slug:" + key)
             .map(
                 res => <InterfaceTag>res.json()
+            );
+    }
+
+    getAuthorList(key:string){
+        let params = new URLSearchParams();
+        params.set('search', key);
+        return this.http.get('https://public-api.wordpress.com/rest/v1.1/sites/' + wordpressURL + "/users")
+            .map(
+                res => <Array<InterfaceAuthor>>res.json()
             );
     }
 

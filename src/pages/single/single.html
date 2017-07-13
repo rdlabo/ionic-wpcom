@@ -26,7 +26,7 @@
       </dl>
       <dl class="attribute">
         <dt><ion-icon name="person"></ion-icon> 執筆者</dt>
-        <dd class="profile clickeble" (tap)="hoge(article.author.ID)">
+        <dd class="profile clickeble" (tap)="viewAuthor(article.author)">
           <img src="{{article.author.avatar_URL}}" class="radius" /><a>{{article.author.name}}</a>
         </dd>
       </dl>

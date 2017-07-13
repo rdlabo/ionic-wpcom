@@ -4,7 +4,7 @@ import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePostParams, InterfaceCategory } from '../../interface/wordpress';
 
 @IonicPage({
-    segment: 'category/:slug',
+    segment: 'category/:key',
 })
 @Component({
     selector: 'category',
@@ -17,7 +17,7 @@ export class Category {
     title:string;
     search: InterfacePostParams = {
         type : 'wait',
-        categorySlug : this.navParams.get('slug')
+        categorySlug : this.navParams.get('key')
     }
 
     constructor(
@@ -32,7 +32,7 @@ export class Category {
         }else{
             const f = () => new Promise(
                 (resolve)=>{
-                    resolve(this.navParams.get('slug'));
+                    resolve(this.navParams.get('key'));
                 }
             );
             f().then(
@@ -47,7 +47,7 @@ export class Category {
 
         this.search = {
             type: 'post',
-            categorySlug : this.navParams.get('slug')
+            categorySlug : this.navParams.get('key')
         }
     }
 }

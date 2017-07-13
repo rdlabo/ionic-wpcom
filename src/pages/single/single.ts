@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { InterfacePost, InterfaceCategory, InterfaceTag } from '../../interface/wordpress'
+import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor } from '../../interface/wordpress'
 import { facebookAppID } from '../../wp-config';
 
 @IonicPage({
@@ -37,7 +37,7 @@ export class Single {
 
         this.wp.getPostArticle(this.navParams.get('postID'))
             .subscribe(
-                data => {
+                (data:InterfacePost) => {
                     this.title = (!this.title)?data.title:this.title;
                     this.article = data;
                     this.shareURL = this.createShareURL(this.url, data);
@@ -48,14 +48,19 @@ export class Single {
             );
     }
 
+    viewAuthor(author:InterfaceAuthor):void
+    {
+        this.navCtrl.setRoot('Author',{ title: author.name, key: author.ID});
+    }
+
     viewCategory(category:InterfaceCategory):void
     {
-        this.navCtrl.setRoot('Category',{ title: category.name, slug: category.slug});
+        this.navCtrl.setRoot('Category',{ title: category.name, key: category.slug});
     }
 
     viewTag(tag:InterfaceTag):void
     {
-        this.navCtrl.setRoot('Tag',{ title: tag.name, slug: tag.slug});
+        this.navCtrl.setRoot('Tag',{ title: tag.name, key: tag.slug});
     }
 
     addClipboard():void

@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, NavParams } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { InterfacePostParams, InterfaceTag } from '../../interface/wordpress'
+import { InterfacePostParams, InterfacePost } from '../../interface/wordpress';
 
 @IonicPage({
-    segment: 'tag/:key',
+    segment: 'author/:key',
 })
 @Component({
-    selector: 'tag',
-    templateUrl: 'tag.html',
+    selector: 'author',
+    templateUrl: 'author.html',
     providers:[ WordpressProvider ]
 })
-export class Tag {
+export class Author {
 
-    type:string = 'タグ';
+    type:string = '執筆者';
     title:string;
     search: InterfacePostParams = {
         type : 'wait',
-        categorySlug : this.navParams.get('key')
-    }
+        authorID : this.navParams.get('key')
+    };
 
     constructor(
         public navCtrl: NavController,
@@ -36,10 +36,13 @@ export class Tag {
                 }
             );
             f().then(
-                (slug:string) => {
-                    this.wp.getCategory(slug)
+                (ID:number) => {
+                    // use not require auth resource.
+                    this.wp.getPostList(0, { 'authorID': ID})
                         .subscribe(
-                            (data:InterfaceTag) => this.title = data.name
+                            (data:Array<InterfacePost>) => {
+                                this.title = data[0].author.name;
+                            }
                         );
                 }
             );
@@ -47,7 +50,7 @@ export class Tag {
 
         this.search = {
             type: 'post',
-            tagSlug : this.navParams.get('key')
+            authorID : this.navParams.get('key')
         }
     }
 }
