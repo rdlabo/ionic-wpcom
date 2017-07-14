@@ -11,6 +11,7 @@
       <li>{{article?.date | mydate}}</li>
     </ul>
   </header>
+  <article padding *ngIf="!article"><ion-spinner color="primary"></ion-spinner></article>
   <article padding class="article-content" *ngIf="article">
     <picture *ngIf="noImageURL != article.post_thumbnail.URL">
       <source media="(max-width: 300px)" srcset="{{article.post_thumbnail.URL}}?w=300 1x, {{article.post_thumbnail.URL}}?w=720 2x">

@@ -4,6 +4,11 @@ ng-component {
     margin-top: 0;
   }
 
+  ion-spinner {
+    display:block;
+    margin:auto;
+  }
+
   .toolbar-title {
     position:relative;top:2px;
   }

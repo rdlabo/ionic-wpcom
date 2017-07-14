@@ -11,6 +11,7 @@
   <header class="article-header" padding>
     <h2 [innerHTML]="title"></h2>
   </header>
+  <article padding *ngIf="!article"><ion-spinner color="primary"></ion-spinner></article>
   <article padding class="article-content" *ngIf="article">
     <section class="main" [innerHTML]="article?.content"></section>
     <div>

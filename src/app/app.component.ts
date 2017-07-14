@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Store } from '@ngrx/store';
@@ -28,17 +28,23 @@ export class MyApp {
       public splashScreen: SplashScreen,
       public wp:WordpressProvider,
       public store:Store<AppState>,
+      public loadingCtrl: LoadingController
   ) {
     this.initializeApp();
   }
 
   ngOnInit(){
+    const loading = this.loadingCtrl.create({ content:'Loading...' });
+    loading.present();
     this.wp.getSiteInfo()
         .subscribe(
             (data:InterfaceSite) => {
-
+              loading.dismiss();
             },
-            (error) => this.wp.errorResponse(error)
+            (error) => {
+              loading.dismiss();
+              this.wp.errorResponse(error)
+            }
         );
   }
 
