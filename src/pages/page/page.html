@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <header class="article-header" padding>
+  <header class="article-header" padding *ngIf="title">
     <h2 [innerHTML]="title"></h2>
   </header>
   <article padding *ngIf="!article"><ion-spinner color="primary"></ion-spinner></article>
