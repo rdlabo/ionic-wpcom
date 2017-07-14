@@ -4,6 +4,10 @@ ng-component {
     margin-top: 0;
   }
 
+  .toolbar-title {
+    position:relative;top:2px;
+  }
+
   img {
     height:auto;
     display:block;
@@ -66,6 +70,7 @@ ng-component {
 
   ion-thumbnail {
     background-size: cover;
+    border-radius:100%;
   }
 
   ion-note.note-md,ion-note.note-ios {
