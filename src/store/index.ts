@@ -11,8 +11,8 @@ const reducers = {
     current: currentReducer
 };
 
-const productionReducer = combineReducers(reducers);
+const rootReducer = combineReducers(reducers);
 
 export function reducer(state: any, action: any) {
-    return productionReducer(state, action);
+    return rootReducer(state, action);
 }

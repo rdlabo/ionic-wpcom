@@ -106,7 +106,6 @@ export class SidebarComponent {
         let checkedPage = [];
         if(pages[0] && currentData.page){
             Array.prototype.forEach.call(pages, (page) => {
-                console.log([page.component.toLowerCase().slice(0,4),currentData.page.toLowerCase().slice(0,4),page.params[label],currentData.opt[label]]);
                 let active = (page.component.toLowerCase().slice(0,4) == currentData.page.toLowerCase().slice(0,4) && page.params[label] == currentData.opt[label]);
                 checkedPage.push({
                     ID          : page.ID,

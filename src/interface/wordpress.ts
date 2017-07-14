@@ -20,11 +20,11 @@ export interface InterfacePost {
 }
 
 export interface InterfacePostParams {
-    type?: string,
-    categorySlug?: string
-    tagSlug?: string
-    authorID?: number
-    search?:string
+    type?           : string,
+    categorySlug?   : string
+    tagSlug?        : string
+    authorID?       : number
+    search?         : string
 }
 
 export interface InterfaceCategory {

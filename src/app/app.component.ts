@@ -3,7 +3,9 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Store } from '@ngrx/store';
-import { REGISTER, DELETE } from '../store/search';
+
+import { REGISTER as REGISTER1, DELETE as DELETE1 } from '../store/search';
+import { REGISTER as REGISTER2, DELETE as DELETE2 } from '../store/current';
 
 import { WordpressProvider } from '../providers/wordpress/wordpress';
 import { AppState } from '../interface/store';
@@ -37,8 +39,8 @@ export class MyApp {
     this.nav.setRoot($event.component, $event.params);
   }
 
-  handlesetSearchKeyword(keyword:string){
-    this.store.dispatch({type: REGISTER, payload: keyword});
+  handlesetSearchKeyword(keyword){
+    this.store.dispatch({type: REGISTER1, payload: { keyword: keyword }});
   }
 
   handlestartSearch() {
@@ -48,7 +50,7 @@ export class MyApp {
   }
 
   handlecancelSearchKeyword() {
-    this.store.dispatch({type: DELETE});
+    this.store.dispatch({type: DELETE1});
   }
 
   private initializeApp() {
@@ -59,7 +61,7 @@ export class MyApp {
 
     this.intervalCurrentPage = setInterval(()=>{
       if(this.nav.getActive()){
-        this.store.dispatch({type: REGISTER, payload: {page:this.nav.getActive().id, opt:this.nav.getActive().data}});
+        this.store.dispatch({type: REGISTER2, payload: { page:this.nav.getActive().id, opt:this.nav.getActive().data }});
       }
     },1000)
   }

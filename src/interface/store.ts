@@ -1,6 +1,11 @@
 
 export interface AppState {
-    searchKeyword : string
+    keyword: InterfaceKeyword,
+    current: InterfaceCurrent
+}
+
+export interface InterfaceKeyword {
+    keyword: string,
 }
 
 export interface InterfaceCurrent {

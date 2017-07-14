@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { Category } from './category';
 import { PostsComponentModule } from '../template-parts/posts/posts.module';
+import { FooterComponentModule } from '../footer/footer.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { PostsComponentModule } from '../template-parts/posts/posts.module';
   ],
   imports: [
     IonicPageModule.forChild(Category),
-    PostsComponentModule
+    PostsComponentModule,
+    FooterComponentModule
   ],
   exports: [
     Category

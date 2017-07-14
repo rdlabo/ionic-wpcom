@@ -69,7 +69,6 @@ export class PostsComponent implements OnChanges {
 
     private getPostList() {
         return new Promise ((resolve, reject) => {
-            console.log(this.search);
             this.wp.getPostList(this.page, this.search)
                 .subscribe(
                     data => {

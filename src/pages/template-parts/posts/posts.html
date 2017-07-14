@@ -1,8 +1,8 @@
 <ion-list>
   <ion-item class="clickeble" *ngFor="let post of posts;trackBy:post?.ID" (tap)="viewSingle(post)">
-    <ion-avatar item-start>
+    <ion-thumbnail item-start>
       <img src="{{post.post_thumbnail.URL|fileserver}}?w=300" alt="thumbnail">
-    </ion-avatar>
+    </ion-thumbnail>
     <h2 [innerHTML]="post.title"></h2>
     <div><p [innerHTML]="post.excerpt"></p></div>
     <ion-note item-end>{{post.date | mydate}}</ion-note>

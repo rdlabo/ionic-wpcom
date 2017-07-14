@@ -1,9 +1,10 @@
 import { Action } from '@ngrx/store';
+import { InterfaceKeyword } from '../interface/store';
 
-export const REGISTER = 'REGISTER';
-export const DELETE = 'DELETE';
+export const REGISTER = 'REGISTER_Search';
+export const DELETE = 'DELETE_Search';
 
-export const searchReducer = (keyword:string = '', action: Action) => {
+export const searchReducer = (keyword:InterfaceKeyword = { keyword: ''} , action: Action) => {
     switch (action.type) {
         case REGISTER:
             return action.payload;

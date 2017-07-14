@@ -8,7 +8,7 @@ export const wordpressURL = 'rdlabo.jp';
 export const facebookAppID = '787556004715339';
 
 // Dummy Image URL (min-width && min-height : 800px)
-export const noImageURL = 'https://s.w.org/about/images/logos/wordpress-logo-notext-rgb.png';
+export const noImageURL = 'assets/wordpress-logo-notext-rgb.png';
 
 /**
  * API Server && API version
