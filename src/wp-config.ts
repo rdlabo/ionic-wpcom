@@ -15,7 +15,7 @@
 export const wordpressURL = 'gohan52.wordpress.com';
 
 /* 表示しないページID */
-export const excludePages = [];
+export const excludePages = [3];
 
 /**
  * その他の設定
