@@ -10,9 +10,7 @@
   <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4e8ef7">
-
-  <!-- cordova.js required for cordova apps -->
-  <!--<script src="cordova.js"></script>-->
+  <link href="build/main.css" rel="stylesheet">
 
   <script>
 //    if ('serviceWorker' in navigator) {
@@ -40,11 +38,11 @@
     </section>
   </ion-app>
 
-  <link href="build/main.css" rel="stylesheet">
-
+  <script src="cordova.js"></script>
   <!-- The polyfills js is generated during the build process -->
   <script src="build/polyfills.js"></script>
-
+  <!-- all code from node_modules directory is here -->
+  <script src="build/vendor.js"></script>
   <!-- The bundle js is generated during the build process -->
   <script src="build/main.js"></script>
 
