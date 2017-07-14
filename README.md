@@ -88,10 +88,12 @@ WordPressの公式テーマと同じフォルダ名にしておりますので�
 ## 簡単にホスティングする
 [Netlify](https://app.netlify.com)を使うと簡単にホスティングすることができます。現在デモをホスティングしているのですが、その設定を書いておきますのでご利用ください。
 
-Repository　　　　　https://github.com/rdlabo/ionic-wpcom
-Branch　　　　　　　master
-Build command　　　npm run-script build --prod
-Publish directory　www
+| 項目 | 入力内容 |
+|:-----------|:------------|
+| Repository | https://github.com/rdlabo/ionic-wpcom |
+| Branch | master |
+| Build command | npm run-script build --prod |
+| Publish directory | www |
 
 ## 問い合わせ
 何かありましたら、[Twitter@rdlabo](https://twitter.com/rdlabo) にお問い合わせ下さい。
