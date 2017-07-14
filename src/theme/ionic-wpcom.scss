@@ -43,9 +43,27 @@ ng-component {
     color: color($colors,primary);
   }
 
-  .side-menu button.item-block:hover, .side-menu button.item-block.active {
-    border-right: 2px solid color($colors,primary);
+  .side-menu {
+    padding-top:10px;
+    ion-item-divider {
+      background-color: transparent;
+      font-weight:bold;
+      margin-bottom:5px;
+    }
+    button.item-block {
+      background-color: transparent;
+
+      &:hover,&.active {
+        color: color($colors,primary);
+        border-right: 2px solid color($colors,primary);
+      }
+
+      div.item-inner, &:last-child{
+        border:none;
+      }
+    }
   }
+
 
   ion-note.note-md,ion-note.note-ios {
     font-size: 1.2rem;

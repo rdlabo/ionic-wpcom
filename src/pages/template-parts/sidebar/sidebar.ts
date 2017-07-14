@@ -8,6 +8,7 @@ import { AppState, InterfaceCurrent } from '../../../interface/store'
 import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 
 export interface InterfacePage {
+    ID          : string,
     title       : string,
     component   : any,
     params      : any,
@@ -44,7 +45,7 @@ export class SidebarComponent {
     private initializeMenu(){
 
         this.pages = [
-            { title: '最近の投稿', component: 'Archive', params: {} },
+            { ID: 'defaul', title: '最近の投稿', component: 'Archive', params: {} },
         ];
 
         this.categories = [];
@@ -53,6 +54,7 @@ export class SidebarComponent {
                 data => {
                     Array.prototype.forEach.call(data, (page:InterfacePost) => {
                         this.pages.push({
+                            ID   : String(page.ID),
                             title: page.title,
                             component: 'Page',
                             params: {
@@ -73,6 +75,7 @@ export class SidebarComponent {
                     Array.prototype.forEach.call(data, (cat:InterfaceCategory) => {
                         if(cat.post_count > 0 && cat.parent == 0) {
                             this.categories.push({
+                                ID   : cat.slug,
                                 title: cat.name,
                                 component: 'Category',
                                 params: {
@@ -106,6 +109,7 @@ export class SidebarComponent {
                 console.log([page.component.toLowerCase().slice(0,4),currentData.page.toLowerCase().slice(0,4),page.params[label],currentData.opt[label]]);
                 let active = (page.component.toLowerCase().slice(0,4) == currentData.page.toLowerCase().slice(0,4) && page.params[label] == currentData.opt[label]);
                 checkedPage.push({
+                    ID          : page.ID,
                     title       : page.title,
                     component   : page.component,
                     params      : page.params,
