@@ -64,6 +64,9 @@ ng-component {
     }
   }
 
+  ion-thumbnail {
+    background-size: cover;
+  }
 
   ion-note.note-md,ion-note.note-ios {
     font-size: 1.2rem;
