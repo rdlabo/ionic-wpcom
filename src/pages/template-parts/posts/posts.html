@@ -6,7 +6,7 @@
     <div><p [innerHTML]="post.excerpt"></p></div>
     <ion-note item-end>{{post.date | mydate}}</ion-note>
   </ion-item>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-list>
-<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-  <ion-infinite-scroll-content></ion-infinite-scroll-content>
-</ion-infinite-scroll>
