@@ -15,6 +15,7 @@ export class PostsComponent implements OnChanges {
 
     @Input() search: InterfacePostParams;
     ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+        this.Loaded = false;
         if(this.search.type != 'wait'){
             this.subject.next();
         }
@@ -30,6 +31,7 @@ export class PostsComponent implements OnChanges {
     page:number = 1;
     posts: Array<InterfacePost> = [];
     subject;
+    Loaded;
 
     doInfinite(infiniteScroll) {
         this.getPostList().then(
@@ -72,6 +74,7 @@ export class PostsComponent implements OnChanges {
             this.wp.getPostList(this.page, this.search)
                 .subscribe(
                     data => {
+                        this.Loaded = true;
                         resolve(data)
                     },
                     error => {

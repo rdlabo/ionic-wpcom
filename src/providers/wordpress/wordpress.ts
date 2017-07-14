@@ -178,7 +178,6 @@ export class WordpressProvider {
         arrowTag = arrowTag ? arrowTag : '';
         let pattern = new RegExp('(?!<\\/?(' + arrowTag + ')(>|\\s[^>]*>))<("[^"]*"|\\\'[^\\\']*\\\'|[^\\\'">])*>', 'gim');
 
-        console.log(str);
         str = str.replace(pattern, '');
         return str.replace(/\s+/g, "");
     }
