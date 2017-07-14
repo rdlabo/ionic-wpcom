@@ -12,7 +12,7 @@
  */
 
 /* WordPress.comのURL、もしくはJetPack連携しているURL */
-export const wordpressURL = 'gohan52.wordpress.com';
+export const wordpressURL = 'rdlabo.jp';
 
 /* 表示しないページID */
 export const excludePages = [];
