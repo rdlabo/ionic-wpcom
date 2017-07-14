@@ -1,14 +1,15 @@
 
-// URL of WordPress.com
-// export const wordpressURL = 'gohan52.wordpress.com';
+// WordPress.comのサイトドメイン、もしくはJetPack連携しているサイトドメイン
 export const wordpressURL = 'rdlabo.jp';
-// export const wordpressURL = 'tec-kansai.tech';
 
-// AppID of Facebook for Facebook share button
-export const facebookAppID = '787556004715339';
+// FacebookのAppID。Facebookのシェアボタンに利用します
+export const facebookAppID = '1375984069183803';
 
-// Dummy Image URL (min-width && min-height : 800px)
+// アイキャッチ画像が設定されていない記事の置き換え画像
 export const noImageURL = 'assets/wordpress-logo-notext-rgb.png';
+
+// 表示しないページID
+export const excludePages = [559, 496, 2];
 
 /**
  * API Server && API version
