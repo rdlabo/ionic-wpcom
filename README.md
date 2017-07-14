@@ -1,4 +1,4 @@
-[![CRAN](https://img.shields.io/cran/l/devtools.svg)]()
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 # Ionic-WP.com
 
