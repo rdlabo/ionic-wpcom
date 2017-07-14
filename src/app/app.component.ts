@@ -5,9 +5,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Store } from '@ngrx/store';
 
 import { REGISTER as REGISTER1, DELETE as DELETE1 } from '../store/search';
-import { REGISTER as REGISTER2, DELETE as DELETE2 } from '../store/current';
+import { REGISTER as REGISTER2 } from '../store/current';
 
 import { WordpressProvider } from '../providers/wordpress/wordpress';
+import { InterfaceSite } from '../interface/wordpress';
 import { AppState } from '../interface/store';
 
 
@@ -31,8 +32,18 @@ export class MyApp {
     this.initializeApp();
   }
 
-  ionViewDidEnter(){
-    clearInterval(this.intervalCurrentPage)
+  ngOnInit(){
+    this.wp.getSiteInfo()
+        .subscribe(
+            (data:InterfaceSite) => {
+
+            },
+            (error) => this.wp.errorResponse(error)
+        );
+  }
+
+  ionViewDidLeave(){
+    clearInterval(this.intervalCurrentPage);
   }
 
   handlesetRootPage($event){

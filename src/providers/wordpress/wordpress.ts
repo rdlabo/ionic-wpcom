@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { AlertController } from 'ionic-angular';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 import { wordpressAPI, wordpressURL, noImageURL } from '../../wp-config';
 import {
     InterfacePost, InterfaceCategory, InterfacePostParams, InterfaceTag,
-    InterfaceAuthor
+    InterfaceAuthor, InterfaceSite
 } from '../../interface/wordpress';
 
 @Injectable()
@@ -13,8 +14,52 @@ export class WordpressProvider {
 
     constructor(
         public http: Http,
-        public sanitizer: DomSanitizer
+        public sanitizer: DomSanitizer,
+        public alertCtrl: AlertController,
     ) {}
+
+    errorResponse(error){
+        let errorTitle, errorText : string;
+        switch (error.status) {
+            case 401:
+                errorTitle = '401 Unauthorized';
+                errorText = 'アクセスが禁止されています。WordPress.comの公開範囲か、JetPackでのRestAPIの許可を確認してください';
+                break;
+            case 404:
+                errorTitle = '404 Not Found';
+                errorText = 'URLが間違っています。WordPress.comのURLか、JetPackの連携を確認してください';
+                break;
+            case 500:
+                errorTitle = '500 Internal Server Error';
+                errorText = 'アクセスができませんでした。インターネットへの接続を確認してください。';
+                break;
+            case 503:
+                errorTitle = '503 Service Unavailable';
+                errorText = 'サーバにアクセスが集中しているためアクセスができませんでした。しばらく時間を置いてから再アクセス下さい。';
+                break;
+            default:
+                errorTitle = 'Server Error';
+                errorText = 'アクセスができませんでした。'+ error.status +'番のエラーです。';
+                break;
+        }
+
+        let alert = this.alertCtrl.create({
+            title: errorTitle,
+            message: errorText,
+            buttons: ['閉じる']
+        });
+        alert.present();
+    }
+
+    getSiteInfo() {
+        let params = new URLSearchParams();
+        params.set('fields', 'name, jetpack');
+        return this.http.get(wordpressAPI + wordpressURL,
+            { search:params })
+            .map(
+                res => <InterfaceSite>res.json()
+            );
+    }
 
     getPostList(page:number, search:InterfacePostParams) {
         let params = new URLSearchParams();
