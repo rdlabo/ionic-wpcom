@@ -155,10 +155,9 @@ export class WordpressProvider {
         }
         params.title = <string>this.sanitizer.bypassSecurityTrustHtml(params.title);
         params.content = <string>this.sanitizer.bypassSecurityTrustHtml(params.content);
+        params.excerpt = <string>this.sanitizer.bypassSecurityTrustHtml(this.removeTag(params.excerpt));
         if(params.excerpt.length > 80){
-            params.excerpt = <string>this.sanitizer.bypassSecurityTrustHtml(params.excerpt.substr(0, 80) + '…');
-        }else{
-            params.excerpt = <string>this.sanitizer.bypassSecurityTrustHtml(this.removeTag(params.excerpt));
+            params.excerpt = params.excerpt.substr(0, 80) + '…';
         }
 
         return params;
