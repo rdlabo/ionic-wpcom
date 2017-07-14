@@ -12,7 +12,7 @@
     </ul>
   </header>
   <article padding class="article-content" *ngIf="article">
-    <picture>
+    <picture *ngIf="noImageURL != article.post_thumbnail.URL">
       <source media="(max-width: 300px)" srcset="{{article.post_thumbnail.URL | fileserver}}?w=300 1x, {{article.post_thumbnail.URL | fileserver}}?w=720 2x">
       <img src="{{article.post_thumbnail.URL | fileserver}}?w=720" class="thumbnail" alt="thumbnail">
     </picture>

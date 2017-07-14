@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor } from '../../interface/wordpress'
-import { facebookAppID } from '../../wp-config';
+import { facebookAppID, noImageURL } from '../../wp-config';
 
 @IonicPage({
     segment: 'single/:postID',
@@ -29,6 +29,7 @@ export class Single {
         facebook: string,
         twitter : string
     };
+    noImageURL:string = noImageURL;
 
     ionViewDidLoad() {
         if(this.navParams.get('title')){
