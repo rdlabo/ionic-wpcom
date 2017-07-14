@@ -1,4 +1,4 @@
-#IonicFramework theme for WordPress.com
+# IonicFramework theme for WordPress.com
 
 WordPress.comのREST APIを利用してSPA（Single Page Application）を構築するスターターパッケージです。
 [Ionic Framework](http://ionicframework.com/docs/)を利用して構築しています。
