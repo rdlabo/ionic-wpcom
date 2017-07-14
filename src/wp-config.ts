@@ -15,7 +15,7 @@
 export const wordpressURL = 'rdlabo.jp';
 
 /* 表示しないページID */
-export const excludePages = [];
+export const excludePages = [559, 496, 2];
 
 /**
  * その他の設定
