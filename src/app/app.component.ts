@@ -17,6 +17,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage = 'Archive';
+  intervalCurrentPage : number;
 
   constructor(
       public platform: Platform,
@@ -26,6 +27,10 @@ export class MyApp {
       public store:Store<AppState>,
   ) {
     this.initializeApp();
+  }
+
+  ionViewDidEnter(){
+    clearInterval(this.intervalCurrentPage)
   }
 
   handlesetRootPage($event){
@@ -38,7 +43,6 @@ export class MyApp {
 
   handlestartSearch() {
     if(this.nav.getActive().id != 'Search'){
-      console.log(this.nav.getActive());
       this.nav.setRoot('Search');
     }
   }
@@ -52,5 +56,11 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+
+    this.intervalCurrentPage = setInterval(()=>{
+      if(this.nav.getActive()){
+        this.store.dispatch({type: REGISTER, payload: {page:this.nav.getActive().id, opt:this.nav.getActive().data}});
+      }
+    },1000)
   }
 }

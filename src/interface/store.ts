@@ -3,6 +3,7 @@ export interface AppState {
     searchKeyword : string
 }
 
-export interface InterfaceSearch {
-    keyword : string
+export interface InterfaceCurrent {
+    page: string,
+    opt : {}
 }

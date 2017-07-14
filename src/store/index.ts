@@ -4,9 +4,11 @@ import 'rxjs/add/operator/let';
 
 import { combineReducers } from '@ngrx/store';
 import { searchReducer } from './search';
+import { currentReducer } from './current';
 
 const reducers = {
     search: searchReducer,
+    current: currentReducer
 };
 
 const productionReducer = combineReducers(reducers);

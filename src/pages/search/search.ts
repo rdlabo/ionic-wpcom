@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { InterfacePostParams } from '../../interface/wordpress'
-import { AppState, InterfaceSearch } from '../../interface/store'
+import { AppState } from '../../interface/store'
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 
 @IonicPage({
@@ -18,7 +18,7 @@ import { WordpressProvider } from '../../providers/wordpress/wordpress';
 export class Search {
 
     title:string;
-    keywordStore$:Observable<InterfaceSearch>;
+    keywordStore$:Observable<string>;
     search: InterfacePostParams = {
         type : 'wait',
         search : ''

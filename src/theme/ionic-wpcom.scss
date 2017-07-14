@@ -43,6 +43,10 @@ ng-component {
     color: color($colors,primary);
   }
 
+  .side-menu button.item-block:hover, .side-menu button.item-block.active {
+    border-right: 2px solid color($colors,primary);
+  }
+
   ion-note.note-md,ion-note.note-ios {
     font-size: 1.2rem;
     align-self: flex-start;
@@ -90,6 +94,12 @@ ng-component {
         font-size:1.4rem;
         border: 1px solid color($colors,dark);
         padding:20px;
+      }
+
+      blockquote {
+        background-color: color($colors,light);
+        margin:10px 0;
+        padding:10px 20px;
       }
 
       img {
