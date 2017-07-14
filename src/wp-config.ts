@@ -2,9 +2,6 @@
 // WordPress.comのサイトドメイン、もしくはJetPack連携しているサイトドメイン
 export const wordpressURL = 'rdlabo.jp';
 
-// FacebookのAppID。Facebookのシェアボタンに利用します
-export const facebookAppID = '1375984069183803';
-
 // アイキャッチ画像が設定されていない記事の置き換え画像
 export const noImageURL = 'assets/wordpress-logo-notext-rgb.png';
 

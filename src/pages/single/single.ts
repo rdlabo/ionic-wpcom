@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor } from '../../interface/wordpress'
-import { facebookAppID, noImageURL } from '../../wp-config';
+import { noImageURL } from '../../wp-config';
 
 @IonicPage({
     segment: 'single/:postID',
@@ -26,7 +26,6 @@ export class Single {
     article:InterfacePost;
     url:string = window.location.href;
     shareURL : {
-        facebook: string,
         twitter : string
     };
     noImageURL:string = noImageURL;
@@ -108,17 +107,6 @@ export class Single {
         }
 
         return {
-            facebook :  "https://www.facebook.com/dialog/share?" +
-            "app_id=" + facebookAppID +
-            "&display=popup" +
-            "&href=" + encodeURIComponent(url) +
-            "&picture=" + encodeURIComponent(params.post_thumbnail.URL) +
-            "&title="+ encodeURIComponent(params.origin.title) +
-            "&caption=" + encodeURIComponent(params.origin.excerpt) +
-            "&redirect_uri=" + encodeURIComponent(url) +
-            "&hashtag = AreaInnovationReview" +
-            "&display=page",
-
             twitter :  "https://twitter.com/intent/tweet?url=" + encodeURIComponent(url) +
             "&text=" + encodeURIComponent(params.origin.title)
         }
