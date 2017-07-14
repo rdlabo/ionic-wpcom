@@ -78,6 +78,7 @@ ng-component {
   ion-thumbnail {
     background-size: cover;
     border-radius:100%;
+    background-color: color($colors,light);
   }
 
   ion-note.note-md,ion-note.note-ios {
