@@ -1,6 +1,6 @@
 [![CRAN](https://img.shields.io/cran/l/devtools.svg)]()
 
-# IonicFramework theme for WordPress.com
+# Ionic-WP.com
 
 WordPress.comのREST APIを利用してSPA（Single Page Application）を構築するスターターパッケージです。
 [Ionic Framework](http://ionicframework.com/docs/)を利用して構築しています。
