@@ -33,6 +33,12 @@ export class PostsComponent implements OnChanges {
     subject;
     Loaded;
 
+    ionViewWillLeave(){
+        if(this.subject){
+            this.subject.unsubscribe();
+        }
+    }
+
     doInfinite(infiniteScroll) {
         this.getPostList().then(
             (data:Array<InterfacePost>) => {
