@@ -24,7 +24,7 @@ export class HeaderComponent {
 
         setTimeout(() => {
             this.searchbar.setFocus();
-        },100);
+        },1000);
     };
 
     searching(ev):void {
