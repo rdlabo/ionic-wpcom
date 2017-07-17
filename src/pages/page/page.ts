@@ -25,9 +25,6 @@ export class Page {
     title:string;
     article:InterfacePost;
     url:string = window.location.href;
-    shareURL : {
-        twitter : string
-    };
 
     ionViewDidLoad() {
         if(this.navParams.get('title')){
@@ -40,7 +37,6 @@ export class Page {
                     (data: InterfacePost) => {
                         this.title = (!this.title) ? data.title : this.title;
                         this.article = data;
-                        this.shareURL = this.createShareURL(this.url, data);
                         setTimeout(() => {
                             this.trimArticle();
                         }, 100);
@@ -64,23 +60,6 @@ export class Page {
         this.navCtrl.setRoot('Tag',{ title: tag.name, key: tag.slug});
     }
 
-    addClipboard():void
-    {
-        const body = document.body;
-        let text_area = document.createElement("textarea");
-        text_area.value = this.url;
-        body.appendChild(text_area);
-        text_area.select();
-        document.execCommand("copy");
-        body.removeChild(text_area);
-
-        let toast = this.toastCtrl.create({
-            message: 'URLをクリップボードにコピーしました',
-            duration: 2500,
-        });
-        toast.present();
-    }
-
     private trimArticle()
     {
         Array.prototype.forEach.call(document.querySelectorAll('article iframe'), function(node) {
@@ -101,16 +80,5 @@ export class Page {
         });
     }
 
-    private createShareURL(url, params:InterfacePost)
-    {
-        if(params.origin.excerpt && params.origin.excerpt.length > 0){
-            params.origin.excerpt = params.origin.excerpt.replace(/\s|&nbsp;/g, '')
-        }
-
-        return {
-            twitter :  "https://twitter.com/intent/tweet?url=" + encodeURIComponent(url) +
-            "&text=" + encodeURIComponent(params.origin.title)
-        }
-    }
 }
 

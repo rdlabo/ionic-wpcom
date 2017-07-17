@@ -67,7 +67,10 @@ export class WordpressProvider {
         return this.http.get(wordpressAPI + wordpressURL,
             { search:params })
             .map(
-                res => <InterfaceSite>res.json()
+                res => {
+                    console.log(res);
+                    return <InterfaceSite>res.json()
+                }
             );
     }
 

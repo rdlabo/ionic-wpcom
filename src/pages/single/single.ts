@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor } from '../../interface/wordpress'
 import { noImageURL } from '../../wp-config';
+
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 
 @IonicPage({
     segment: 'single/:postID',
@@ -22,14 +24,13 @@ export class Single {
         public wp:WordpressProvider,
         public toastCtrl: ToastController,
         public storage: Storage,
+        public admobFree: AdMobFree,
+        public platform: Platform
     ){}
 
     title:string;
     article:InterfacePost;
     url:string = window.location.href;
-    shareURL : {
-        twitter : string
-    };
     noImageURL:string = noImageURL;
 
     ionViewDidLoad() {
@@ -50,6 +51,26 @@ export class Single {
                     }
                 );
         });
+
+        if(this.platform.is('cordova')){
+            const bannerConfig: AdMobFreeBannerConfig = {
+                isTesting: true,
+                autoShow: false
+            };
+            this.admobFree.banner.config(bannerConfig);
+
+            this.admobFree.banner.prepare()
+                .then(() => {
+                    this.admobFree.banner.show();
+                })
+                .catch(e => console.log(e));
+        }
+    }
+
+    ionViewWillLeave(){
+        if(this.platform.is('cordova')){
+            this.admobFree.banner.hide();
+        }
     }
 
     viewAuthor(author:InterfaceAuthor):void
@@ -65,23 +86,6 @@ export class Single {
     viewTag(tag:InterfaceTag):void
     {
         this.navCtrl.setRoot('Tag',{ title: tag.name, key: tag.slug});
-    }
-
-    addClipboard():void
-    {
-        const body = document.body;
-        let text_area = document.createElement("textarea");
-        text_area.value = this.url;
-        body.appendChild(text_area);
-        text_area.select();
-        document.execCommand("copy");
-        body.removeChild(text_area);
-
-        let toast = this.toastCtrl.create({
-            message: 'URLをクリップボードにコピーしました',
-            duration: 2500,
-        });
-        toast.present();
     }
 
     private trimArticle()

@@ -1,10 +1,8 @@
-<header>
-  <ion-toolbar color="primary">
-    <ion-buttons start>
-      <button ion-button icon-only color="royal" (tap)="setWordPress()">
-        <ion-icon name="settings"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-searchbar (input)="searching($event)" (ionClear)="cancelKeyword($event)" [(ngModel)]="searchKeyword" (ionFocus)="searchStart()"></ion-searchbar>
-  </ion-toolbar>
-</header>
+<ion-toolbar color="primary">
+  <ion-buttons end>
+    <button ion-button icon-only color="royal" (tap)="setWordPress()">
+      <ion-icon name="settings"></ion-icon>
+    </button>
+  </ion-buttons>
+  <ion-searchbar (input)="searching($event)" (ionClear)="cancelKeyword($event)" [(ngModel)]="searchKeyword" (ionFocus)="searchStart()"></ion-searchbar>
+</ion-toolbar>
