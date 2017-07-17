@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 
-import { excludePages } from '../../../wp-config';
 import { InterfacePost, InterfaceCategory } from '../../../interface/wordpress'
 import { AppState, InterfaceCurrent } from '../../../interface/store'
 import { WordpressProvider } from '../../../providers/wordpress/wordpress';
@@ -58,17 +57,15 @@ export class SidebarComponent {
                 .subscribe(
                     data => {
                         Array.prototype.forEach.call(data, (page: InterfacePost) => {
-                            if (excludePages.indexOf(page.ID) < 0) {
-                                this.pages.push({
-                                    ID: String(page.ID),
-                                    title: page.title,
-                                    component: 'Page',
-                                    params: {
-                                        postID: page.ID,
-                                        title: page.title
-                                    }
-                                });
-                            }
+                            this.pages.push({
+                                ID: String(page.ID),
+                                title: page.title,
+                                component: 'Page',
+                                params: {
+                                    postID: page.ID,
+                                    title: page.title
+                                }
+                            });
                         });
                     },
                     error => {

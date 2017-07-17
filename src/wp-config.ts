@@ -12,10 +12,10 @@
  */
 
 /* WordPress.comのURL、もしくはJetPack連携しているURL */
-export const wordpressURL = 'rdlabo.jp';
+// export const wordpressURL = 'rdlabo.jp';
 
 /* 表示しないページID */
-export const excludePages = [559, 496, 2];
+// export const excludePages = [559, 496, 2];
 
 /**
  * その他の設定
