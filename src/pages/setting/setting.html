@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start *ngIf="enableClose">
+      <button ion-button icon-only color="royal" (tap)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>ドメイン設定</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <form padding (submit)="setDomain()">
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>ドメイン</ion-label>
+        <ion-input type="text" placeholder="例：rdlabo.jp"  [(ngModel)]="domain" name="domain"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button type="submit" ion-button block>設定</button>
+    <p class="attend">※ 右上の<ion-icon name="settings"></ion-icon>からいつでも設定できます</p>
+  </form>
+
+  <section class="setting-box">
+    <h2>WordPress.comの場合</h2>
+    <p>あなたがWordPress.comを使ってブログを運営している場合は、 上記のURL欄にWordPress.comのドメインを入力して下さい。</p>
+
+    <h2>WordPress.orgの場合</h2>
+    <ol>
+      <li>WordPressにプラグインJetpack by WordPress.comをインストールして有効にする
+      <li>JetpackとWordPress.comを連携します（Connect Jetpack to WordPress.com）。この作業のためにはWordPress.comのアカウントが必要になります。
+      <li>Jetpackプラグインのダッシュボード画面のFooterにあるDebugをクリックして下さい。右下バージョン表記の左上にあります（わかりにくいです）
+      <li>お使いのサイトで使用可能な Jetpack モジュールの全一覧にアクセスします。をクリックします。
+      <li>上から5つ目にJSON APIという項目があるので、有効化して下さい
+    </ol>
+    <p>以上が完了したあと、ドメイン欄をWordPressのURL（独自ドメイン可）に変更して下さい。</p>
+  </section>
+</ion-content>

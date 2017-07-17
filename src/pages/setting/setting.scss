@@ -1,0 +1,43 @@
+setting {
+
+  h2 {
+    color: color($colors, black);
+    font-size:1.4rem;
+    border-top: 1px solid color($colors,light);
+    border-bottom: 1px solid color($colors,light);
+    padding:15px 16px;
+    font-weight: normal;
+  }
+
+  ol {
+    margin: 0 16px;
+    padding:0 16px;
+    color: color($colors, black);
+
+    li {
+      padding-left:10px;
+      margin-bottom:4px;
+    }
+  }
+
+  p {
+    color: color($colors, black);
+    margin: 10px 16px;
+
+    &.attend {
+      text-align:center;
+      color : color($colors,dark);
+
+      ion-icon {
+        font-size: 1.4rem;
+        margin: auto 2px;
+      }
+    }
+  }
+
+  .setting-box {
+    margin:16px;
+    border: 1px solid color($colors,light);
+    border-top:none;
+  }
+}
