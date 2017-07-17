@@ -40,12 +40,13 @@ export class Setting {
     this.wp.getSiteInfo(domain)
         .subscribe(
             (data:InterfaceSite) => {
+                console.log(data);
               loading.dismiss();
               this.viewCtrl.dismiss();
               this.storage.set('domain', this.wp.shapingDomain(this.domain));
                 let alert = this.alertCtrl.create({
-                    title: '設定を反映します',
-                    subTitle: '正常に設定されました。設定を反映するために、ブラウザを更新します。',
+                    title: data.name,
+                    subTitle: data.name + 'を設定しました。設定を反映するために、ブラウザを更新します。',
                     buttons: [{
                         text: '更新する',
                         handler: () => {

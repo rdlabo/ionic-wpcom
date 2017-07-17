@@ -44,7 +44,6 @@ export class Single {
                     (data: InterfacePost) => {
                         this.title = (!this.title) ? data.title : this.title;
                         this.article = data;
-                        this.shareURL = this.createShareURL(this.url, data);
                         setTimeout(() => {
                             this.trimArticle();
                         }, 100);
@@ -103,18 +102,6 @@ export class Single {
         Array.prototype.forEach.call(document.querySelectorAll('article div[data-shortcode=caption]'), function(node) {
             node.style.width = '100%'
         });
-    }
-
-    private createShareURL(url, params:InterfacePost)
-    {
-        if(params.origin.excerpt && params.origin.excerpt.length > 0){
-            params.origin.excerpt = params.origin.excerpt.replace(/\s|&nbsp;/g, '')
-        }
-
-        return {
-            twitter :  "https://twitter.com/intent/tweet?url=" + encodeURIComponent(url) +
-            "&text=" + encodeURIComponent(params.origin.title)
-        }
     }
 }
 

@@ -19,7 +19,13 @@ export class WordpressProvider {
     ) {}
 
     shapingDomain(domain){
-        return domain.replace( /https?:\/\//g , '' );
+        domain = domain.replace( /https?:\/\//g , '' );
+        console.log(domain.substr(domain.length-1, 1));
+        if(domain[domain.length - 1] == '/'){
+            domain = domain.replace(/\/$/, '')
+        }
+
+        return domain;
     }
 
     errorResponse(error){
@@ -129,7 +135,7 @@ export class WordpressProvider {
             );
     }
 
-    getAuthorList(wordpressURL:string, key:string){
+    getAuthorList(wordpressURL:string,key:string){
         let params = new URLSearchParams();
         params.set('search', key);
         return this.http.get(wordpressAPI + wordpressURL + "/users")
