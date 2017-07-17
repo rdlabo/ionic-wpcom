@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, IonicPage, NavParams } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePostParams, InterfaceCategory } from '../../interface/wordpress';
+import { Storage } from '@ionic/storage';
 
 @IonicPage({
     segment: 'category/:key',
@@ -23,7 +24,8 @@ export class Category {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
-        public wp: WordpressProvider
+        public wp: WordpressProvider,
+        public storage: Storage,
     ) {}
 
     ionViewDidLoad(){
@@ -35,10 +37,13 @@ export class Category {
         );
         f().then(
             (slug:string) => {
-                this.wp.getCategory(slug)
-                    .subscribe(
-                        (data:InterfaceCategory) => this.title = data.name
-                    );
+
+                this.storage.get('domain').then((val) => {
+                    this.wp.getCategory(val, slug)
+                        .subscribe(
+                            (data: InterfaceCategory) => this.title = data.name
+                        );
+                });
 
                 this.search = {
                     type: 'post',

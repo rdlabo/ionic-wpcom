@@ -3,7 +3,7 @@ import { AlertController } from 'ionic-angular';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
-import { wordpressAPI, wordpressURL, noImageURL } from '../../wp-config';
+import { wordpressAPI, noImageURL } from '../../wp-config';
 import {
     InterfacePost, InterfaceCategory, InterfacePostParams, InterfaceTag,
     InterfaceAuthor, InterfaceSite
@@ -17,6 +17,10 @@ export class WordpressProvider {
         public sanitizer: DomSanitizer,
         public alertCtrl: AlertController,
     ) {}
+
+    shapingDomain(domain){
+        return domain.replace( /https?:\/\//g , '' );
+    }
 
     errorResponse(error){
         let errorTitle, errorText : string;
@@ -51,7 +55,7 @@ export class WordpressProvider {
         alert.present();
     }
 
-    getSiteInfo() {
+    getSiteInfo(wordpressURL:string) {
         let params = new URLSearchParams();
         params.set('fields', 'name, jetpack');
         return this.http.get(wordpressAPI + wordpressURL,
@@ -61,7 +65,7 @@ export class WordpressProvider {
             );
     }
 
-    getPostList(page:number, search:InterfacePostParams) {
+    getPostList(wordpressURL:string, page:number, search:InterfacePostParams) {
         let params = new URLSearchParams();
         params.set('page', String(page));
         params.set('number',String(12));
@@ -93,7 +97,7 @@ export class WordpressProvider {
             );
     }
 
-    getPostArticle(pageID:number) {
+    getPostArticle(wordpressURL:string, pageID:number) {
         let params = new URLSearchParams();
         params.set('fields','ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
 
@@ -104,28 +108,28 @@ export class WordpressProvider {
             );
     }
 
-    getCategoryList(){
+    getCategoryList(wordpressURL:string){
         return this.http.get(wordpressAPI + wordpressURL + "/categories")
             .map(
                 res => <Array<InterfaceCategory>>res.json().categories
             );
     }
 
-    getCategory(key:string){
+    getCategory(wordpressURL:string, key:string){
         return this.http.get(wordpressAPI + wordpressURL + "/categories/slug:" + key)
             .map(
                 res => <InterfaceCategory>res.json()
             );
     }
 
-    getTag(key:string){
+    getTag(wordpressURL:string, key:string){
         return this.http.get(wordpressAPI + wordpressURL + "/tags/slug:" + key)
             .map(
                 res => <InterfaceTag>res.json()
             );
     }
 
-    getAuthorList(key:string){
+    getAuthorList(wordpressURL:string, key:string){
         let params = new URLSearchParams();
         params.set('search', key);
         return this.http.get(wordpressAPI + wordpressURL + "/users")

@@ -1,6 +1,7 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Nav, LoadingController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
+import { Storage } from '@ionic/storage';
 import { Observable } from 'rxjs';
 
 import { excludePages } from '../../../wp-config';
@@ -33,6 +34,7 @@ export class SidebarComponent {
         public wp: WordpressProvider,
         public loadingCtrl: LoadingController,
         public store:Store<AppState>,
+        public storage: Storage,
     ) {}
 
     ngOnInit(){
@@ -46,53 +48,56 @@ export class SidebarComponent {
     private initializeMenu(){
 
         this.pages = [
-            { ID: 'defaul', title: '最近の投稿', component: 'Archive', params: {} },
+            { ID: 'default', title: '最近の投稿', component: 'Archive', params: {} },
         ];
 
         this.categories = [];
-        this.wp.getPostList(0, { type: 'page' })
-            .subscribe(
-                data => {
-                    Array.prototype.forEach.call(data, (page:InterfacePost) => {
-                        if(excludePages.indexOf(page.ID) < 0){
-                            this.pages.push({
-                                ID   : String(page.ID),
-                                title: page.title,
-                                component: 'Page',
-                                params: {
-                                    postID:page.ID,
-                                    title: page.title
-                                }
-                            });
-                        }
-                    });
-                },
-                error => {
 
-                }
-            );
+        this.storage.get('domain').then((val) => {
+            this.wp.getPostList(val, 0, {type: 'page'})
+                .subscribe(
+                    data => {
+                        Array.prototype.forEach.call(data, (page: InterfacePost) => {
+                            if (excludePages.indexOf(page.ID) < 0) {
+                                this.pages.push({
+                                    ID: String(page.ID),
+                                    title: page.title,
+                                    component: 'Page',
+                                    params: {
+                                        postID: page.ID,
+                                        title: page.title
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    error => {
 
-        this.wp.getCategoryList()
-            .subscribe(
-                data => {
-                    Array.prototype.forEach.call(data, (cat:InterfaceCategory) => {
-                        if(cat.post_count > 0 && cat.parent == 0) {
-                            this.categories.push({
-                                ID   : cat.slug,
-                                title: cat.name,
-                                component: 'Category',
-                                params: {
+                    }
+                );
+
+            this.wp.getCategoryList(val)
+                .subscribe(
+                    data => {
+                        Array.prototype.forEach.call(data, (cat: InterfaceCategory) => {
+                            if (cat.post_count > 0 && cat.parent == 0) {
+                                this.categories.push({
+                                    ID: cat.slug,
                                     title: cat.name,
-                                    key  :cat.slug,
-                                }
-                            });
-                        }
-                    });
-                },
-                error => {
+                                    component: 'Category',
+                                    params: {
+                                        title: cat.name,
+                                        key: cat.slug,
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    error => {
 
-                }
-            );
+                    }
+                );
+        });
 
         this.currentStore$ = this.store.select('current');
         this.currentStore$.subscribe(

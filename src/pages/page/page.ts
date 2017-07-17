@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor } from '../../interface/wordpress'
 
@@ -17,7 +18,8 @@ export class Page {
         public navCtrl: NavController,
         public navParams: NavParams,
         public wp:WordpressProvider,
-        public toastCtrl: ToastController
+        public toastCtrl: ToastController,
+        public storage: Storage,
     ){}
 
     title:string;
@@ -32,17 +34,19 @@ export class Page {
             this.title = this.navParams.get('title');
         }
 
-        this.wp.getPostArticle(this.navParams.get('postID'))
-            .subscribe(
-                (data:InterfacePost) => {
-                    this.title = (!this.title)?data.title:this.title;
-                    this.article = data;
-                    this.shareURL = this.createShareURL(this.url, data);
-                    setTimeout(()=>{
-                        this.trimArticle();
-                    }, 100);
-                }
-            );
+        this.storage.get('domain').then((val) => {
+            this.wp.getPostArticle(val, this.navParams.get('postID'))
+                .subscribe(
+                    (data: InterfacePost) => {
+                        this.title = (!this.title) ? data.title : this.title;
+                        this.article = data;
+                        this.shareURL = this.createShareURL(this.url, data);
+                        setTimeout(() => {
+                            this.trimArticle();
+                        }, 100);
+                    }
+                );
+        });
     }
 
     viewAuthor(author:InterfaceAuthor):void

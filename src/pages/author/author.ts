@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, IonicPage, NavParams } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePostParams, InterfacePost } from '../../interface/wordpress';
+import { Storage } from '@ionic/storage';
 
 @IonicPage({
     segment: 'author/:key',
@@ -23,7 +24,8 @@ export class Author {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
-        public wp: WordpressProvider
+        public wp: WordpressProvider,
+        public storage: Storage,
     ) {}
 
     ionViewDidLoad(){
@@ -37,12 +39,15 @@ export class Author {
         f().then(
             (ID:number) => {
                 // use not require auth resource.
-                this.wp.getPostList(0, { 'authorID': ID})
-                    .subscribe(
-                        (data:Array<InterfacePost>) => {
-                            this.title = data[0].author.name;
-                        }
-                    );
+
+                this.storage.get('domain').then((val) => {
+                    this.wp.getPostList(val, 0, {'authorID': ID})
+                        .subscribe(
+                            (data: Array<InterfacePost>) => {
+                                this.title = data[0].author.name;
+                            }
+                        );
+                });
 
                 this.search = {
                     type: 'post',

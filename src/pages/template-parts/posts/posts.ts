@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Subject } from 'rxjs';
+import { Storage } from '@ionic/storage';
 
 import { InterfacePost, InterfacePostParams } from '../../../interface/wordpress'
 import { WordpressProvider } from '../../../providers/wordpress/wordpress';
@@ -24,6 +25,7 @@ export class PostsComponent implements OnChanges {
     constructor(
         public nav:NavController,
         public wp: WordpressProvider,
+        public storage: Storage,
     ) {
         this.initializeSubject();
     }
@@ -40,6 +42,7 @@ export class PostsComponent implements OnChanges {
     }
 
     doInfinite(infiniteScroll) {
+
         this.getPostList().then(
             (data:Array<InterfacePost>) => {
                 this.page++;
@@ -77,16 +80,18 @@ export class PostsComponent implements OnChanges {
 
     private getPostList() {
         return new Promise ((resolve, reject) => {
-            this.wp.getPostList(this.page, this.search)
-                .subscribe(
-                    data => {
-                        this.Loaded = true;
-                        resolve(data)
-                    },
-                    error => {
-                        reject(error);
-                    }
-                );
+            this.storage.get('domain').then((val) => {
+                this.wp.getPostList(val, this.page, this.search)
+                    .subscribe(
+                        data => {
+                            this.Loaded = true;
+                            resolve(data)
+                        },
+                        error => {
+                            reject(error);
+                        }
+                    );
+            });
         });
     }
 }

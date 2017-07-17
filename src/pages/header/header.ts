@@ -1,5 +1,5 @@
 import { Component, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Nav, Searchbar } from 'ionic-angular';
+import { Nav, Searchbar, ModalController } from 'ionic-angular';
 
 @Component({
     selector: 'wp-header',
@@ -16,6 +16,7 @@ export class HeaderComponent {
     searchKeyword:string;
 
     constructor(
+        public modalCtrl: ModalController
     ) {}
 
     searchStart():void {
@@ -33,5 +34,10 @@ export class HeaderComponent {
 
     cancelKeyword($event){
         this.cancelSearchKeyword.emit();
+    }
+
+    setWordPress(){
+        const settingModal = this.modalCtrl.create('Setting');
+        settingModal.present();
     }
 }
