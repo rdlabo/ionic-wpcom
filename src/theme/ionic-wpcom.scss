@@ -1,5 +1,7 @@
 ng-component {
 
+  background-color:color($colors,primary);
+
   // bug対策
   posts ion-list ion-item .item-inner .input-wrapper ion-label.label {
     margin: 11px 8px 11px 0;
@@ -237,3 +239,16 @@ ng-component {
   }
 }
 
+ng-component {
+  wp-header.cordova {
+    position:absolute;
+    top:20px;
+    width:100%;
+  }
+
+  .cordova {
+    .side-menu {
+      padding-top:30px;
+    }
+  }
+}
