@@ -54,8 +54,9 @@ export class Single {
 
         if(this.platform.is('cordova')){
             const bannerConfig: AdMobFreeBannerConfig = {
-                isTesting: true,
-                autoShow: false
+                isTesting: false,
+                autoShow: false,
+                id: "ca-app-pub-1053575285730954~7013757626"
             };
             this.admobFree.banner.config(bannerConfig);
 

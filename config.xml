@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="ionic-wpcom" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>wp-pocket</name>
-    <description>wp-pocket</description>
+<widget id="jp.rdlabo.wp-pocket" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>wp pocket</name>
+    <description>wp pocket</description>
     <author email="info@rdlabo.jp" href="https://rdlabo.jp/">rdlabo.inc</author>
     <content src="index.html"/>
     <access origin="*"/>
