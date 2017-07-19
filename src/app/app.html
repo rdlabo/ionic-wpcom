@@ -1,6 +1,6 @@
 <wp-header [ngClass]="platform.is('cordova')?'cordova':''" (setSearchKeyword)="handlesetSearchKeyword($event)"
            (cancelSearchKeyword)="handlecancelSearchKeyword()"
-        (startSearch)="handlestartSearch()"></wp-header>
+           (startSearch)="handlestartSearch()"></wp-header>
 
 <ion-split-pane [ngClass]="platform.is('cordova')?'cordova':''">
   <ion-menu [content]="content"><sidebar (setRootPage)="handlesetRootPage($event)"></sidebar></ion-menu>
