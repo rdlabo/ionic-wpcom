@@ -1,33 +1,12 @@
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+※ 本ブランチはオープンソースではありませんのでお気をつけ下さい
 
-# Ionic-WP.com
+# wp pocket
 
-WordPress.comのREST APIを利用してSPA（Single Page Application）を構築するスターターパッケージです。
+WordPress.comのREST APIを利用した、WordPressサイト持ち歩きアプリです。
 [Ionic Framework](http://ionicframework.com/docs/)を利用して構築しています。
 
 デモは [https://ionic-wpcom.netlify.com](https://ionic-wpcom.netlify.com) をご覧ください。
 
-## はじめ方
-
-このパッケージではNode.jsを利用します。
-未インストールの方は[こちら](https://nodejs.org/ja/download/)からインストールしてからご利用下さい。
-
-### コマンド
-Ionic Frameworkでは、開発用のコマンドと本番用のコマンドが別れています。
-開発用コマンドでは、dev-serverを立ち上げます。これはCSSなどのファイルの変更を検知して自動的にビルドしたあと、
-ブラウザを自動的にリロードしてくれる機能などがついております。
-
-開発用コマンドはこちらです。本レポジトリをCloneしたフォルダ内で実行下さい。
-```
-$ npm run-script ionic:serve
-```
-
-本番用コマンドは、dev-serverの立ち上げがなく、またビルドに時間がかかります。しかしながら、ファイルサイズが大きく圧縮され、
-また高速に動作するようになっておりますので、サーバにアップロードする時にはこちらを利用するのが一般的です。
-
-```bash
-$ npm run-script build --prod
-```
 
 ### 自分のWordPressを表示する
 デフォルトの設定では、パッケージ開発元の[rdlabo](https://rdlabo.jp/)のREST APIが表示されます。
@@ -78,22 +57,6 @@ CSSを変更するのはとても簡単です。`src/theme`の中にSCSSファ�
 SPA（Single Page Application）でTypeScriptで書かれていますので最初はとっつきにくいかもしれませんが、大体の構成を
 WordPressの公式テーマと同じフォルダ名にしておりますので、お試し下さい。
 
-
-## 利用パッケージ一覧（一部）
-- [Ionic Framework](http://ionicframework.com/docs/)（Angular UIフレームワーク）
-- SCSS（CSSの拡張言語）
-- TypeScript（JavaScriptの拡張言語）
-- [ngrx/store](https://github.com/ngrx/store)
-
-## 簡単にホスティングする
-[Netlify](https://app.netlify.com)を使うと簡単にホスティングすることができます。現在デモをホスティングしているのですが、その設定を書いておきますのでご利用ください。
-
-| 項目 | 入力内容 |
-|:-----------|:------------|
-| Repository | https://github.com/rdlabo/ionic-wpcom |
-| Branch | master |
-| Build command | npm run-script build --prod |
-| Publish directory | www |
 
 ## 問い合わせ
 何かありましたら、[Twitter@rdlabo](https://twitter.com/rdlabo) にお問い合わせ下さい。
