@@ -63,12 +63,13 @@ export class WordpressProvider {
 
     getPostList(page:number, search:InterfacePostParams) {
         let params = new URLSearchParams();
-        params.set('page', String(page));
-        params.set('number',String(12));
+        // params.set('page', String(page));
+        params.set('number',String(100));
         // params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
         params.set('fields', 'ID, date, excerpt, post_thumbnail, title');
 
         params.set('type', search.type);
+        params.set('order_by',['date','title'][Math.floor( Math.random() * 2)]);
 
         if(search.categorySlug){
             params.set('category', search.categorySlug);
@@ -89,7 +90,20 @@ export class WordpressProvider {
         return this.http.get(wordpressAPI + wordpressURL + "/posts",
             { search:params })
             .map(
-                res => <Array<InterfacePost>>this.loopPosts(res.json().posts)
+                res => {
+                    const posts = res.json().posts;
+
+                    for(let i = posts.length - 1; i > 0; i--){
+                        const r = Math.floor(Math.random() * (i + 1));
+                        const tmp = posts[i];
+                        posts[i] = posts[r];
+                        posts[r] = tmp;
+                    }
+
+                    const result = posts.slice(0, 12);
+
+                    return <Array<InterfacePost>>this.loopPosts(result);
+                }
             );
     }
 
