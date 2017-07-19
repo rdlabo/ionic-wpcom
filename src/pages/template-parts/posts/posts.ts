@@ -72,7 +72,7 @@ export class PostsComponent implements OnChanges {
             })
             .subscribe(
                 (data:Array<InterfacePost>) => {
-                    this.page = 1;
+                    this.page = 2;
                     this.posts = data;
                 }
             )
