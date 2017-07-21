@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicStorageModule } from '@ionic/storage';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from '../store/index';
 
@@ -22,6 +23,7 @@ import { SidebarComponentModule} from '../pages/template-parts/sidebar/sidebar.m
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     StoreModule.provideStore(reducer),
     HeaderComponentModule,
     SidebarComponentModule

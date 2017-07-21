@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor } from '../../interface/wordpress'
-import { noImageURL } from '../../wp-config';
+import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor, InterfaceBookmark } from '../../interface/wordpress'
+import { wordpressURL, noImageURL } from '../../wp-config';
 
 @IonicPage({
     segment: 'single/:postID',
@@ -18,6 +19,7 @@ export class Single {
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
+        public storage: Storage,
         public wp:WordpressProvider,
         public toastCtrl: ToastController
     ){}
@@ -29,6 +31,7 @@ export class Single {
         twitter : string
     };
     noImageURL:string = noImageURL;
+    bookmarked:boolean = false;
 
     ionViewDidLoad() {
         if(this.navParams.get('title')){
@@ -44,27 +47,24 @@ export class Single {
                     setTimeout(()=>{
                         this.trimArticle();
                     }, 100);
+                    this.checkBookmarked();
                 }
             );
     }
 
-    viewAuthor(author:InterfaceAuthor):void
-    {
+    viewAuthor(author:InterfaceAuthor):void {
         this.navCtrl.setRoot('Author',{ title: author.name, key: author.ID});
     }
 
-    viewCategory(category:InterfaceCategory):void
-    {
+    viewCategory(category:InterfaceCategory):void {
         this.navCtrl.setRoot('Category',{ title: category.name, key: category.slug});
     }
 
-    viewTag(tag:InterfaceTag):void
-    {
+    viewTag(tag:InterfaceTag):void {
         this.navCtrl.setRoot('Tag',{ title: tag.name, key: tag.slug});
     }
 
-    addClipboard():void
-    {
+    addClipboard():void {
         const body = document.body;
         let text_area = document.createElement("textarea");
         text_area.value = this.url;
@@ -80,8 +80,53 @@ export class Single {
         toast.present();
     }
 
-    private trimArticle()
-    {
+    private checkBookmarked(){
+        this.storage.get('bookmarks').then((data)=>{
+            if(data){
+                data = JSON.parse(data);
+                Array.prototype.forEach.call(data, (node)=> {
+                    if(node.domain == wordpressURL && node.postID == this.navParams.get('postID')){
+                        this.bookmarked = true;
+                    }
+                });
+            }
+        });
+    }
+
+    saveBookmark():void {
+        const now = new Date();
+        const bookmark:Array<InterfaceBookmark> = [{
+            domain: wordpressURL,
+            postID: this.navParams.get('postID'),
+            article: this.article,
+            created: now.getFullYear() + '-' + now.getMonth()+1 + '-' + now.getDate()
+        }];
+
+        let registerBookmarks:Array<InterfaceBookmark> = [];
+        this.storage.get('bookmarks').then((data)=>{
+            if(data){
+                registerBookmarks = JSON.parse(data);
+            }else{
+                registerBookmarks = [];
+            }
+
+            const createBookmarks = bookmark.concat(registerBookmarks);
+            console.log(createBookmarks);
+
+            this.bookmarked = true;
+            this.storage.set('bookmarks', JSON.stringify(createBookmarks));
+
+            let toast = this.toastCtrl.create({
+                message: 'この記事をブックマークしました。サイドメニューから確認できます',
+                duration: 1000,
+                position: 'bottomop'
+            });
+            toast.present();
+        });
+
+    }
+
+    private trimArticle() {
         Array.prototype.forEach.call(document.querySelectorAll('article iframe'), function(node) {
             node.setAttribute('width','100%');
         });
@@ -100,8 +145,7 @@ export class Single {
         });
     }
 
-    private createShareURL(url, params:InterfacePost)
-    {
+    private createShareURL(url, params:InterfacePost) {
         if(params.origin.excerpt && params.origin.excerpt.length > 0){
             params.origin.excerpt = params.origin.excerpt.replace(/\s|&nbsp;/g, '')
         }

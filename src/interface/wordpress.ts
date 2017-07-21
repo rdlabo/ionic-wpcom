@@ -52,3 +52,10 @@ export interface InterfaceAuthor {
     name            : string,
     avatar_URL      :string
 }
+
+export interface InterfaceBookmark {
+    domain          : string,
+    postID          : number,
+    article         : InterfacePost
+    created         : string
+}
