@@ -33,7 +33,7 @@ export class PostsComponent implements OnChanges {
     subject;
     Loaded;
 
-    ionViewWillLeave(){
+    ngOnDestroy(){
         if(this.subject){
             this.subject.unsubscribe();
         }
@@ -84,6 +84,7 @@ export class PostsComponent implements OnChanges {
                         resolve(data)
                     },
                     error => {
+                        this.Loaded = true;
                         reject(error);
                     }
                 );

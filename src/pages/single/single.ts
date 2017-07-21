@@ -83,8 +83,8 @@ export class Single {
     private checkBookmarked(){
         this.storage.get('bookmarks').then((data)=>{
             if(data){
-                data = JSON.parse(data);
-                Array.prototype.forEach.call(data, (node)=> {
+                const bookmarks:Array<InterfaceBookmark> = JSON.parse(data);
+                Array.prototype.forEach.call(bookmarks, (node)=> {
                     if(node.domain == wordpressURL && node.postID == this.navParams.get('postID')){
                         this.bookmarked = true;
                     }
@@ -94,6 +94,9 @@ export class Single {
     }
 
     saveBookmark():void {
+        if(!this.article){
+            return;
+        }
         const now = new Date();
         const bookmark:Array<InterfaceBookmark> = [{
             domain: wordpressURL,
