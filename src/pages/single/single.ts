@@ -120,7 +120,7 @@ export class Single {
             this.storage.set('bookmarks', JSON.stringify(createBookmarks));
 
             let toast = this.toastCtrl.create({
-                message: 'この記事をブックマークしました。サイドメニューから確認できます',
+                message: 'この記事をお気に入りに追加しました。サイドメニューから確認できます',
                 duration: 1000,
                 position: 'bottomop'
             });
