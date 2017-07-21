@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor, InterfaceBookmark } from '../../interface/wordpress'
@@ -18,6 +18,7 @@ export class Single {
 
     constructor(
         public navCtrl: NavController,
+        public alertCtrl: AlertController,
         public navParams: NavParams,
         public storage: Storage,
         public wp:WordpressProvider,
@@ -97,36 +98,72 @@ export class Single {
         if(!this.article){
             return;
         }
-        const now = new Date();
-        const bookmark:Array<InterfaceBookmark> = [{
-            domain: wordpressURL,
-            postID: this.navParams.get('postID'),
-            article: this.article,
-            created: now.getFullYear() + '-' + now.getMonth()+1 + '-' + now.getDate()
-        }];
-
-        let registerBookmarks:Array<InterfaceBookmark> = [];
-        this.storage.get('bookmarks').then((data)=>{
-            if(data){
-                registerBookmarks = JSON.parse(data);
-            }else{
-                registerBookmarks = [];
-            }
-
-            const createBookmarks = bookmark.concat(registerBookmarks);
-            console.log(createBookmarks);
-
-            this.bookmarked = true;
-            this.storage.set('bookmarks', JSON.stringify(createBookmarks));
-
+        this.saveLocalStrage('bookmarks').then(()=>{
             let toast = this.toastCtrl.create({
                 message: 'この記事をお気に入りに追加しました。サイドメニューから確認できます',
-                duration: 1000,
+                duration: 2000,
                 position: 'bottomop'
             });
             toast.present();
         });
+    }
 
+    hidden():void {
+        let alert = this.alertCtrl.create({
+            title: '非表示にしますか？',
+            message: 'この記事を非表示にしますか？？',
+            buttons: [
+                {
+                    text: '閉じる',
+                    role: 'cancel',
+                },
+                {
+                    text: '非表示にする',
+                    handler: () => {
+                        this.saveLocalStrage('hidden').then(()=>{
+                            let toast = this.toastCtrl.create({
+                                message: 'この記事を非表示にしました',
+                                duration: 2000,
+                                position: 'bottomop'
+                            });
+                            toast.present();
+                            this.navCtrl.pop();
+                        });
+                    }
+                }
+            ]
+        });
+        alert.present();
+    }
+
+    private saveLocalStrage(key:string){
+        return new Promise((resolve)=>{
+            const now = new Date();
+            const bookmark:Array<InterfaceBookmark> = [{
+                domain: wordpressURL,
+                postID: this.navParams.get('postID'),
+                article: this.article,
+                created: now.getFullYear() + '-' + now.getMonth()+1 + '-' + now.getDate()
+            }];
+
+            let registerBookmarks:Array<InterfaceBookmark> = [];
+
+            this.storage.get(key).then((data)=>{
+                if(data){
+                    registerBookmarks = JSON.parse(data);
+                }else{
+                    registerBookmarks = [];
+                }
+
+                const createBookmarks = bookmark.concat(registerBookmarks);
+                console.log(createBookmarks);
+
+                this.bookmarked = true;
+                this.storage.set(key, JSON.stringify(createBookmarks));
+
+                return resolve();
+            });
+        })
     }
 
     private trimArticle() {
