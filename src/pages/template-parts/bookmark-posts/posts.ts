@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { InterfacePost, InterfaceBookmark } from '../../../interface/wordpress'
+import { wordpressURL } from '../../../wp-config';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -63,7 +64,7 @@ export class BookmarkPostsComponent {
                     let bookmarkArticles: Array<InterfacePost> = [];
                     console.log(bookmarks);
                     Array.prototype.forEach.call(bookmarks, (node)=> {
-                        if(node.article){
+                        if(node.article && node.domain == wordpressURL){
                             node.article.title = this.sanitizer.bypassSecurityTrustHtml(node.article.origin.title);
                             node.article.excerpt = this.sanitizer.bypassSecurityTrustHtml(node.article.origin.excerpt);
                             bookmarkArticles.push(node.article);
