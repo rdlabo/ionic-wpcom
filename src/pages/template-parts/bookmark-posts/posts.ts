@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { InterfacePost, InterfaceBookmark } from '../../../interface/wordpress'
+import { InterfacePost, InterfaceStragePost } from '../../../interface/wordpress'
 import { wordpressURL } from '../../../wp-config';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -60,7 +60,7 @@ export class BookmarkPostsComponent {
         return new Promise ((resolve, reject) => {
             this.storage.get('bookmarks').then((data)=>{
                 if(data){
-                    const bookmarks:Array<InterfaceBookmark> = JSON.parse(data);
+                    const bookmarks:Array<InterfaceStragePost> = JSON.parse(data);
                     let bookmarkArticles: Array<InterfacePost> = [];
                     console.log(bookmarks);
                     Array.prototype.forEach.call(bookmarks, (node)=> {

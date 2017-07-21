@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor, InterfaceBookmark } from '../../interface/wordpress'
+import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor, InterfaceStragePost } from '../../interface/wordpress'
 import { wordpressURL, noImageURL } from '../../wp-config';
 
 @IonicPage({
@@ -84,7 +84,7 @@ export class Single {
     private checkBookmarked(){
         this.storage.get('bookmarks').then((data)=>{
             if(data){
-                const bookmarks:Array<InterfaceBookmark> = JSON.parse(data);
+                const bookmarks:Array<InterfaceStragePost> = JSON.parse(data);
                 Array.prototype.forEach.call(bookmarks, (node)=> {
                     if(node.domain == wordpressURL && node.postID == this.navParams.get('postID')){
                         this.bookmarked = true;
@@ -139,14 +139,14 @@ export class Single {
     private saveLocalStrage(key:string){
         return new Promise((resolve)=>{
             const now = new Date();
-            const bookmark:Array<InterfaceBookmark> = [{
+            const bookmark:Array<InterfaceStragePost> = [{
                 domain: wordpressURL,
                 postID: this.navParams.get('postID'),
                 article: this.article,
                 created: now.getFullYear() + '-' + now.getMonth()+1 + '-' + now.getDate()
             }];
 
-            let registerBookmarks:Array<InterfaceBookmark> = [];
+            let registerBookmarks:Array<InterfaceStragePost> = [];
 
             this.storage.get(key).then((data)=>{
                 if(data){

@@ -1,8 +1,10 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Subject } from 'rxjs';
+import { Subject, Observable, Subscription } from 'rxjs';
+import { Storage } from '@ionic/storage';
+import { wordpressURL } from '../../../wp-config';
 
-import { InterfacePost, InterfacePostParams } from '../../../interface/wordpress'
+import { InterfacePost, InterfacePostParams, InterfaceStragePost } from '../../../interface/wordpress'
 import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 
 
@@ -15,6 +17,7 @@ export class PostsComponent implements OnChanges {
 
     @Input() search: InterfacePostParams;
     ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+        console.log('ngOnChanges');
         this.Loaded = false;
         if(this.search.type != 'wait'){
             this.subject.next();
@@ -24,6 +27,7 @@ export class PostsComponent implements OnChanges {
     constructor(
         public nav:NavController,
         public wp: WordpressProvider,
+        public storage: Storage,
     ) {
         this.initializeSubject();
     }
@@ -31,11 +35,39 @@ export class PostsComponent implements OnChanges {
     page:number = 1;
     posts: Array<InterfacePost> = [];
     subject;
-    Loaded;
+    Loaded: boolean;
+    timerSubscription : Subscription;
+
+    ngOnInit(){
+        // 定期実行
+        this.timerSubscription = Observable
+            .timer(0,1000)
+            .subscribe(
+                ()=>{
+                    this.storage.get('hidden').then((data)=>{
+                        if(data){
+                            const hiddens:Array<InterfaceStragePost> = JSON.parse(data);
+                            console.log(hiddens);
+                            this.posts = this.posts.filter((v)=>{
+                                let flg:boolean = true;
+                                Array.prototype.forEach.call(hiddens, (node)=> {
+                                    if(node.domain == wordpressURL && v.ID == node.article.ID){
+                                        flg = false;
+                                    }
+                                });
+                                return flg;
+                            });
+                        }
+                    });
+                });
+    }
 
     ngOnDestroy(){
         if(this.subject){
             this.subject.unsubscribe();
+        }
+        if(this.timerSubscription){
+            this.timerSubscription.unsubscribe();
         }
     }
 
