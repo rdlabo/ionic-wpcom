@@ -239,16 +239,18 @@ ng-component {
   }
 }
 
-ng-component {
-  wp-header.cordova {
-    position:absolute;
-    top:20px;
-    width:100%;
-  }
+.md {
+  ng-component {
+    wp-header.cordova {
+      position:absolute;
+      top:0;
+      width:100%;
+    }
 
-  .cordova {
-    .side-menu {
-      padding-top:30px;
+    .cordova {
+      .side-menu {
+        padding-top:10px;
+      }
     }
   }
 }
