@@ -6,7 +6,7 @@ import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor, Interf
 import { wordpressURL, noImageURL } from '../../wp-config';
 
 @IonicPage({
-    segment: 'single/:postID',
+    segment: 'archive/single/:postID',
     defaultHistory: ['Archive']
 })
 @Component({
