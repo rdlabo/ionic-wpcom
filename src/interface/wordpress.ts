@@ -50,5 +50,12 @@ export interface InterfaceTag {
 export interface InterfaceAuthor {
     ID              : number,
     name            : string,
-    avatar_URL      :string
+    avatar_URL      : string
+}
+
+export interface InterfaceStragePost {
+    domain          : string,
+    postID          : number,
+    article         : InterfacePost
+    created         : string
 }

@@ -1,6 +1,14 @@
 <ion-header>
   <ion-navbar>
     <ion-title><span [innerHTML]="title"></span></ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="danger" (tap)="hidden()">
+        <ion-icon name="remove-circle"></ion-icon>
+      </button>
+      <button ion-button icon-only (tap)="changeBookmark()" [style.color]="!bookmarked?'#4e8ef7':'#999'">
+        <ion-icon name="bookmark"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 

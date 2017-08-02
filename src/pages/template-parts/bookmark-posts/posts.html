@@ -1,0 +1,12 @@
+<ion-spinner *ngIf="!Loaded" color="primary"></ion-spinner>
+<ion-list *ngIf="Loaded">
+  <ion-item *ngFor="let post of posts;trackBy:post?.ID" (tap)="viewSingle(post)" class="clickeble">
+    <ion-thumbnail item-start  [ngStyle]="{'background-image': 'url(' + post.post_thumbnail.URL + '?w=300)'}"></ion-thumbnail>
+    <h2 [innerHTML]="post.title"></h2>
+    <div><p [innerHTML]="post.excerpt"></p></div>
+    <ion-note item-end>{{post.date | mydate}}</ion-note>
+  </ion-item>
+  <!--<ion-infinite-scroll (ionInfinite)="doInfinite($event)">-->
+    <!--<ion-infinite-scroll-content></ion-infinite-scroll-content>-->
+  <!--</ion-infinite-scroll>-->
+</ion-list>

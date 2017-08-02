@@ -5,7 +5,7 @@
 WordPress.comのREST APIを利用した、WordPressサイト持ち歩きアプリです。
 [Ionic Framework](http://ionicframework.com/docs/)を利用して構築しています。
 
-デモは [https://ionic-wpcom.netlify.com](https://ionic-wpcom.netlify.com) をご覧ください。
+デモは [https://demo-ionic-wpcom.netlify.com](https://demo-ionic-wpcom.netlify.com) をご覧ください。
 
 
 ### 自分のWordPressを表示する

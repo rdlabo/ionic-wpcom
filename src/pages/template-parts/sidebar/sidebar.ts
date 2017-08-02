@@ -47,7 +47,8 @@ export class SidebarComponent {
     private initializeMenu(){
 
         this.pages = [
-            { ID: 'default', title: '最近の投稿', component: 'Archive', params: {} },
+            { ID: 'defaul', title: '最近の投稿', component: 'Archive', params: {} },
+            { ID: 'bookmark', title: 'お気に入り', component: 'Bookmark', params: {} },
         ];
 
         this.categories = [];

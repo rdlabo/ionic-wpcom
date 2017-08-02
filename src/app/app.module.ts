@@ -24,6 +24,7 @@ import { SidebarComponentModule} from '../pages/template-parts/sidebar/sidebar.m
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     StoreModule.provideStore(reducer),
     IonicStorageModule.forRoot(),
     HeaderComponentModule,

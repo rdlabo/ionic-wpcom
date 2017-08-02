@@ -44,6 +44,7 @@ export class Author {
                     this.wp.getPostList(val, 0, {'authorID': ID})
                         .subscribe(
                             (data: Array<InterfacePost>) => {
+                                console.log(data);
                                 this.title = data[0].author.name;
                             }
                         );

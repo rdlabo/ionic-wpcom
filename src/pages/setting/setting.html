@@ -22,9 +22,9 @@
           <ion-input type="text" placeholder="例：rdlabo.jp"  [(ngModel)]="domain" name="domain"></ion-input>
         </ion-item>
       </ion-list>
+      <button type="submit" ion-button block (tap)="setDomain()" [disabled]="!f.form.valid">設定</button>
+      <p class="attend">※ 右上の<ion-icon name="settings"></ion-icon>からいつでも設定できます</p>
     </form>
-    <button type="submit" ion-button block (tap)="setDomain()" [disabled]="!f.form.valid">設定</button>
-    <p class="attend">※ 右上の<ion-icon name="settings"></ion-icon>からいつでも設定できます</p>
   </section>
 
   <section class="setting-box">
