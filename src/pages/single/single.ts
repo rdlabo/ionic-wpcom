@@ -51,6 +51,7 @@ export class Single {
                         setTimeout(() => {
                             this.trimArticle();
                         }, 100);
+                        this.checkBookmarked();
                     }
                 );
         });
