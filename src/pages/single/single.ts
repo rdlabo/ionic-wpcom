@@ -94,18 +94,30 @@ export class Single {
         });
     }
 
-    saveBookmark():void {
-        if(!this.article){
-            return;
-        }
-        this.saveLocalStrage('bookmarks').then(()=>{
-            let toast = this.toastCtrl.create({
-                message: 'この記事をお気に入りに追加しました。サイドメニューから確認できます',
-                duration: 2000,
-                position: 'bottomop'
+    changeBookmark():void {
+        if(!this.article){ return; }
+
+        if(this.bookmarked){
+            this.deleteLocalStrage('bookmarks').then(()=>{
+
+                let toast = this.toastCtrl.create({
+                    message: 'この記事をお気に入りから削除しました。',
+                    duration: 2000,
+                    position: 'bottomop'
+                });
+                toast.present();
+                }
+            );
+        } else {
+            this.saveLocalStrage('bookmarks').then(()=>{
+                let toast = this.toastCtrl.create({
+                    message: 'この記事をお気に入りに追加しました。サイドメニューから確認できます',
+                    duration: 2000,
+                    position: 'bottomop'
+                });
+                toast.present();
             });
-            toast.present();
-        });
+        }
     }
 
     hidden():void {
@@ -134,6 +146,31 @@ export class Single {
             ]
         });
         alert.present();
+    }
+
+    private deleteLocalStrage(key:string){
+        return new Promise((resolve)=>{
+            let registerBookmarks:Array<InterfaceStragePost> = [];
+            this.storage.get(key).then(( data )=>{
+                if(data){
+                    registerBookmarks = JSON.parse(data);
+                }else{
+                    registerBookmarks = [];
+                }
+
+                const createBookmarks = registerBookmarks.filter((e)=>{
+                    console.log([e.domain , wordpressURL , String(e.postID) ,String(this.navParams.get('postID'))]);
+                    console.log((e.domain == wordpressURL && String(e.postID) != String(this.navParams.get('postID'))));
+                    return (e.domain == wordpressURL && String(e.postID) != String(this.navParams.get('postID')));
+                });
+
+                this.bookmarked = false;
+                this.storage.set(key, JSON.stringify(createBookmarks));
+
+                return resolve();
+            });
+            return resolve();
+        });
     }
 
     private saveLocalStrage(key:string){
