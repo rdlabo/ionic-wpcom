@@ -44,7 +44,7 @@ export class Single {
                 (data:InterfacePost) => {
                     this.title = (!this.title)?data.title:this.title;
                     this.article = data;
-                    this.shareURL = this.createShareURL(this.url, data);
+                    this.shareURL = this.createShareURL(location.href, data);
                     setTimeout(()=>{
                         this.trimArticle();
                     }, 100);
@@ -68,7 +68,7 @@ export class Single {
     addClipboard():void {
         const body = document.body;
         let text_area = document.createElement("textarea");
-        text_area.value = this.url;
+        text_area.value = location.href;
         body.appendChild(text_area);
         text_area.select();
         document.execCommand("copy");
