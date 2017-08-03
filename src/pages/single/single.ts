@@ -5,7 +5,8 @@ import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor, InterfaceStragePost } from '../../interface/wordpress'
 import { noImageURL } from '../../wp-config';
 
-import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
+import { AdMobPro } from '@ionic-native/admob-pro';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @IonicPage({
     segment: 'archive/single/:postID',
@@ -23,9 +24,10 @@ export class Single {
         public alertCtrl: AlertController,
         public navParams: NavParams,
         public storage: Storage,
+        public iab: InAppBrowser,
         public wp:WordpressProvider,
         public toastCtrl: ToastController,
-        public admobFree: AdMobFree,
+        public admob: AdMobPro,
         public platform: Platform
     ){}
 
@@ -57,24 +59,23 @@ export class Single {
         });
 
         if(this.platform.is('cordova')){
-            const bannerConfig: AdMobFreeBannerConfig = {
-                isTesting: false,
-                autoShow: false,
-                id: "ca-app-pub-1053575285730954~7013757626"
-            };
-            this.admobFree.banner.config(bannerConfig);
-
-            this.admobFree.banner.prepare()
-                .then(() => {
-                    this.admobFree.banner.show();
-                })
-                .catch(e => console.log(e));
+            let adId;
+            if(this.platform.is('android')) {
+                adId = 'ca-app-pub-1053575285730954/6025700920';
+            } else if (this.platform.is('ios')) {
+                adId = 'ca-app-pub-1053575285730954~7013757626';
+            }
+            this.admob.createBanner({
+                adId: adId,
+                position: this.admob.AD_POSITION.BOTTOM_CENTER,
+                autoShow: true
+            });
         }
     }
 
     ionViewWillLeave(){
         if(this.platform.is('cordova')){
-            this.admobFree.banner.hide();
+            this.admob.removeBanner();
         }
     }
 
@@ -228,20 +229,29 @@ export class Single {
     }
 
     private trimArticle() {
-        Array.prototype.forEach.call(document.querySelectorAll('article iframe'), function(node) {
+        Array.prototype.forEach.call(document.querySelectorAll('article iframe'), (node) =>{
             node.setAttribute('width','100%');
         });
 
-        Array.prototype.forEach.call(document.querySelectorAll('article iframe.wp-embedded-content'), function(node) {
+        Array.prototype.forEach.call(document.querySelectorAll('article iframe.wp-embedded-content'), (node)=> {
             node.style.display = 'none';
         });
 
-        Array.prototype.forEach.call(document.querySelectorAll('article a'), function(node) {
+        Array.prototype.forEach.call(document.querySelectorAll('article a'), (node)=> {
             node.setAttribute('target','_blank');
             node.setAttribute('rel','noopener');
+
+            if(this.platform.is('cordova')){
+                node.addEventListener('click',
+                    (e)=>{
+                        e.preventDefault();
+                        const browser = this.iab.create(node.getAttribute('href'), '_blank');
+                        browser.show();
+                    }, false);
+            }
         });
 
-        Array.prototype.forEach.call(document.querySelectorAll('article div[data-shortcode=caption]'), function(node) {
+        Array.prototype.forEach.call(document.querySelectorAll('article div[data-shortcode=caption]'), (node)=> {
             node.style.width = '100%'
         });
     }

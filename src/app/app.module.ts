@@ -8,7 +8,8 @@ import { reducer } from '../store/index';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AdMobFree } from '@ionic-native/admob-free';
+import { AdMobPro } from '@ionic-native/admob-pro';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { MyApp } from './app.component';
 import { WordpressProvider } from '../providers/wordpress/wordpress';
@@ -37,7 +38,8 @@ import { SidebarComponentModule} from '../pages/template-parts/sidebar/sidebar.m
   providers: [
     StatusBar,
     SplashScreen,
-    AdMobFree,
+    InAppBrowser,
+    AdMobPro,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     WordpressProvider
   ]

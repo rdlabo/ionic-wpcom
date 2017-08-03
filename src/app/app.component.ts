@@ -39,24 +39,28 @@ export class MyApp {
   ngOnInit(){
     const loading = this.loadingCtrl.create({ content:'Loading...' });
     loading.present();
+    const settingModal = this.modalCtrl.create('Setting');
 
-    this.storage.get('domain').then((val) => {
-      this.wp.getSiteInfo(val)
-          .subscribe(
-              (data:InterfaceSite) => {
-                loading.dismiss();
-              },
-              (error) => {
-                loading.dismiss();
-                if(error.status == 401 || error.status == 404){
-                  const settingModal = this.modalCtrl.create('Setting');
-                  settingModal.present();
-                }else{
-                  this.wp.errorResponse(error)
-                }
-              }
-          );
-    });
+    this.storage.get('domain').then(
+        (val) => {
+            this.wp.getSiteInfo(val)
+                .subscribe(
+                    (data:InterfaceSite) => {
+                        loading.dismiss();
+                    },
+                    (error) => {
+                        loading.dismiss();
+                        if(error.status == 401 || error.status == 404){
+                            settingModal.present();
+                        }else{
+                            this.wp.errorResponse(error)
+                        }
+                    }
+                );
+        },
+        (error)=>{
+            settingModal.present();
+        });
   }
 
   ionViewDidLeave(){
@@ -83,8 +87,13 @@ export class MyApp {
 
   private initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+        if (window.indexedDB) {
+            console.log("I'm in WKWebView!");
+        } else {
+            console.log("I'm in UIWebView");
+        }
+        this.statusBar.styleDefault();
+        this.splashScreen.hide();
     });
 
     this.intervalCurrentPage = setInterval(()=>{

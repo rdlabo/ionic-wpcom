@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Platform} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { InterfacePost, InterfaceCategory, InterfaceTag, InterfaceAuthor } from '../../interface/wordpress'
 
@@ -19,6 +20,8 @@ export class Page {
         public navParams: NavParams,
         public wp:WordpressProvider,
         public toastCtrl: ToastController,
+        public platform:Platform,
+        public iab: InAppBrowser,
         public storage: Storage,
     ){}
 
@@ -62,20 +65,28 @@ export class Page {
 
     private trimArticle()
     {
-        Array.prototype.forEach.call(document.querySelectorAll('article iframe'), function(node) {
+        Array.prototype.forEach.call(document.querySelectorAll('article iframe'), (node)=> {
             node.setAttribute('width','100%');
         });
 
-        Array.prototype.forEach.call(document.querySelectorAll('article iframe.wp-embedded-content'), function(node) {
+        Array.prototype.forEach.call(document.querySelectorAll('article iframe.wp-embedded-content'), (node)=> {
             node.style.display = 'none';
         });
 
-        Array.prototype.forEach.call(document.querySelectorAll('article a'), function(node) {
+        Array.prototype.forEach.call(document.querySelectorAll('article a'), (node)=> {
             node.setAttribute('target','_blank');
             node.setAttribute('rel','noopener');
+            if(this.platform.is('cordova')){
+                node.addEventListener('click',
+                    (e)=>{
+                        e.preventDefault();
+                        const browser = this.iab.create(node.getAttribute('href'), '_blank');
+                        browser.show();
+                    }, false);
+            }
         });
 
-        Array.prototype.forEach.call(document.querySelectorAll('article div[data-shortcode=caption]'), function(node) {
+        Array.prototype.forEach.call(document.querySelectorAll('article div[data-shortcode=caption]'), (node)=> {
             node.style.width = '100%'
         });
     }
