@@ -12,15 +12,6 @@
   <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4e8ef7">
-  <link href="build/main.css" rel="stylesheet">
-
-  <script>
-//    if ('serviceWorker' in navigator) {
-//      navigator.serviceWorker.register('service-worker.js')
-//        .then(() => console.log('service worker installed'))
-//        .catch(err => console.error('Error', err));
-//    }
-  </script>
 
 </head>
 <body>
@@ -40,6 +31,8 @@
     </section>
   </ion-app>
 
+  <link href="build/main.css" rel="stylesheet">
+
   <script src="cordova.js"></script>
   <!-- The polyfills js is generated during the build process -->
   <script src="build/polyfills.js"></script>
@@ -48,5 +41,19 @@
   <!-- The bundle js is generated during the build process -->
   <script src="build/main.js"></script>
 
+  <script>
+
+      if(document.location.protocol === "https:") {
+          window.console.log = () => {
+          };
+          if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('service-worker.js')
+                  .then(() => console.log('service worker installed'))
+                  .catch(err => console.error('Error', err));
+          }
+      }else{
+          location.replace(location.href.replace(/http:/, 'https:'));
+      }
+  </script>
 </body>
 </html>
