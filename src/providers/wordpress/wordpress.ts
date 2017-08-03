@@ -64,7 +64,7 @@ export class WordpressProvider {
     getPostList(page:number, search:InterfacePostParams) {
         let params = new URLSearchParams();
         params.set('page', String(page));
-        params.set('number',String(12));
+        params.set('number',String(10));
         // params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
         params.set('fields', 'ID, date, excerpt, post_thumbnail, title');
 
