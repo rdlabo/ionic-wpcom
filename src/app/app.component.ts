@@ -76,7 +76,7 @@ export class MyApp {
       this.splashScreen.hide();
     });
 
-    this.intervalCurrentPage = setInterval(()=>{
+    this.intervalCurrentPage = window.setInterval(()=>{
       if(this.nav.getActive()){
         this.store.dispatch({type: REGISTER2, payload: { page:this.nav.getActive().id, opt:this.nav.getActive().data }});
       }
