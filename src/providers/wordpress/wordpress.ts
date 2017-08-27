@@ -66,7 +66,7 @@ export class WordpressProvider {
         params.set('page', String(page));
         params.set('number',String(10));
         // params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
-        params.set('fields', 'ID, date, excerpt, post_thumbnail, title');
+        params.set('fields', 'ID, date, excerpt, post_thumbnail, title, author');
 
         params.set('type', search.type);
 
