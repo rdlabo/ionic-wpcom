@@ -1,99 +1,105 @@
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
+[日本語のREADME.mdはこちら](https://github.com/rdlabo/ionic-wpcom/blob/master/README.ja.md)
+
 # Ionic-WP.com
 
-WordPress.comのREST APIを利用してSPA（Single Page Application）を構築するスターターパッケージです。
-[Ionic Framework](http://ionicframework.com/docs/)を利用して構築しています。
+This is starter package builds SPA using WordPress.com's REST API.
+I build it using [Ionic Framework](http://ionicframework.com/docs/).
 
-デモは [https://demo.ionic-wp.com](https://demo.ionic-wp.com) をご覧ください。また、本レポジトリの紹介サイトは[こちら](http://ionic-wp.com/)。
+Please visit [https://demo.ionic-wp.com](https://demo.ionic-wp.com) for the demo. 
+In addition, the introduction site of this repository is [here](http://ionic-wp.com/) (This is Japanese web site).
 
-## はじめ方
+## Getting Started
 
-このパッケージではNode.jsを利用します。
-未インストールの方は[こちら](https://nodejs.org/ja/download/)からインストールしてからご利用下さい。
+This package uses Node.js. If you do not install it please use it from [here](https://nodejs.org/ja/download/).
 
-### コマンド
-Ionic Frameworkでは、開発用のコマンドと本番用のコマンドが別れています。
-開発用コマンドでは、dev-serverを立ち上げます。これはCSSなどのファイルの変更を検知して自動的にビルドしたあと、
-ブラウザを自動的にリロードしてくれる機能などがついております。
+### Command
+In Ionic Framework, development commands and production commands are separate. 
 
-開発用コマンドはこちらです。本レポジトリをCloneしたフォルダ内で実行下さい。
+For the development command, start dev-server. 
+This is equipped with function that automatically reloads the browser after detecting the change of the file such as CSS and automatically building it.
+
+The command for development is here. Please execute in this folder which clone this repository.
+
 ```
 $ npm run-script ionic:serve
 ```
 
-本番用コマンドは、dev-serverの立ち上げがなく、またビルドに時間がかかります。しかしながら、ファイルサイズが大きく圧縮され、
-また高速に動作するようになっておりますので、サーバにアップロードする時にはこちらを利用するのが一般的です。
+For the production command, there is no launch of dev-server and it takes time to build. 
+However, since the file size is greatly compressed and it is designed to operate at high speed,
+it is common to use this when uploading to the server.
 
-```bash
+```
 $ npm run-script build --prod
 ```
 
-### 自分のWordPressを表示する
-デフォルトの設定では、パッケージ開発元の[rdlabo](https://rdlabo.jp/)のREST APIが表示されます。
-これを自分が持っているWordPressに変更してみましょう。
+### Show your WordPress
+By default, the package developer [rdlabo](https://rdlabo.jp/)'s REST API is displayed. 
+Let's change this to WordPress you have.
 
-変更はとても簡単です。
-`src/wp-config.ts`を開いて、以下の部分を自分が持っているWordPressのURLに変更して下さい。
+The change is very easy. 
+Open `src/wp-config.ts` and change the following part to the URL of WordPress you have.
 
 ```
 14  /* WordPress.comのURL、もしくはJetPack連携しているURL */
 15  export const wordpressURL = 'rdlabo.jp';
 ```
 
-変更・保存後に、コマンドを叩いたらあなたのWordPressのデータが表示されています。
+After change/save, hitting a command will display your WordPress data.
 
-#### WordPress.comの場合
-あなたが[WordPress.com](https://wordpress.com/)を使ってブログを運営している場合は、
-上記のURL欄にWordPress.comのURLを入力して下さい。
+#### For WordPress.com
+If you run a blog using [WordPress.com](https://wordpress.com/), 
+please enter the URL of WordPress.com in the above URL field.
 
-例えば、`https://ja.blog.wordpress.com`の場合は以下のように変更して下さい
+For example, at https: //en.blog.wordpress.com, please change it as follows
 
 ```
 14  /* WordPress.comのURL、もしくはJetPack連携しているURL */
 15  export const wordpressURL = 'ja.blog.wordpress.com';
 ```
 
-#### WordPress.org（インストール型）の場合
-WordPress.orgを使っている場合は準備に5つのステップがあります。
+#### For WordPress.org (installation type)
+If you are using WordPress.org there are 5 steps to prepare.
 
-1. WordPressにプラグイン[Jetpack by WordPress.com](https://ja.wordpress.org/plugins/jetpack/)をインストールして有効にする
-2. JetpackとWordPress.comを連携します（Connect Jetpack to WordPress.com）。この作業のためにはWordPress.comのアカウントが必要になります。
-3. Jetpackプラグインのダッシュボード画面のFooterにある`Debug`をクリックして下さい。右下バージョン表記の左上にあります（わかりにくいです）
-4. `お使いのサイトで使用可能な Jetpack モジュールの全一覧にアクセスします。`をクリックします。
-5. 上から5つ目に`JSON API`という項目があるので、有効化して下さい
+1. Install and enable the plugin [Jetpack by WordPress.com](https://ja.wordpress.org/plugins/jetpack/) in WordPress
+2. Jetpack and WordPress.com will work together (Connect Jetpack to WordPress.com). For this work you will need an account at WordPress.com.
+3. Click `Debug` in the Footer of the Jetpack plugin's dashboard screen. It is in the upper left corner of the lower right version notation (it is hard to understand)
+4. Go to the full list of available Jetpack modules on your site.
+5. Since there is an item called `JSON API` the fifth from the top, please enable it
 
-以上が完了したあと、URL欄をWordPressのURL（独自ドメイン可）に変更して下さい。
+After completing the above, change the URL field to WordPress URL (unique domain available).
 
-### テーマを変更する
+### Change theme
 
-#### CSSを変更する
-CSSを変更するのはとても簡単です。`src/theme`の中にSCSSファイルがあります。
-`src/theme/variables.scss`はIonicデフォルトのテーマ編集用ファイルです。
-[Theming your Ionic App](http://ionicframework.com/docs/theming/theming-your-app/)をご参考下さい。
-`src/theme/ionic-wpcom.scss`は本テーマを構築するのに追記したSCSSです。
+#### Change CSS
+Changing CSS is very easy. There is an SCSS file in `src/theme`.
+`src/theme/variables.scss` is the Ionic default theme editing file.
+Please refer to [Theming your Ionic App](http://ionicframework.com/docs/theming/theming-your-app/).
+`src/theme/ionic-wpcom.scss` is the SCSS added to build this theme.
 
-#### HTMLを変更する
-`src/pages`がテーマ置き場となっております。
-SPA（Single Page Application）でTypeScriptで書かれていますので最初はとっつきにくいかもしれませんが、大体の構成を
-WordPressの公式テーマと同じフォルダ名にしておりますので、お試し下さい。
+#### Change HTML
+`src/pages` is the theme storage place.
+Since it is written in TypeScript with SPA (Single Page Application), 
+it may be hard to get stuck at the beginning. 
+But I will make the approximate composition the same folder name as WordPress official theme, so please try it.
 
-
-## 利用パッケージ一覧（一部）
-- [Ionic Framework](http://ionicframework.com/docs/)（Angular UIフレームワーク）
-- SCSS（CSSの拡張言語）
-- TypeScript（JavaScriptの拡張言語）
+## Usage package list (partial)
+- [Ionic Framework](http://ionicframework.com/docs/)
+- SCSS
+- TypeScript
 - [ngrx/store](https://github.com/ngrx/store)
 
-## 簡単にホスティングする
-[Netlify](https://app.netlify.com)を使うと簡単にホスティングすることができます。現在デモをホスティングしているのですが、その設定を書いておきますのでご利用ください。
+## Easy hosting
+With [Netlify](https://app.netlify.com)  you can easily host it. 
+I am hosting the demo now, but please use it because I write the setting.
 
-| 項目 | 入力内容 |
+| Item | input content |
 |:-----------|:------------|
 | Repository | https://github.com/rdlabo/ionic-wpcom |
 | Branch | master |
 | Build command | npm run-script build --prod |
 | Publish directory | www |
 
-## 問い合わせ
-何かありましたら、[Twitter@rdlabo](https://twitter.com/rdlabo) にお問い合わせ下さい。
+## Contact
+[Twitter@rdlabo](https://twitter.com/rdlabo) 
