@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
-import 'rxjs/add/operator/map';
 import { wordpressAPI, wordpressURL, noImageURL } from '../../wp-config';
 import {
     InterfacePost, InterfaceCategory, InterfacePostParams, InterfaceTag,
@@ -19,7 +18,7 @@ export class WordpressProvider {
         public alertCtrl: AlertController,
     ) {}
 
-    errorResponse(error){
+    errorResponse(error) : void{
         let errorTitle, errorText : string;
         switch (error.status) {
             case 401:
@@ -52,7 +51,7 @@ export class WordpressProvider {
         alert.present();
     }
 
-    getSiteInfo() {
+    getSiteInfo() : Observable<InterfaceSite> {
         let params = new HttpParams();
         params = params.append('fields', 'name, jetpack');
         return this.http.get<
@@ -60,7 +59,7 @@ export class WordpressProvider {
             >(wordpressAPI + wordpressURL, { params:params });
     }
 
-    getPostList(page:number, search:InterfacePostParams) {
+    getPostList(page:number, search:InterfacePostParams): Observable<any>  {
         let params = new HttpParams();
         params = params.append('page', String(page));
         params = params.append('number',String(10));
@@ -78,7 +77,7 @@ export class WordpressProvider {
             .map( res => this.loopPosts(res.posts));
     }
 
-    getPostArticle(pageID:number) {
+    getPostArticle(pageID:number): Observable<any> {
         let params = new HttpParams();
         params = params.append('fields','ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
 
@@ -88,26 +87,26 @@ export class WordpressProvider {
             .map(res => this.createArticle(res));
     }
 
-    getCategoryList(){
+    getCategoryList(): Observable<InterfaceCategory[]>{
         return this.http.get<{
             categories: InterfaceCategory[]
         }>(wordpressAPI + wordpressURL + "/categories")
             .map(res => res.categories);
     }
 
-    getCategory(key:string){
+    getCategory(key:string): Observable<InterfaceCategory>{
         return this.http.get<
             InterfaceCategory
             >(wordpressAPI + wordpressURL + "/categories/slug:" + key);
     }
 
-    getTag(key:string){
+    getTag(key:string): Observable<InterfaceTag>{
         return this.http.get<
             InterfaceTag
             >(wordpressAPI + wordpressURL + "/tags/slug:" + key);
     }
 
-    getAuthorList(key:string){
+    getAuthorList(key:string): Observable<InterfaceAuthor[]>{
         let params = new HttpParams();
         params = params.append('search', key);
 
@@ -116,7 +115,7 @@ export class WordpressProvider {
             >(wordpressAPI + wordpressURL + "/users");
     }
 
-    private loopPosts(params:Array<InterfacePost>){
+    private loopPosts(params:Array<InterfacePost>): any{
         let returnData:Array<InterfacePost> = [];
         params.forEach((val:InterfacePost) => {
             returnData.push(this.createArticle(val));
@@ -124,7 +123,8 @@ export class WordpressProvider {
         return returnData;
     }
 
-    private createArticle(params:InterfacePost){
+    private createArticle(params:InterfacePost) : any {
+
         if(params.post_thumbnail == null){
             params.post_thumbnail = {
                 URL : noImageURL
@@ -148,8 +148,7 @@ export class WordpressProvider {
         return params;
     }
 
-    private removeTag(str, arrowTag = null)
-    {
+    private removeTag(str: string, arrowTag = null) : string {
         if ((Array.isArray ?
                 Array.isArray(arrowTag)
                 : Object.prototype.toString.call(arrowTag) === '[object Array]')
@@ -164,3 +163,4 @@ export class WordpressProvider {
         return str.replace(/\s+/g, "");
     }
 }
+
