@@ -8,8 +8,8 @@ import { REGISTER as REGISTER1, DELETE as DELETE1 } from '../reducers/search';
 import { REGISTER as REGISTER2 } from '../reducers/current';
 
 import { WordpressProvider } from '../providers/wordpress/wordpress';
-import { InterfaceSite } from '../interface/wordpress';
-import { AppStateInterface } from '../interface/store';
+import { Site } from '../interfaces/wordpress';
+import { AppState } from '../interfaces/store';
 
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/map';
@@ -40,7 +40,7 @@ export class MyApp {
       public statusBar: StatusBar,
       public splashScreen: SplashScreen,
       public wp:WordpressProvider,
-      public store:Store<AppStateInterface>,
+      public store:Store<AppState>,
       public loadingCtrl: LoadingController
   ) {
     this.initializeApp();
@@ -51,7 +51,7 @@ export class MyApp {
     loading.present();
     this.wp.getSiteInfo()
         .subscribe(
-            (data:InterfaceSite) => {
+            (data:Site) => {
               loading.dismiss();
             },
             (error) => {

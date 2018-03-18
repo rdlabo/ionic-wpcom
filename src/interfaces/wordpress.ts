@@ -1,22 +1,22 @@
 
-export interface InterfaceSite {
+export interface Site {
     name        : string,
     jetpack     : boolean
 }
 
-export interface InterfacePost {
+export interface Post {
     ID          : number,
     title       : string,
     excerpt     : string,
     content     : string,
     date        : string,
-    author      : InterfaceAuthor,
+    author      : Author,
     post_thumbnail: {
         URL     : string
     },
     short_URL   : string,
-    categories  : Array<InterfaceCategory>
-    tags        : Array<InterfaceTag>,
+    categories  : Array<Category>
+    tags        : Array<Tag>,
 
     origin: {
         title   : string,
@@ -24,7 +24,7 @@ export interface InterfacePost {
     }
 }
 
-export interface InterfacePostParams {
+export interface PostParams {
     type?           : string,
     categorySlug?   : string
     tagSlug?        : string
@@ -32,7 +32,7 @@ export interface InterfacePostParams {
     search?         : string
 }
 
-export interface InterfaceCategory {
+export interface Category {
     ID              : number,
     name            : string,
     post_count      : number,
@@ -40,22 +40,22 @@ export interface InterfaceCategory {
     slug            : string
 }
 
-export interface InterfaceTag {
+export interface Tag {
     ID              : number,
     name            : string,
     post_count      : number,
     slug            : string
 }
 
-export interface InterfaceAuthor {
+export interface Author {
     ID              : number,
     name            : string,
     avatar_URL      : string
 }
 
-export interface InterfaceStragePost {
+export interface StragePost {
     domain          : string,
     postID          : number,
-    article         : InterfacePost
+    article         : Post
     created         : string
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, NavParams } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { InterfacePostParams, InterfacePost } from '../../interface/wordpress';
+import { PostParams, Post } from '../../interfaces/wordpress';
 
 @IonicPage({
     segment: 'author/:key',
@@ -15,7 +15,7 @@ export class Author {
 
     type:string = '執筆者';
     title:string;
-    search: InterfacePostParams = {
+    search: PostParams = {
         type : 'wait',
         authorID : this.navParams.get('key')
     };
@@ -39,7 +39,7 @@ export class Author {
                 // use not require auth resource.
                 this.wp.getPostList(0, { 'authorID': ID})
                     .subscribe(
-                        (data:Array<InterfacePost>) => {
+                        (data:Array<Post>) => {
                             this.title = data[0].author.name;
                         }
                     );

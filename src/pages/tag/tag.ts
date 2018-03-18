@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, NavParams } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { InterfacePostParams, InterfaceTag } from '../../interface/wordpress'
+import { PostParams, Tag } from '../../interfaces/wordpress'
 
 @IonicPage({
     segment: 'tag/:key',
@@ -15,7 +15,7 @@ export class Tag {
 
     type:string = 'タグ';
     title:string;
-    search: InterfacePostParams = {
+    search: PostParams = {
         type : 'wait',
         categorySlug : this.navParams.get('key')
     }
@@ -37,7 +37,7 @@ export class Tag {
             (slug:string) => {
                 this.wp.getCategory(slug)
                     .subscribe(
-                        (data:InterfaceTag) => this.title = data.name
+                        (data:Tag) => this.title = data.name
                     );
 
                 this.search = {

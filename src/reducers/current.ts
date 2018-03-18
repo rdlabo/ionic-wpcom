@@ -1,10 +1,10 @@
 
 import { Action } from '@ngrx/store';
-import { CurrentInterface } from '../interface/store';
+import { Current } from '../interfaces/store';
 
 export class CreateMehod implements Action {
     readonly type = 'CURRENT';
-    constructor(public payload: CurrentInterface) {}
+    constructor(public payload: Current) {}
 }
 export type CustomAction = CreateMehod;
 
@@ -14,7 +14,7 @@ export const currentDefault = {
     opt: null
 };
 
-export function reducer(state:CurrentInterface = currentDefault, action: CustomAction) {
+export function reducer(state:Current = currentDefault, action: CustomAction) {
     switch (action.type) {
         case REGISTER:
             return action.payload;

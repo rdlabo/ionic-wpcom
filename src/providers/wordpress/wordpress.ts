@@ -4,9 +4,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { wordpressAPI, wordpressURL, noImageURL } from '../../wp-config';
 import {
-    InterfacePost, InterfaceCategory, InterfacePostParams, InterfaceTag,
-    InterfaceAuthor, InterfaceSite
-} from '../../interface/wordpress';
+    Post, Category, PostParams, Tag,
+    Author, Site
+} from '../../interfaces/wordpress';
 import {Observable} from "rxjs/Observable";
 
 @Injectable()
@@ -51,15 +51,15 @@ export class WordpressProvider {
         alert.present();
     }
 
-    getSiteInfo() : Observable<InterfaceSite> {
+    getSiteInfo() : Observable<Site> {
         let params = new HttpParams();
         params = params.append('fields', 'name, jetpack');
         return this.http.get<
-            InterfaceSite
+            Site
             >(wordpressAPI + wordpressURL, { params:params });
     }
 
-    getPostList(page:number, search:InterfacePostParams): Observable<any>  {
+    getPostList(page:number, search:PostParams): Observable<any>  {
         let params = new HttpParams();
         params = params.append('page', String(page));
         params = params.append('number',String(10));
@@ -72,7 +72,7 @@ export class WordpressProvider {
         if(search.search) params = params.append('search', search.search);
 
         return this.http.get<{
-            posts:InterfacePost[]
+            posts:Post[]
         }>(wordpressAPI + wordpressURL + "/posts", { params:params })
             .map( res => this.loopPosts(res.posts));
     }
@@ -82,48 +82,48 @@ export class WordpressProvider {
         params = params.append('fields','ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
 
         return this.http.get<
-            InterfacePost
+            Post
             >(wordpressAPI + wordpressURL + "/posts/" + pageID, { params:params })
             .map(res => this.createArticle(res));
     }
 
-    getCategoryList(): Observable<InterfaceCategory[]>{
+    getCategoryList(): Observable<Category[]>{
         return this.http.get<{
-            categories: InterfaceCategory[]
+            categories: Category[]
         }>(wordpressAPI + wordpressURL + "/categories")
             .map(res => res.categories);
     }
 
-    getCategory(key:string): Observable<InterfaceCategory>{
+    getCategory(key:string): Observable<Category>{
         return this.http.get<
-            InterfaceCategory
+            Category
             >(wordpressAPI + wordpressURL + "/categories/slug:" + key);
     }
 
-    getTag(key:string): Observable<InterfaceTag>{
+    getTag(key:string): Observable<Tag>{
         return this.http.get<
-            InterfaceTag
+            Tag
             >(wordpressAPI + wordpressURL + "/tags/slug:" + key);
     }
 
-    getAuthorList(key:string): Observable<InterfaceAuthor[]>{
+    getAuthorList(key:string): Observable<Author[]>{
         let params = new HttpParams();
         params = params.append('search', key);
 
         return this.http.get<
-            InterfaceAuthor[]
+            Author[]
             >(wordpressAPI + wordpressURL + "/users");
     }
 
-    private loopPosts(params:Array<InterfacePost>): any{
-        let returnData:Array<InterfacePost> = [];
-        params.forEach((val:InterfacePost) => {
+    private loopPosts(params:Array<Post>): any{
+        let returnData:Array<Post> = [];
+        params.forEach((val:Post) => {
             returnData.push(this.createArticle(val));
         });
         return returnData;
     }
 
-    private createArticle(params:InterfacePost) : any {
+    private createArticle(params:Post) : any {
 
         if(params.post_thumbnail == null){
             params.post_thumbnail = {

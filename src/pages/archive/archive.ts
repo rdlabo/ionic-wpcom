@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController,IonicPage } from 'ionic-angular';
-import { InterfacePostParams } from '../../interface/wordpress'
+import { PostParams } from '../../interfaces/wordpress'
 
 @IonicPage()
 @Component({
@@ -9,7 +9,7 @@ import { InterfacePostParams } from '../../interface/wordpress'
 })
 export class Archive {
 
-    search:InterfacePostParams = {
+    search:PostParams = {
         type: 'post'
     };
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { InterfacePost, InterfaceStragePost } from '../../../interface/wordpress'
+import { Post, StragePost } from '../../../interfaces/wordpress'
 import { wordpressURL } from '../../../wp-config';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -18,12 +18,12 @@ export class BookmarkPostsComponent {
     ) {}
 
     page:number = 1;
-    posts: Array<InterfacePost> = [];
+    posts: Array<Post> = [];
     Loaded;
 
     ngOnInit(){
         this.getPostList().then(
-            (data:Array<InterfacePost>) => {
+            (data:Array<Post>) => {
                 console.log(data);
                 this.page++;
                 this.posts = this.posts.concat(data);
@@ -60,8 +60,8 @@ export class BookmarkPostsComponent {
         return new Promise ((resolve, reject) => {
             this.storage.get('bookmarks').then((data)=>{
                 if(data){
-                    const bookmarks:Array<InterfaceStragePost> = JSON.parse(data);
-                    let bookmarkArticles: Array<InterfacePost> = [];
+                    const bookmarks:Array<StragePost> = JSON.parse(data);
+                    let bookmarkArticles: Array<Post> = [];
                     console.log(bookmarks);
                     Array.prototype.forEach.call(bookmarks, (node)=> {
                         if(node.article && node.domain == wordpressURL){
