@@ -4,7 +4,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -12,10 +11,9 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '../reducers';
 
 import { MyApp } from './app.component';
+import { ComponentsModule } from "../components/components.module";
 import { WordpressProvider } from '../providers/wordpress/wordpress';
 
-import { HeaderComponentModule } from '../pages/header/header.module';
-import { SidebarComponentModule} from '../pages/template-parts/sidebar/sidebar.module';
 
 @NgModule({
     declarations: [
@@ -25,8 +23,7 @@ import { SidebarComponentModule} from '../pages/template-parts/sidebar/sidebar.m
         BrowserModule,
         HttpClientModule,
         IonicModule.forRoot(MyApp),
-        HeaderComponentModule,
-        SidebarComponentModule,
+        ComponentsModule,
         IonicStorageModule.forRoot(),
         StoreModule.forRoot(reducers),
     ],

@@ -4,8 +4,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { wordpressAPI, wordpressURL, noImageURL } from '../../wp-config';
 import {
-    Post, Category, PostParams, Tag,
-    Author, Site
+    IPost, ICategory, IPostParams, ITag,
+    IAuthor, ISite
 } from '../../interfaces/wordpress';
 import {Observable} from "rxjs/Observable";
 
@@ -43,7 +43,7 @@ export class WordpressProvider {
                 break;
         }
 
-        let alert = this.alertCtrl.create({
+        const alert = this.alertCtrl.create({
             title: errorTitle,
             message: errorText,
             buttons: ['閉じる']
@@ -51,15 +51,15 @@ export class WordpressProvider {
         alert.present();
     }
 
-    getSiteInfo() : Observable<Site> {
+    getSiteInfo() : Observable<ISite> {
         let params = new HttpParams();
         params = params.append('fields', 'name, jetpack');
         return this.http.get<
-            Site
+            ISite
             >(wordpressAPI + wordpressURL, { params:params });
     }
 
-    getPostList(page:number, search:PostParams): Observable<any>  {
+    getPostList(page:number, search:IPostParams): Observable<any>  {
         let params = new HttpParams();
         params = params.append('page', String(page));
         params = params.append('number',String(10));
@@ -71,8 +71,9 @@ export class WordpressProvider {
         if(search.authorID) params = params.append('author', String(search.authorID));
         if(search.search) params = params.append('search', search.search);
 
+        console.log(params);
         return this.http.get<{
-            posts:Post[]
+            posts:IPost[]
         }>(wordpressAPI + wordpressURL + "/posts", { params:params })
             .map( res => this.loopPosts(res.posts));
     }
@@ -82,48 +83,48 @@ export class WordpressProvider {
         params = params.append('fields','ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
 
         return this.http.get<
-            Post
+            IPost
             >(wordpressAPI + wordpressURL + "/posts/" + pageID, { params:params })
             .map(res => this.createArticle(res));
     }
 
-    getCategoryList(): Observable<Category[]>{
+    getCategoryList(): Observable<ICategory[]>{
         return this.http.get<{
-            categories: Category[]
+            categories: ICategory[]
         }>(wordpressAPI + wordpressURL + "/categories")
             .map(res => res.categories);
     }
 
-    getCategory(key:string): Observable<Category>{
+    getCategory(key:string): Observable<ICategory>{
         return this.http.get<
-            Category
+            ICategory
             >(wordpressAPI + wordpressURL + "/categories/slug:" + key);
     }
 
-    getTag(key:string): Observable<Tag>{
+    getTag(key:string): Observable<ITag>{
         return this.http.get<
-            Tag
+            ITag
             >(wordpressAPI + wordpressURL + "/tags/slug:" + key);
     }
 
-    getAuthorList(key:string): Observable<Author[]>{
+    getAuthorList(key:string): Observable<IAuthor[]>{
         let params = new HttpParams();
         params = params.append('search', key);
 
         return this.http.get<
-            Author[]
+            IAuthor[]
             >(wordpressAPI + wordpressURL + "/users");
     }
 
-    private loopPosts(params:Array<Post>): any{
-        let returnData:Array<Post> = [];
-        params.forEach((val:Post) => {
+    private loopPosts(params:Array<IPost>): any{
+        let returnData:Array<IPost> = [];
+        params.forEach((val:IPost) => {
             returnData.push(this.createArticle(val));
         });
         return returnData;
     }
 
-    private createArticle(params:Post) : any {
+    private createArticle(params:IPost) : any {
 
         if(params.post_thumbnail == null){
             params.post_thumbnail = {
@@ -134,7 +135,7 @@ export class WordpressProvider {
         params.origin = {
             title : params.title,
             excerpt: params.excerpt
-        }
+        };
         params.title = <string>this.sanitizer.bypassSecurityTrustHtml(params.title);
         params.content = <string>this.sanitizer.bypassSecurityTrustHtml(params.content);
 

@@ -1,14 +1,14 @@
 
-export interface AppState {
-    search: Search,
-    current: Current
+export interface IAppState {
+    search: ISearch,
+    current: ICurrent
 }
 
-export interface Search {
+export interface ISearch {
     keyword: string,
 }
 
-export interface Current {
+export interface ICurrent {
     page: string,
     opt : {}
 }

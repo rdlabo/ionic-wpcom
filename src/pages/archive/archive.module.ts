@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { Archive } from './archive';
-import { PostsComponentModule } from '../template-parts/posts/posts.module';
-import { FooterComponentModule } from '../footer/footer.module';
+import { ComponentsModule } from "../../components/components.module";
+
 
 @NgModule({
   declarations: [
@@ -10,8 +10,7 @@ import { FooterComponentModule } from '../footer/footer.module';
   ],
   imports: [
     IonicPageModule.forChild(Archive),
-    PostsComponentModule,
-    FooterComponentModule
+    ComponentsModule
   ],
   exports: [
     Archive,

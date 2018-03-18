@@ -4,7 +4,7 @@ import { Subject, Observable, Subscription } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { wordpressURL } from '../../../wp-config';
 
-import { Post, PostParams, StragePost } from '../../../interfaces/wordpress'
+import { IPost, IPostParams, IStragePost } from '../../../interfaces/wordpress'
 import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 
 
@@ -15,7 +15,7 @@ import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 })
 export class PostsComponent implements OnChanges {
 
-    @Input() search: PostParams;
+    @Input() search: IPostParams;
     ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
         console.log('ngOnChanges');
         this.Loaded = false;
@@ -33,7 +33,7 @@ export class PostsComponent implements OnChanges {
     }
 
     page:number = 1;
-    posts: Array<Post> = [];
+    posts: Array<IPost> = [];
     subject;
     Loaded: boolean;
     timerSubscription : Subscription;
@@ -46,7 +46,7 @@ export class PostsComponent implements OnChanges {
                 ()=>{
                     this.storage.get('hidden').then((data)=>{
                         if(data){
-                            const hiddens:Array<StragePost> = JSON.parse(data);
+                            const hiddens:Array<IStragePost> = JSON.parse(data);
                             console.log(hiddens);
                             this.posts = this.posts.filter((v)=>{
                                 let flg:boolean = true;
@@ -73,7 +73,7 @@ export class PostsComponent implements OnChanges {
 
     doInfinite(infiniteScroll) {
         this.getPostList().then(
-            (data:Array<Post>) => {
+            (data:Array<IPost>) => {
                 this.page++;
                 this.posts = this.posts.concat(data);
                 if(data.length > 0) {
@@ -100,7 +100,7 @@ export class PostsComponent implements OnChanges {
                 return this.getPostList()
             })
             .subscribe(
-                (data:Array<Post>) => {
+                (data:Array<IPost>) => {
                     this.page = 2;
                     this.posts = data;
                 }

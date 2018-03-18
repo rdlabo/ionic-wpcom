@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { Post, Category, Tag, Author, StragePost } from '../../interfaces/wordpress'
+import { IPost, ICategory, ITag, IAuthor, IStragePost } from '../../interfaces/wordpress'
 import { wordpressURL, noImageURL } from '../../wp-config';
 
 @IonicPage({
@@ -26,7 +26,7 @@ export class Single {
     ){}
 
     title:string;
-    article:Post;
+    article:IPost;
     url:string = window.location.href;
     shareURL : {
         twitter : string
@@ -41,7 +41,7 @@ export class Single {
 
         this.wp.getPostArticle(this.navParams.get('postID'))
             .subscribe(
-                (data:Post) => {
+                data => {
                     this.title = (!this.title)?data.title:this.title;
                     this.article = data;
                     this.shareURL = this.createShareURL(location.href, data);
@@ -53,15 +53,15 @@ export class Single {
             );
     }
 
-    viewAuthor(author:Author):void {
+    viewAuthor(author:IAuthor):void {
         this.navCtrl.setRoot('Author',{ title: author.name, key: author.ID});
     }
 
-    viewCategory(category:Category):void {
+    viewCategory(category:ICategory):void {
         this.navCtrl.setRoot('Category',{ title: category.name, key: category.slug});
     }
 
-    viewTag(tag:Tag):void {
+    viewTag(tag:ITag):void {
         this.navCtrl.setRoot('Tag',{ title: tag.name, key: tag.slug});
     }
 
@@ -84,7 +84,7 @@ export class Single {
     private checkBookmarked(){
         this.storage.get('bookmarks').then((data)=>{
             if(data){
-                const bookmarks:Array<StragePost> = JSON.parse(data);
+                const bookmarks:Array<IStragePost> = JSON.parse(data);
                 Array.prototype.forEach.call(bookmarks, (node)=> {
                     if(node.domain == wordpressURL && node.postID == this.navParams.get('postID')){
                         this.bookmarked = true;
@@ -150,7 +150,7 @@ export class Single {
 
     private deleteLocalStrage(key:string){
         return new Promise((resolve)=>{
-            let registerBookmarks:Array<StragePost> = [];
+            let registerBookmarks:Array<IStragePost> = [];
             this.storage.get(key).then(( data )=>{
                 if(data){
                     registerBookmarks = JSON.parse(data);
@@ -176,14 +176,14 @@ export class Single {
     private saveLocalStrage(key:string){
         return new Promise((resolve)=>{
             const now = new Date();
-            const bookmark:Array<StragePost> = [{
+            const bookmark:Array<IStragePost> = [{
                 domain: wordpressURL,
                 postID: this.navParams.get('postID'),
                 article: this.article,
                 created: now.getFullYear() + '-' + now.getMonth()+1 + '-' + now.getDate()
             }];
 
-            let registerBookmarks:Array<StragePost> = [];
+            let registerBookmarks:Array<IStragePost> = [];
 
             this.storage.get(key).then((data)=>{
                 if(data){
@@ -222,7 +222,7 @@ export class Single {
         });
     }
 
-    private createShareURL(url, params:Post) {
+    private createShareURL(url, params:IPost) {
         if(params.origin.excerpt && params.origin.excerpt.length > 0){
             params.origin.excerpt = params.origin.excerpt.replace(/\s|&nbsp;/g, '')
         }

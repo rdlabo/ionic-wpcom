@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { Bookmark } from './bookmark';
-import { BookmarkPostsComponentModule } from '../template-parts/bookmark-posts/posts.module';
-import { FooterComponentModule } from '../footer/footer.module';
+import {ComponentsModule} from "../../components/components.module";
 
 @NgModule({
   declarations: [
@@ -10,8 +9,7 @@ import { FooterComponentModule } from '../footer/footer.module';
   ],
   imports: [
     IonicPageModule.forChild(Bookmark),
-      BookmarkPostsComponentModule,
-      FooterComponentModule
+      ComponentsModule
   ],
   exports: [
       Bookmark,

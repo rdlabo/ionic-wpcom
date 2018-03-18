@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { Page } from './page';
 import { PipesModule } from '../../pipes/pipes.module'
-import { FooterComponentModule } from '../footer/footer.module';
+import {ComponentsModule} from "../../components/components.module";
 
 
 @NgModule({
@@ -12,7 +12,7 @@ import { FooterComponentModule } from '../footer/footer.module';
   imports: [
     IonicPageModule.forChild(Page),
     PipesModule,
-    FooterComponentModule
+      ComponentsModule
   ],
   exports: [
     Page

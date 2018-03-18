@@ -3,8 +3,8 @@ import { NavController, IonicPage, NavParams } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { PostParams } from '../../interfaces/wordpress'
-import { AppState, Search } from '../../interfaces/store'
+import { IPostParams } from '../../interfaces/wordpress'
+import { IAppState, ISearch } from '../../interfaces/store'
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 
 @IonicPage({
@@ -18,8 +18,8 @@ import { WordpressProvider } from '../../providers/wordpress/wordpress';
 export class Search {
 
     title:string;
-    keywordStore$:Observable<Search>;
-    search: PostParams = {
+    keywordStore$:Observable<ISearch>;
+    search: IPostParams = {
         type : 'wait'
     };
 
@@ -27,14 +27,13 @@ export class Search {
         public navCtrl: NavController,
         public navParams: NavParams,
         public wp: WordpressProvider,
-        public store:Store<AppState>,
+        public store:Store<IAppState>,
     ) {}
 
     ionViewDidLoad(){
         this.keywordStore$ = this.store.select('search');
         this.keywordStore$.subscribe(
-            (data:Search) => {
-                console.log(data);
+            data => {
                 this.title = data.keyword;
                 this.search = {
                     type: 'post',

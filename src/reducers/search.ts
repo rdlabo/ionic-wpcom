@@ -1,14 +1,14 @@
 import { Action } from '@ngrx/store';
-import { Search } from '../interfaces/store';
+import { ISearch } from '../interfaces/store';
 
 export class createAction implements Action {
     readonly type = 'SEARCH';
-    constructor(public payload: Search) {}
+    constructor(public payload: ISearch) {}
 }
 
 export class deleteAction implements Action {
     readonly type = 'SEARCH_DELETE';
-    constructor(public payload: Search) {}
+    constructor(public payload: ISearch) {}
 }
 export type CustomAction = createAction | deleteAction;
 
@@ -18,7 +18,7 @@ export const searchDefault = {
     keyword: null
 };
 
-export function reducer(state:Search = searchDefault, action: CustomAction) {
+export function reducer(state:ISearch = searchDefault, action: CustomAction) {
     switch (action.type) {
         case REGISTER:
             return action.payload;

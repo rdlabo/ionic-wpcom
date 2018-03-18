@@ -1,9 +1,9 @@
 import { ActionReducerMap } from '@ngrx/store';
 import { reducer as searchReducer } from './search';
 import { reducer as currentReducer } from './current';
-import { AppState } from '../interfaces/store';
+import { IAppState } from '../interfaces/store';
 
-export const reducers: ActionReducerMap<AppState> = {
+export const reducers: ActionReducerMap<IAppState> = {
     search: searchReducer,
     current: currentReducer
 };

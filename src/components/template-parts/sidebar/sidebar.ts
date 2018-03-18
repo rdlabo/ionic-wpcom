@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { excludePages } from '../../../wp-config';
-import { Post, Category } from '../../../interfaces/wordpress'
-import { AppState, Current } from '../../../interfaces/store'
+import { IPost, ICategory } from '../../../interfaces/wordpress'
+import { IAppState, ICurrent } from '../../../interfaces/store'
 import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 
 export interface InterfacePage {
@@ -27,12 +27,12 @@ export class SidebarComponent {
 
     pages: Array<InterfacePage>;
     categories: Array<InterfacePage>;
-    currentStore$:Observable<Current>;
+    currentStore$:Observable<ICurrent>;
 
     constructor(
         public wp: WordpressProvider,
         public loadingCtrl: LoadingController,
-        public store:Store<AppState>,
+        public store:Store<IAppState>,
     ) {}
 
     ngOnInit(){
@@ -54,7 +54,7 @@ export class SidebarComponent {
         this.wp.getPostList(0, { type: 'page' })
             .subscribe(
                 data => {
-                    Array.prototype.forEach.call(data, (page:Post) => {
+                    Array.prototype.forEach.call(data, (page:IPost) => {
                         if(excludePages.indexOf(page.ID) < 0){
                             this.pages.push({
                                 ID   : String(page.ID),
@@ -76,7 +76,7 @@ export class SidebarComponent {
         this.wp.getCategoryList()
             .subscribe(
                 data => {
-                    Array.prototype.forEach.call(data, (cat:Category) => {
+                    Array.prototype.forEach.call(data, (cat:ICategory) => {
                         if(cat.post_count > 0 && cat.parent == 0) {
                             this.categories.push({
                                 ID   : cat.slug,
@@ -106,7 +106,7 @@ export class SidebarComponent {
         );
     }
 
-    private checkCurrentPage(pages:Array<InterfacePage>, label, currentData:Current){
+    private checkCurrentPage(pages:Array<InterfacePage>, label, currentData:ICurrent){
         let checkedPage = [];
         if(pages[0] && currentData.page){
             Array.prototype.forEach.call(pages, (page) => {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { Post, Category, Tag, Author } from '../../interfaces/wordpress'
+import { IPost, ICategory, ITag, IAuthor } from '../../interfaces/wordpress'
 
 @IonicPage({
     segment: 'page/:postID',
@@ -21,7 +21,7 @@ export class Page {
     ){}
 
     title:string;
-    article:Post;
+    article:IPost;
     url:string = window.location.href;
     shareURL : {
         twitter : string
@@ -34,7 +34,7 @@ export class Page {
 
         this.wp.getPostArticle(this.navParams.get('postID'))
             .subscribe(
-                (data:Post) => {
+                data => {
                     this.title = (!this.title)?data.title:this.title;
                     this.article = data;
                     this.shareURL = this.createShareURL(this.url, data);
@@ -45,17 +45,17 @@ export class Page {
             );
     }
 
-    viewAuthor(author:Author):void
+    viewAuthor(author:IAuthor):void
     {
         this.navCtrl.setRoot('Author',{ title: author.name, key: author.ID});
     }
 
-    viewCategory(category:Category):void
+    viewCategory(category:ICategory):void
     {
         this.navCtrl.setRoot('Category',{ title: category.name, key: category.slug});
     }
 
-    viewTag(tag:Tag):void
+    viewTag(tag:ITag):void
     {
         this.navCtrl.setRoot('Tag',{ title: tag.name, key: tag.slug});
     }
@@ -97,7 +97,7 @@ export class Page {
         });
     }
 
-    private createShareURL(url, params:Post)
+    private createShareURL(url, params:IPost)
     {
         if(params.origin.excerpt && params.origin.excerpt.length > 0){
             params.origin.excerpt = params.origin.excerpt.replace(/\s|&nbsp;/g, '')
