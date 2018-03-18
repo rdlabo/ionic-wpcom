@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { excludePages } from '../../../wp-config';
 import { InterfacePost, InterfaceCategory } from '../../../interface/wordpress'
-import { AppState, InterfaceCurrent } from '../../../interface/store'
+import { AppStateInterface, CurrentInterface } from '../../../interface/store'
 import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 
 export interface InterfacePage {
@@ -27,12 +27,12 @@ export class SidebarComponent {
 
     pages: Array<InterfacePage>;
     categories: Array<InterfacePage>;
-    currentStore$:Observable<InterfaceCurrent>;
+    currentStore$:Observable<CurrentInterface>;
 
     constructor(
         public wp: WordpressProvider,
         public loadingCtrl: LoadingController,
-        public store:Store<AppState>,
+        public store:Store<AppStateInterface>,
     ) {}
 
     ngOnInit(){
@@ -106,7 +106,7 @@ export class SidebarComponent {
         );
     }
 
-    private checkCurrentPage(pages:Array<InterfacePage>, label, currentData:InterfaceCurrent){
+    private checkCurrentPage(pages:Array<InterfacePage>, label, currentData:CurrentInterface){
         let checkedPage = [];
         if(pages[0] && currentData.page){
             Array.prototype.forEach.call(pages, (page) => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 import { wordpressAPI, wordpressURL, noImageURL } from '../../wp-config';
@@ -8,12 +8,13 @@ import {
     InterfacePost, InterfaceCategory, InterfacePostParams, InterfaceTag,
     InterfaceAuthor, InterfaceSite
 } from '../../interface/wordpress';
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class WordpressProvider {
 
     constructor(
-        public http: Http,
+        public http: HttpClient,
         public sanitizer: DomSanitizer,
         public alertCtrl: AlertController,
     ) {}
@@ -52,86 +53,67 @@ export class WordpressProvider {
     }
 
     getSiteInfo() {
-        let params = new URLSearchParams();
-        params.set('fields', 'name, jetpack');
-        return this.http.get(wordpressAPI + wordpressURL,
-            { search:params })
-            .map(
-                res => <InterfaceSite>res.json()
-            );
+        let params = new HttpParams();
+        params = params.append('fields', 'name, jetpack');
+        return this.http.get<
+            InterfaceSite
+            >(wordpressAPI + wordpressURL, { params:params });
     }
 
     getPostList(page:number, search:InterfacePostParams) {
-        let params = new URLSearchParams();
-        params.set('page', String(page));
-        params.set('number',String(10));
-        // params.set('fields', 'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
-        params.set('fields', 'ID, date, excerpt, post_thumbnail, title, author');
+        let params = new HttpParams();
+        params = params.append('page', String(page));
+        params = params.append('number',String(10));
+        params = params.append('fields', 'ID, date, excerpt, post_thumbnail, title, author');
+        params = params.append('type', search.type);
 
-        params.set('type', search.type);
+        if(search.categorySlug)params = params.append('category', search.categorySlug);
+        if(search.tagSlug)params = params.append('tag', search.tagSlug);
+        if(search.authorID) params = params.append('author', String(search.authorID));
+        if(search.search) params = params.append('search', search.search);
 
-        if(search.categorySlug){
-            params.set('category', search.categorySlug);
-        }
-
-        if(search.tagSlug){
-            params.set('tag', search.tagSlug);
-        }
-
-        if(search.authorID){
-            params.set('author', String(search.authorID));
-        }
-
-        if(search.search){
-            params.set('search', search.search);
-        }
-
-        return this.http.get(wordpressAPI + wordpressURL + "/posts",
-            { search:params })
-            .map(
-                res => <Array<InterfacePost>>this.loopPosts(res.json().posts)
-            );
+        return this.http.get<{
+            posts:InterfacePost[]
+        }>(wordpressAPI + wordpressURL + "/posts", { params:params })
+            .map( res => this.loopPosts(res.posts));
     }
 
     getPostArticle(pageID:number) {
-        let params = new URLSearchParams();
-        params.set('fields','ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
+        let params = new HttpParams();
+        params = params.append('fields','ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags');
 
-        return this.http.get(wordpressAPI + wordpressURL + "/posts/" + pageID,
-            { search:params })
-            .map(
-                res => <InterfacePost>this.createArticle(res.json())
-            );
+        return this.http.get<
+            InterfacePost
+            >(wordpressAPI + wordpressURL + "/posts/" + pageID, { params:params })
+            .map(res => this.createArticle(res));
     }
 
     getCategoryList(){
-        return this.http.get(wordpressAPI + wordpressURL + "/categories")
-            .map(
-                res => <Array<InterfaceCategory>>res.json().categories
-            );
+        return this.http.get<{
+            categories: InterfaceCategory[]
+        }>(wordpressAPI + wordpressURL + "/categories")
+            .map(res => res.categories);
     }
 
     getCategory(key:string){
-        return this.http.get(wordpressAPI + wordpressURL + "/categories/slug:" + key)
-            .map(
-                res => <InterfaceCategory>res.json()
-            );
+        return this.http.get<
+            InterfaceCategory
+            >(wordpressAPI + wordpressURL + "/categories/slug:" + key);
     }
 
     getTag(key:string){
-        return this.http.get(wordpressAPI + wordpressURL + "/tags/slug:" + key)
-            .map(
-                res => <InterfaceTag>res.json()
-            );
+        return this.http.get<
+            InterfaceTag
+            >(wordpressAPI + wordpressURL + "/tags/slug:" + key);
     }
 
     getAuthorList(key:string){
-        let params = new URLSearchParams();
-        params.set('search', key);
-        return this.http.get(wordpressAPI + wordpressURL + "/users")
-            .map(
-                res => <Array<InterfaceAuthor>>res.json()
-            );
+        let params = new HttpParams();
+        params = params.append('search', key);
+
+        return this.http.get<
+            InterfaceAuthor[]
+            >(wordpressAPI + wordpressURL + "/users");
     }
 
     private loopPosts(params:Array<InterfacePost>){

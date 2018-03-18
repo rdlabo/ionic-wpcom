@@ -1,14 +1,14 @@
 
-export interface AppState {
-    keyword: InterfaceKeyword,
-    current: InterfaceCurrent
+export interface AppStateInterface {
+    search: SearchInterface,
+    current: CurrentInterface
 }
 
-export interface InterfaceKeyword {
+export interface SearchInterface {
     keyword: string,
 }
 
-export interface InterfaceCurrent {
+export interface CurrentInterface {
     page: string,
     opt : {}
 }

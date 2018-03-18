@@ -4,12 +4,25 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Store } from '@ngrx/store';
 
-import { REGISTER as REGISTER1, DELETE as DELETE1 } from '../store/search';
-import { REGISTER as REGISTER2 } from '../store/current';
+import { REGISTER as REGISTER1, DELETE as DELETE1 } from '../reducers/search';
+import { REGISTER as REGISTER2 } from '../reducers/current';
 
 import { WordpressProvider } from '../providers/wordpress/wordpress';
 import { InterfaceSite } from '../interface/wordpress';
-import { AppState } from '../interface/store';
+import { AppStateInterface } from '../interface/store';
+
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/retry';
+import 'rxjs/add/operator/skip';
+import 'rxjs/add/operator/skipWhile'
+import 'rxjs/add/operator/concatMap'
+
+import 'rxjs/add/observable/timer';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/of';
 
 
 @Component({
@@ -27,7 +40,7 @@ export class MyApp {
       public statusBar: StatusBar,
       public splashScreen: SplashScreen,
       public wp:WordpressProvider,
-      public store:Store<AppState>,
+      public store:Store<AppStateInterface>,
       public loadingCtrl: LoadingController
   ) {
     this.initializeApp();
