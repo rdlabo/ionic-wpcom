@@ -79,7 +79,7 @@ Please refer to [Theming your Ionic App](http://ionicframework.com/docs/theming/
 `src/theme/ionic-wpcom.scss` is the SCSS added to build this theme.
 
 #### Change HTML
-`src/pages` is the theme storage place.
+`src/components` and `src/pages` is the theme storage place.
 Since it is written in TypeScript with SPA (Single Page Application), 
 it may be hard to get stuck at the beginning. 
 But I will make the approximate composition the same folder name as WordPress official theme, so please try it.

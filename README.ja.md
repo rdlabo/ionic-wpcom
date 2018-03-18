@@ -74,7 +74,7 @@ CSSを変更するのはとても簡単です。`src/theme`の中にSCSSファ�
 `src/theme/ionic-wpcom.scss`は本テーマを構築するのに追記したSCSSです。
 
 #### HTMLを変更する
-`src/pages`がテーマ置き場となっております。
+`src/components`、`src/pages`がテーマ置き場となっております。
 SPA（Single Page Application）でTypeScriptで書かれていますので最初はとっつきにくいかもしれませんが、大体の構成を
 WordPressの公式テーマと同じフォルダ名にしておりますので、お試し下さい。
 
