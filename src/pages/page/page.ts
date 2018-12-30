@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { IPost, ICategory, ITag, IAuthor } from '../../interfaces/wordpress';
+import { WordpressProvider } from '@/providers/wordpress/wordpress';
+import { IPost, ICategory, ITag, IAuthor } from '@/interfaces/wordpress';
 
 @IonicPage({
   segment: 'page/:postID',
@@ -55,14 +55,14 @@ export class Page {
 
   addClipboard(): void {
     const body = document.body;
-    let text_area = document.createElement('textarea');
-    text_area.value = this.url;
-    body.appendChild(text_area);
-    text_area.select();
+    const textArea = document.createElement('textarea');
+    textArea.value = this.url;
+    body.appendChild(textArea);
+    textArea.select();
     document.execCommand('copy');
-    body.removeChild(text_area);
+    body.removeChild(textArea);
 
-    let toast = this.toastCtrl.create({
+    const toast = this.toastCtrl.create({
       message: 'URLをクリップボードにコピーしました',
       duration: 2500,
     });

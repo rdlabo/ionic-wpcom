@@ -3,10 +3,10 @@ import { Nav, LoadingController } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { excludePages } from '../../../wp-config';
-import { IPost, ICategory } from '../../../interfaces/wordpress';
-import { IAppState, ICurrent } from '../../../interfaces/store';
-import { WordpressProvider } from '../../../providers/wordpress/wordpress';
+import { environment } from '@app/environment';
+import { IPost, ICategory } from '@/interfaces/wordpress';
+import { IAppState, ICurrent } from '@/interfaces/store';
+import { WordpressProvider } from '@/providers/wordpress/wordpress';
 
 export interface InterfacePage {
   ID: string;
@@ -49,7 +49,7 @@ export class SidebarComponent {
     this.wp.getPostList(0, { type: 'page' }).subscribe(
       data => {
         Array.prototype.forEach.call(data, (page: IPost) => {
-          if (excludePages.indexOf(page.ID) < 0) {
+          if (environment.excludePages.indexOf(page.ID) < 0) {
             this.pages.push({
               ID: String(page.ID),
               title: page.title,
@@ -92,12 +92,12 @@ export class SidebarComponent {
   }
 
   private checkCurrentPage(pages: Array<InterfacePage>, label, currentData: ICurrent) {
-    let checkedPage = [];
+    const checkedPage = [];
     if (pages[0] && currentData.page) {
       Array.prototype.forEach.call(pages, page => {
-        let active =
-          page.component.toLowerCase().slice(0, 4) == currentData.page.toLowerCase().slice(0, 4) &&
-          page.params[label] == currentData.opt[label];
+        const active =
+          page.component.toLowerCase().slice(0, 4) === currentData.page.toLowerCase().slice(0, 4) &&
+          page.params[label] === currentData.opt[label];
         checkedPage.push({
           ID: page.ID,
           title: page.title,

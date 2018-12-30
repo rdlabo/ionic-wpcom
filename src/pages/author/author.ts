@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage, NavParams } from 'ionic-angular';
-import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { IPostParams } from '../../interfaces/wordpress';
+import { WordpressProvider } from '@/providers/wordpress/wordpress';
+import { IPostParams } from '@/interfaces/wordpress';
 
 @IonicPage({
   segment: 'author/:key',

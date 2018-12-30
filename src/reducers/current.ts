@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ICurrent } from '../interfaces/store';
+import { ICurrent } from '@/interfaces/store';
 
 export class CreateMehod implements Action {
   readonly type = 'CURRENT';

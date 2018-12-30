@@ -11,8 +11,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class KeyPipe implements PipeTransform {
   transform(value, args: string[]) {
-    let keys = [];
-    for (let key in value) {
+    const keys = [];
+    for (const key of value) {
       keys.push({ key: key, value: value[key] });
     }
     return keys;

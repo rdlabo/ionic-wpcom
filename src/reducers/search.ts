@@ -1,16 +1,16 @@
 import { Action } from '@ngrx/store';
-import { ISearch } from '../interfaces/store';
+import { ISearch } from '@/interfaces/store';
 
-export class createAction implements Action {
+export class CreateAction implements Action {
   readonly type = 'SEARCH';
   constructor(public payload: ISearch) {}
 }
 
-export class deleteAction implements Action {
+export class DeleteAction implements Action {
   readonly type = 'SEARCH_DELETE';
   constructor(public payload: ISearch) {}
 }
-export type CustomAction = createAction | deleteAction;
+export type CustomAction = CreateAction | DeleteAction;
 
 export const REGISTER = 'SEARCH';
 export const DELETE = 'SEARCH_DELETE';

@@ -3,9 +3,9 @@ import { NavController, IonicPage, NavParams } from 'ionic-angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { IPostParams } from '../../interfaces/wordpress';
-import { IAppState, ISearch } from '../../interfaces/store';
-import { WordpressProvider } from '../../providers/wordpress/wordpress';
+import { IPostParams } from '@/interfaces/wordpress';
+import { IAppState, ISearch } from '@/interfaces/store';
+import { WordpressProvider } from '@/providers/wordpress/wordpress';
 
 @IonicPage({
   segment: 'search',

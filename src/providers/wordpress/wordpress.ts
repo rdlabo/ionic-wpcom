@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AlertController } from 'ionic-angular';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
-import { wordpressAPI, wordpressURL, noImageURL } from '../../wp-config';
-import { IPost, ICategory, IPostParams, ITag, IAuthor, ISite } from '../../interfaces/wordpress';
+import { environment } from '@app/environment';
+import { IPost, ICategory, IPostParams, ITag, IAuthor, ISite } from '@/interfaces/wordpress';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -48,7 +48,7 @@ export class WordpressProvider {
   getSiteInfo(): Observable<ISite> {
     let params = new HttpParams();
     params = params.append('fields', 'name, jetpack');
-    return this.http.get<ISite>(wordpressAPI + wordpressURL, { params: params });
+    return this.http.get<ISite>(environment.wordpressAPI + environment.wordpressURL, { params: params });
   }
 
   getPostList(page: number, search: IPostParams): Observable<any> {
@@ -58,16 +58,24 @@ export class WordpressProvider {
     params = params.append('fields', 'ID, date, excerpt, post_thumbnail, title, author');
     params = params.append('type', search.type);
 
-    if (search.categorySlug) params = params.append('category', search.categorySlug);
-    if (search.tagSlug) params = params.append('tag', search.tagSlug);
-    if (search.authorID) params = params.append('author', String(search.authorID));
-    if (search.search) params = params.append('search', search.search);
+    if (search.categorySlug) {
+      params = params.append('category', search.categorySlug);
+    }
+    if (search.tagSlug) {
+      params = params.append('tag', search.tagSlug);
+    }
+    if (search.authorID) {
+      params = params.append('author', String(search.authorID));
+    }
+    if (search.search) {
+      params = params.append('search', search.search);
+    }
 
     console.log(params);
     return this.http
       .get<{
         posts: IPost[];
-      }>(wordpressAPI + wordpressURL + '/posts', { params: params })
+      }>(environment.wordpressAPI + environment.wordpressURL + '/posts', { params: params })
       .pipe(map(res => this.loopPosts(res.posts)));
   }
 
@@ -79,7 +87,7 @@ export class WordpressProvider {
     );
 
     return this.http
-      .get<IPost>(wordpressAPI + wordpressURL + '/posts/' + pageID, { params: params })
+      .get<IPost>(environment.wordpressAPI + environment.wordpressURL + '/posts/' + pageID, { params: params })
       .pipe(map(res => this.createArticle(res)));
   }
 
@@ -87,27 +95,27 @@ export class WordpressProvider {
     return this.http
       .get<{
         categories: ICategory[];
-      }>(wordpressAPI + wordpressURL + '/categories')
+      }>(environment.wordpressAPI + environment.wordpressURL + '/categories')
       .pipe(map(res => res.categories));
   }
 
   getCategory(key: string): Observable<ICategory> {
-    return this.http.get<ICategory>(wordpressAPI + wordpressURL + '/categories/slug:' + key);
+    return this.http.get<ICategory>(environment.wordpressAPI + environment.wordpressURL + '/categories/slug:' + key);
   }
 
   getTag(key: string): Observable<ITag> {
-    return this.http.get<ITag>(wordpressAPI + wordpressURL + '/tags/slug:' + key);
+    return this.http.get<ITag>(environment.wordpressAPI + environment.wordpressURL + '/tags/slug:' + key);
   }
 
   getAuthorList(key: string): Observable<IAuthor[]> {
     let params = new HttpParams();
     params = params.append('search', key);
 
-    return this.http.get<IAuthor[]>(wordpressAPI + wordpressURL + '/users');
+    return this.http.get<IAuthor[]>(environment.wordpressAPI + environment.wordpressURL + '/users');
   }
 
   private loopPosts(params: Array<IPost>): any {
-    let returnData: Array<IPost> = [];
+    const returnData: Array<IPost> = [];
     params.forEach((val: IPost) => {
       returnData.push(this.createArticle(val));
     });
@@ -117,7 +125,7 @@ export class WordpressProvider {
   private createArticle(params: IPost): any {
     if (params.post_thumbnail == null) {
       params.post_thumbnail = {
-        URL: noImageURL,
+        URL: environment.noImageURL,
       };
     }
 
@@ -144,7 +152,10 @@ export class WordpressProvider {
     }
 
     arrowTag = arrowTag ? arrowTag : '';
-    let pattern = new RegExp('(?!<\\/?(' + arrowTag + ')(>|\\s[^>]*>))<("[^"]*"|\\\'[^\\\']*\\\'|[^\\\'">])*>', 'gim');
+    const pattern = new RegExp(
+      '(?!<\\/?(' + arrowTag + ')(>|\\s[^>]*>))<("[^"]*"|\\\'[^\\\']*\\\'|[^\\\'">])*>',
+      'gim',
+    );
 
     str = str.replace(pattern, '');
     return str.replace(/\s+/g, '');

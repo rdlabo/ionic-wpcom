@@ -1,24 +1,30 @@
-import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChange, OnInit, OnDestroy } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Subject, Observable, Subscription, timer } from 'rxjs';
+import { Subject, Subscription, timer } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
-import { wordpressURL } from '../../../wp-config';
+import { environment } from '@app/environment';
 
-import { IPost, IPostParams, IStragePost } from '../../../interfaces/wordpress';
-import { WordpressProvider } from '../../../providers/wordpress/wordpress';
+import { IPost, IPostParams, IStragePost } from '@/interfaces/wordpress';
+import { WordpressProvider } from '@/providers/wordpress/wordpress';
 
 @Component({
   selector: 'posts',
   templateUrl: 'posts.html',
   providers: [WordpressProvider],
 })
-export class PostsComponent implements OnChanges {
+export class PostsComponent implements OnChanges, OnInit, OnDestroy {
   @Input() search: IPostParams;
+  page: number = 1;
+  posts: Array<IPost> = [];
+  subject;
+  Loaded: boolean;
+  timerSubscription: Subscription;
+
   ngOnChanges(changes: { [propKey: string]: SimpleChange }) {
     console.log('ngOnChanges');
     this.Loaded = false;
-    if (this.search.type != 'wait') {
+    if (this.search.type !== 'wait') {
       this.subject.next();
     }
   }
@@ -26,12 +32,6 @@ export class PostsComponent implements OnChanges {
   constructor(public nav: NavController, public wp: WordpressProvider, public storage: Storage) {
     this.initializeSubject();
   }
-
-  page: number = 1;
-  posts: Array<IPost> = [];
-  subject;
-  Loaded: boolean;
-  timerSubscription: Subscription;
 
   ngOnInit() {
     // 定期実行
@@ -43,7 +43,7 @@ export class PostsComponent implements OnChanges {
           this.posts = this.posts.filter(v => {
             let flg: boolean = true;
             Array.prototype.forEach.call(hiddens, node => {
-              if (node.domain == wordpressURL && v.ID == node.article.ID) {
+              if (node.domain == environment.wordpressURL && v.ID == node.article.ID) {
                 flg = false;
               }
             });

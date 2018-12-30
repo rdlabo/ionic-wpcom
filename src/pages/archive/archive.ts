@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
-import { IPostParams } from '../../interfaces/wordpress';
+import { IPostParams } from '@/interfaces/wordpress';
 
 @IonicPage()
 @Component({

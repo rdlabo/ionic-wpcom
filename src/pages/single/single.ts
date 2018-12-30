@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { IPost, ICategory, ITag, IAuthor, IStragePost } from '../../interfaces/wordpress';
-import { wordpressURL, noImageURL } from '../../wp-config';
+import { WordpressProvider } from '@/providers/wordpress/wordpress';
+import { IPost, ICategory, ITag, IAuthor, IStragePost } from '@/interfaces/wordpress';
+import { environment } from '@app/environment';
 
 @IonicPage({
   segment: 'archive/single/:postID',
@@ -30,7 +30,7 @@ export class Single {
   shareURL: {
     twitter: string;
   };
-  noImageURL: string = noImageURL;
+  noImageURL: string = environment.noImageURL;
   bookmarked: boolean = false;
 
   ionViewDidLoad() {
@@ -63,14 +63,14 @@ export class Single {
 
   addClipboard(): void {
     const body = document.body;
-    let text_area = document.createElement('textarea');
-    text_area.value = location.href;
-    body.appendChild(text_area);
-    text_area.select();
+    const textArea = document.createElement('textarea');
+    textArea.value = location.href;
+    body.appendChild(textArea);
+    textArea.select();
     document.execCommand('copy');
-    body.removeChild(text_area);
+    body.removeChild(textArea);
 
-    let toast = this.toastCtrl.create({
+    const toast = this.toastCtrl.create({
       message: 'URLをクリップボードにコピーしました',
       duration: 2500,
     });
@@ -82,7 +82,7 @@ export class Single {
       if (data) {
         const bookmarks: Array<IStragePost> = JSON.parse(data);
         Array.prototype.forEach.call(bookmarks, node => {
-          if (node.domain == wordpressURL && node.postID == this.navParams.get('postID')) {
+          if (node.domain === environment.wordpressURL && node.postID === this.navParams.get('postID')) {
             this.bookmarked = true;
           }
         });
@@ -97,7 +97,7 @@ export class Single {
 
     if (this.bookmarked) {
       this.deleteLocalStrage('bookmarks').then(() => {
-        let toast = this.toastCtrl.create({
+        const toast = this.toastCtrl.create({
           message: 'この記事をお気に入りから削除しました。',
           duration: 2000,
           position: 'bottomop',
@@ -106,7 +106,7 @@ export class Single {
       });
     } else {
       this.saveLocalStrage('bookmarks').then(() => {
-        let toast = this.toastCtrl.create({
+        const toast = this.toastCtrl.create({
           message: 'この記事をお気に入りに追加しました。サイドメニューから確認できます',
           duration: 2000,
           position: 'bottomop',
@@ -117,7 +117,7 @@ export class Single {
   }
 
   hidden(): void {
-    let alert = this.alertCtrl.create({
+    const alert = this.alertCtrl.create({
       title: '非表示にしますか？',
       message: 'この記事を非表示にしますか？？',
       buttons: [
@@ -129,7 +129,7 @@ export class Single {
           text: '非表示にする',
           handler: () => {
             this.saveLocalStrage('hidden').then(() => {
-              let toast = this.toastCtrl.create({
+              const toast = this.toastCtrl.create({
                 message: 'この記事を非表示にしました',
                 duration: 2000,
                 position: 'bottomop',
@@ -155,9 +155,11 @@ export class Single {
         }
 
         const createBookmarks = registerBookmarks.filter(e => {
-          console.log([e.domain, wordpressURL, String(e.postID), String(this.navParams.get('postID'))]);
-          console.log(e.domain == wordpressURL && String(e.postID) != String(this.navParams.get('postID')));
-          return e.domain == wordpressURL && String(e.postID) != String(this.navParams.get('postID'));
+          console.log([e.domain, environment.wordpressURL, String(e.postID), String(this.navParams.get('postID'))]);
+          console.log(
+            e.domain === environment.wordpressURL && String(e.postID) !== String(this.navParams.get('postID')),
+          );
+          return e.domain === environment.wordpressURL && String(e.postID) !== String(this.navParams.get('postID'));
         });
 
         this.bookmarked = false;
@@ -174,7 +176,7 @@ export class Single {
       const now = new Date();
       const bookmark: Array<IStragePost> = [
         {
-          domain: wordpressURL,
+          domain: environment.wordpressURL,
           postID: this.navParams.get('postID'),
           article: this.article,
           created: now.getFullYear() + '-' + now.getMonth() + 1 + '-' + now.getDate(),
