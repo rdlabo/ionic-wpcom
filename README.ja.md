@@ -34,11 +34,11 @@ $ npm run-script build --prod
 これを自分が持っているWordPressに変更してみましょう。
 
 変更はとても簡単です。
-`src/wp-config.ts`を開いて、以下の部分を自分が持っているWordPressのURLに変更して下さい。
+`src/environments/environments.dev.ts`、`src/environments/environments.prod.ts`を開いて、以下の部分を自分が持っているWordPressのURLに変更して下さい。
 
 ```
-14  /* WordPress.comのURL、もしくはJetPack連携しているURL */
-15  export const wordpressURL = 'rdlabo.jp';
+9   // WordPress.comのURL、もしくはJetPack連携しているURL
+10  wordpressURL: 'rdlabo630094126.wordpress.com',
 ```
 
 変更・保存後に、コマンドを叩いたらあなたのWordPressのデータが表示されています。
@@ -50,8 +50,8 @@ $ npm run-script build --prod
 例えば、`https://ja.blog.wordpress.com`の場合は以下のように変更して下さい
 
 ```
-14  /* WordPress.comのURL、もしくはJetPack連携しているURL */
-15  export const wordpressURL = 'ja.blog.wordpress.com';
+9   // WordPress.comのURL、もしくはJetPack連携しているURL
+10  wordpressURL: 'rdlabo630094126.wordpress.com',
 ```
 
 #### WordPress.org（インストール型）の場合

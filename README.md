@@ -39,11 +39,11 @@ By default, the package developer [rdlabo](https://rdlabo.jp/)'s REST API is dis
 Let's change this to WordPress you have.
 
 The change is very easy. 
-Open `src/wp-config.ts` and change the following part to the URL of WordPress you have.
+Open `src/environments/environments.dev.ts`,`src/environments/environments.prod.ts` and change the following part to the URL of WordPress you have.
 
 ```
-14  /* WordPress.comのURL、もしくはJetPack連携しているURL */
-15  export const wordpressURL = 'rdlabo.jp';
+9   // WordPress.comのURL、もしくはJetPack連携しているURL
+10  wordpressURL: 'rdlabo630094126.wordpress.com',
 ```
 
 After change/save, hitting a command will display your WordPress data.
@@ -52,11 +52,11 @@ After change/save, hitting a command will display your WordPress data.
 If you run a blog using [WordPress.com](https://wordpress.com/), 
 please enter the URL of WordPress.com in the above URL field.
 
-For example, at https: //en.blog.wordpress.com, please change it as follows
+For example, at https://en.blog.wordpress.com, please change it as follows
 
 ```
-14  /* WordPress.comのURL、もしくはJetPack連携しているURL */
-15  export const wordpressURL = 'ja.blog.wordpress.com';
+9   // WordPress.comのURL、もしくはJetPack連携しているURL
+10  wordpressURL: 'rdlabo630094126.wordpress.com',
 ```
 
 #### For WordPress.org (installation type)
