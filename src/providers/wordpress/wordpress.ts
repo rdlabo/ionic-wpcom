@@ -7,7 +7,8 @@ import {
     IPost, ICategory, IPostParams, ITag,
     IAuthor, ISite
 } from '../../interfaces/wordpress';
-import {Observable} from "rxjs/Observable";
+import {Observable} from "rxjs";
+import {map} from 'rxjs/operators';
 
 @Injectable()
 export class WordpressProvider {
@@ -75,7 +76,9 @@ export class WordpressProvider {
         return this.http.get<{
             posts:IPost[]
         }>(wordpressAPI + wordpressURL + "/posts", { params:params })
-            .map( res => this.loopPosts(res.posts));
+          .pipe(
+            map( res => this.loopPosts(res.posts))
+          );
     }
 
     getPostArticle(pageID:number): Observable<any> {
@@ -85,14 +88,14 @@ export class WordpressProvider {
         return this.http.get<
             IPost
             >(wordpressAPI + wordpressURL + "/posts/" + pageID, { params:params })
-            .map(res => this.createArticle(res));
+          .pipe(map(res => this.createArticle(res)))
     }
 
     getCategoryList(): Observable<ICategory[]>{
         return this.http.get<{
             categories: ICategory[]
         }>(wordpressAPI + wordpressURL + "/categories")
-            .map(res => res.categories);
+            .pipe(map(res => res.categories));
     }
 
     getCategory(key:string): Observable<ICategory>{

@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChange } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Subject, Observable, Subscription } from 'rxjs';
+import { Subject, Observable, Subscription, timer } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 import { wordpressURL } from '../../../wp-config';
 
@@ -40,8 +41,7 @@ export class PostsComponent implements OnChanges {
 
     ngOnInit(){
         // 定期実行
-        this.timerSubscription = Observable
-            .timer(0,1000)
+        this.timerSubscription = timer(0,1000)
             .subscribe(
                 ()=>{
                     this.storage.get('hidden').then((data)=>{
@@ -96,9 +96,9 @@ export class PostsComponent implements OnChanges {
     private initializeSubject(){
         this.subject = new Subject();
         this.subject
-            .switchMap(obj => {
+            .pipe(switchMap(obj => {
                 return this.getPostList()
-            })
+            }))
             .subscribe(
                 (data:Array<IPost>) => {
                     this.page = 2;

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, LoadingController } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Store } from '@ngrx/store';
 
 import { REGISTER as REGISTER1, DELETE as DELETE1 } from '../reducers/search';
@@ -9,21 +9,7 @@ import { REGISTER as REGISTER2 } from '../reducers/current';
 
 import { WordpressProvider } from '../providers/wordpress/wordpress';
 import { ISite } from '../interfaces/wordpress';
-import { IAppState } from '../interfaces/store';
-
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/retry';
-import 'rxjs/add/operator/skip';
-import 'rxjs/add/operator/skipWhile'
-import 'rxjs/add/operator/concatMap'
-
-import 'rxjs/add/observable/timer';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/of';
-
+import { IAppState } from '@/interfaces/store';
 
 @Component({
   templateUrl: 'app.html',

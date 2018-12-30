@@ -12,7 +12,7 @@
  */
 
 /* WordPress.comのURL、もしくはJetPack連携しているURL */
-export const wordpressURL = 'example.com';
+export const wordpressURL = 'rdlabo630094126.wordpress.com';
 
 /* 表示しないページID */
 export const excludePages = [559, 496, 2];

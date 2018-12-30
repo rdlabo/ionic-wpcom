@@ -4,14 +4,14 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 import { StoreModule } from '@ngrx/store';
-import { reducers } from '../reducers';
+import { reducers } from '@/reducers';
 
 import { MyApp } from './app.component';
-import { ComponentsModule } from "../components/components.module";
+import { ComponentsModule } from "@/components/components.module";
 import { WordpressProvider } from '../providers/wordpress/wordpress';
 
 
