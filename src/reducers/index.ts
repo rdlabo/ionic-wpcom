@@ -4,6 +4,6 @@ import { reducer as currentReducer } from './current';
 import { IAppState } from '../interfaces/store';
 
 export const reducers: ActionReducerMap<IAppState> = {
-    search: searchReducer,
-    current: currentReducer
+  search: searchReducer,
+  current: currentReducer,
 };

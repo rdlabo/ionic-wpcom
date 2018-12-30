@@ -13,60 +13,59 @@ import { IAppState } from '@/interfaces/store';
 
 @Component({
   templateUrl: 'app.html',
-  providers:[ WordpressProvider ]
+  providers: [WordpressProvider],
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage = 'Archive';
-  intervalCurrentPage : number;
+  intervalCurrentPage: number;
 
   constructor(
-      public platform: Platform,
-      public statusBar: StatusBar,
-      public splashScreen: SplashScreen,
-      public wp:WordpressProvider,
-      public store:Store<IAppState>,
-      public loadingCtrl: LoadingController
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public wp: WordpressProvider,
+    public store: Store<IAppState>,
+    public loadingCtrl: LoadingController,
   ) {
     this.initializeApp();
   }
 
-  ngOnInit(){
-    const loading = this.loadingCtrl.create({ content:'Loading...' });
+  ngOnInit() {
+    const loading = this.loadingCtrl.create({ content: 'Loading...' });
     loading.present();
-    this.wp.getSiteInfo()
-        .subscribe(
-            (data:ISite) => {
-              loading.dismiss();
-            },
-            (error) => {
-              loading.dismiss();
-              this.wp.errorResponse(error)
-            }
-        );
+    this.wp.getSiteInfo().subscribe(
+      (data: ISite) => {
+        loading.dismiss();
+      },
+      error => {
+        loading.dismiss();
+        this.wp.errorResponse(error);
+      },
+    );
   }
 
-  ionViewDidLeave(){
+  ionViewDidLeave() {
     clearInterval(this.intervalCurrentPage);
   }
 
-  handlesetRootPage($event){
+  handlesetRootPage($event) {
     this.nav.setRoot($event.component, $event.params);
   }
 
-  handlesetSearchKeyword(keyword){
-    this.store.dispatch({type: REGISTER1, payload: { keyword: keyword }});
+  handlesetSearchKeyword(keyword) {
+    this.store.dispatch({ type: REGISTER1, payload: { keyword: keyword } });
   }
 
   handlestartSearch() {
-    if(this.nav.getActive().id != 'Search'){
+    if (this.nav.getActive().id != 'Search') {
       this.nav.setRoot('Search');
     }
   }
 
   handlecancelSearchKeyword() {
-    this.store.dispatch({type: DELETE1});
+    this.store.dispatch({ type: DELETE1 });
   }
 
   private initializeApp() {
@@ -75,10 +74,13 @@ export class MyApp {
       this.splashScreen.hide();
     });
 
-    this.intervalCurrentPage = window.setInterval(()=>{
-      if(this.nav.getActive()){
-        this.store.dispatch({type: REGISTER2, payload: { page:this.nav.getActive().id, opt:this.nav.getActive().data }});
+    this.intervalCurrentPage = window.setInterval(() => {
+      if (this.nav.getActive()) {
+        this.store.dispatch({
+          type: REGISTER2,
+          payload: { page: this.nav.getActive().id, opt: this.nav.getActive().data },
+        });
       }
-    },1000)
+    }, 1000);
   }
 }

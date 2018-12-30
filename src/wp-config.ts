@@ -1,4 +1,3 @@
-
 /**
  * 基本設定
  *
@@ -26,5 +25,5 @@ export const excludePages = [559, 496, 2];
 /* アイキャッチ画像が設定されていない記事の置き換え画像 */
 export const noImageURL = 'assets/wordpress-logo-notext-rgb.png';
 
- /* REST API Endpoint */
+/* REST API Endpoint */
 export const wordpressAPI = 'https://public-api.wordpress.com/rest/v1.1/sites/';

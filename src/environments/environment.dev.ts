@@ -5,5 +5,5 @@
 // `ionic build --prod` then `environment.prod.ts` will be used instead.
 
 export const environment = {
-  production: false
+  production: false,
 };

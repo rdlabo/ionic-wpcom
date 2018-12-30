@@ -4,47 +4,36 @@ import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { IPostParams } from '../../interfaces/wordpress';
 
 @IonicPage({
-    segment: 'category/:key',
+  segment: 'category/:key',
 })
 @Component({
-    selector: 'category',
-    templateUrl: 'category.html',
-    providers:[ WordpressProvider ]
+  selector: 'category',
+  templateUrl: 'category.html',
+  providers: [WordpressProvider],
 })
 export class Category {
+  type: string = 'カテゴリ';
+  title: string;
+  search: IPostParams = {
+    type: 'wait',
+    categorySlug: this.navParams.get('key'),
+  };
 
-    type:string = 'カテゴリ';
-    title:string;
-    search: IPostParams = {
-        type : 'wait',
-        categorySlug : this.navParams.get('key')
-    }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public wp: WordpressProvider) {}
 
-    constructor(
-        public navCtrl: NavController,
-        public navParams: NavParams,
-        public wp: WordpressProvider
-    ) {}
+  ionViewDidLoad() {
+    this.title = this.navParams.get('title');
+    const f = () =>
+      new Promise(resolve => {
+        resolve(this.navParams.get('key'));
+      });
+    f().then((slug: string) => {
+      this.wp.getCategory(slug).subscribe(data => (this.title = data.name));
 
-    ionViewDidLoad(){
-        this.title = this.navParams.get('title');
-        const f = () => new Promise(
-            (resolve)=>{
-                resolve(this.navParams.get('key'));
-            }
-        );
-        f().then(
-            (slug:string) => {
-                this.wp.getCategory(slug)
-                    .subscribe(
-                        data => this.title = data.name
-                    );
-
-                this.search = {
-                    type: 'post',
-                    categorySlug : slug
-                }
-            }
-        );
-    }
+      this.search = {
+        type: 'post',
+        categorySlug: slug,
+      };
+    });
+  }
 }

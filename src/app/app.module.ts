@@ -11,31 +11,21 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '@/reducers';
 
 import { MyApp } from './app.component';
-import { ComponentsModule } from "@/components/components.module";
+import { ComponentsModule } from '@/components/components.module';
 import { WordpressProvider } from '../providers/wordpress/wordpress';
 
-
 @NgModule({
-    declarations: [
-        MyApp
-    ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        IonicModule.forRoot(MyApp),
-        ComponentsModule,
-        IonicStorageModule.forRoot(),
-        StoreModule.forRoot(reducers),
-    ],
-    bootstrap: [IonicApp],
-    entryComponents: [
-        MyApp
-    ],
-    providers: [
-        StatusBar,
-        SplashScreen,
-        {provide: ErrorHandler, useClass: IonicErrorHandler},
-        WordpressProvider
-    ]
+  declarations: [MyApp],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    IonicModule.forRoot(MyApp),
+    ComponentsModule,
+    IonicStorageModule.forRoot(),
+    StoreModule.forRoot(reducers),
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [MyApp],
+  providers: [StatusBar, SplashScreen, { provide: ErrorHandler, useClass: IonicErrorHandler }, WordpressProvider],
 })
 export class AppModule {}
