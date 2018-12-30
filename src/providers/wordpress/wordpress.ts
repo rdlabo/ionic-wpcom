@@ -7,7 +7,9 @@ import { IPost, ICategory, IPostParams, ITag, IAuthor, ISite } from '@/interface
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class WordpressProvider {
   constructor(public http: HttpClient, public sanitizer: DomSanitizer, public alertCtrl: AlertController) {}
 
