@@ -8,8 +8,16 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'archive',
     pathMatch: 'full'
+  },
+  {
+    path: 'archive',
+    loadChildren: () => import('./archive/archive.module').then( m => m.ArchivePageModule)
+  },
+  {
+    path: 'archive/single/:postID',
+    loadChildren: () => import('./single/single.module').then( m => m.SinglePageModule)
   },
 ];
 
