@@ -7,7 +7,9 @@ import { environment } from '../../../../environments/environment';
 
 import { IPost, IPostParams, IStragePost } from '../../../../interfaces/wordpress';
 import { WordpressProvider } from '../../../../providers/wordpress/wordpress';
-import {formatNumber} from "@angular/common";
+//import {formatNumber} from "@angular/common";
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'posts',
@@ -34,6 +36,7 @@ export class PostsComponent implements OnChanges, OnInit, OnDestroy {
   constructor(
     public navCtrl: NavController,
     public wp: WordpressProvider,
+    public router: Router,
     public storage: Storage) {
     this.initializeSubject();
   }
@@ -69,26 +72,24 @@ export class PostsComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   doInfinite(infiniteScroll) {
-    this.getPostList().then(
-      (data: Array<IPost>) => {
+     this.getPostList().then((data: Array<IPost>) => {
         this.page++;
         this.posts = this.posts.concat(data);
         if (data.length > 0) {
-          infiniteScroll.complete();
+          console.log('infiniteScroll',infiniteScroll)
+          infiniteScroll.target.complete();
         } else {
-          infiniteScroll.enable(false);
+          infiniteScroll.target.enable(false);
         }
       },
       error => {
-        infiniteScroll.complete();
+        infiniteScroll.target.complete();
       },
     );
   }
 
   viewSingle(post): void {
-    console.log('post',post)
-    // @ts-ignore
-    this.navCtrl.navigateRoot(`/archive/single/${post.ID}`, { postID: post.ID, title: post.title });
+    this.router.navigateByUrl(`/archive/single/${post.ID}`);
   }
 
   private initializeSubject() {

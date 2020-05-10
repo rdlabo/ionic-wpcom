@@ -8,7 +8,6 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {WordpressProvider} from '../providers/wordpress/wordpress'
 import {SharedModule} from "./_shared/shared.module";
 
 import {HttpClientModule} from '@angular/common/http';
@@ -29,7 +28,6 @@ import {IonicStorageModule} from '@ionic/storage';
     StatusBar,
     SplashScreen,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
-    WordpressProvider
   ],
   bootstrap: [AppComponent]
 })
