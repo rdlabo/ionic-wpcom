@@ -1,25 +1,23 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { Platform,NavController } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Store } from '@ngrx/store';
+import { Platform, NavController } from "@ionic/angular";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { Store } from "@ngrx/store";
 
-import {DELETE as DELETE1, REGISTER as REGISTER1} from "../../_old/src/reducers/search";
-import {REGISTER as REGISTER2} from "../../_old/src/reducers/current";
+//import {DELETE as DELETE1, REGISTER as REGISTER1} from "../../_old/src/reducers/search";
+//import {REGISTER as REGISTER2} from "../../_old/src/reducers/current";
 
-import { WordpressProvider } from '../providers/wordpress/wordpress';
-import { ISite } from '../interfaces/wordpress';
-import { IAppState } from '../interfaces/store';
-
+import { WordpressProvider } from "../providers/wordpress/wordpress";
+import { ISite } from "../interfaces/wordpress";
+import { IAppState } from "../interfaces/store";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  selector: "app-root",
+  templateUrl: "app.component.html",
+  styleUrls: ["app.component.scss"],
 })
 export class AppComponent {
-
   //rootPage = 'Archive';
   intervalCurrentPage: number;
 
@@ -28,7 +26,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private navCtrl: NavController,
-    public store: Store<IAppState>,
+    public store: Store<IAppState>
   ) {
     this.initializeApp();
   }
@@ -38,9 +36,9 @@ export class AppComponent {
   }
 
   handlesetRootPage($event) {
-    if ($event.params.postID === undefined){
+    if ($event.params.postID === undefined) {
       this.navCtrl.navigateRoot(`${$event.component}`);
-      return
+      return;
     }
     this.navCtrl.navigateRoot(`${$event.component}/${$event.params.postID}`);
   }

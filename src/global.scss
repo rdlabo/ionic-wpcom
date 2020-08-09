@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -26,14 +26,15 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 $colors: (
-  primary:    #4e8ef7,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #999,
-  black:      #333,
-  white:      #fff
+  primary: #4e8ef7,
+  secondary: #32db64,
+  danger: #f53d3d,
+  light: #f4f4f4,
+  dark: #999,
+  black: #333,
+  white: #fff,
 );
+@function color($colors, $key) {
+  @return map-get($colors, $key);
+}
 @import "./theme/ionic-wpcom";
-
-
