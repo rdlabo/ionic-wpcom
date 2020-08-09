@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from '@ionic/angular';
-import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { IPostParams } from '../../interfaces/wordpress';
+import { WordpressProvider } from '../../providers/wordpress/wordpress';
 
 @Component({
   selector: 'app-category',
@@ -9,9 +9,9 @@ import { IPostParams } from '../../interfaces/wordpress';
   styleUrls: ['./category.page.scss'],
 })
 export class CategoryPage implements OnInit {
-  type = 'カテゴリ';
-  title: string;
-  search: IPostParams = {
+  public type = 'カテゴリ';
+  public title: string;
+  public search: IPostParams = {
     type: 'wait',
     categorySlug: this.navParams.get('key'),
   };
@@ -19,11 +19,11 @@ export class CategoryPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public wp: WordpressProvider
+    public wp: WordpressProvider,
   ) {}
 
-  ngOnInit() {}
-  ionViewWillEnter() {
+  public ngOnInit() {}
+  public ionViewWillEnter() {
     console.log('カテゴリの読み込み');
     this.title = this.navParams.get('title');
     const f = () =>

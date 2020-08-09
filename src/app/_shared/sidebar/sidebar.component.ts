@@ -1,15 +1,15 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 // import { Nav, LoadingController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { IPost, ICategory } from '../../../interfaces/wordpress';
 import { IAppState, ICurrent } from '../../../interfaces/store';
+import { ICategory, IPost } from '../../../interfaces/wordpress';
 import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 
-export interface InterfacePage {
+export interface IPage {
   ID: string;
   title: string;
   component: any;
@@ -18,26 +18,26 @@ export interface InterfacePage {
 }
 
 @Component({
-  selector: 'sidebar',
+  selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   providers: [WordpressProvider],
 })
 export class SidebarComponent implements OnInit {
   // @ViewChild() nav: NavController;
-  @Output() setRootPage = new EventEmitter();
+  @Output() public setRootPage = new EventEmitter();
 
-  pages: Array<InterfacePage>;
-  categories: Array<InterfacePage>;
-  currentStore$: Observable<ICurrent>;
+  public pages: Array<IPage>;
+  public categories: Array<IPage>;
+  public currentStore$: Observable<ICurrent>;
 
   constructor(public wp: WordpressProvider, public store: Store<IAppState>) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.initializeMenu();
   }
 
-  openPage(page: InterfacePage): void {
+  public openPage(page: IPage): void {
     this.setRootPage.emit(page);
   }
 
@@ -69,7 +69,7 @@ export class SidebarComponent implements OnInit {
           }
         });
       },
-      (error) => {}
+      (error) => {},
     );
 
     this.wp.getCategoryList().subscribe(
@@ -88,7 +88,7 @@ export class SidebarComponent implements OnInit {
           }
         });
       },
-      (error) => {}
+      (error) => {},
     );
 
     this.currentStore$ = this.store.select('current');
@@ -99,9 +99,9 @@ export class SidebarComponent implements OnInit {
   }
 
   private checkCurrentPage(
-    pages: Array<InterfacePage>,
+    pages: Array<IPage>,
     label,
-    currentData: ICurrent
+    currentData: ICurrent,
   ) {
     const checkedPage = [];
     if (pages[0] && currentData.page) {

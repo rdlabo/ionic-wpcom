@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import { NavController, NavParams, ToastController } from '@ionic/angular';
+import { IAuthor, ICategory, IPost, ITag } from '../../interfaces/wordpress';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { IPost, ICategory, ITag, IAuthor } from '../../interfaces/wordpress';
-import {Router, ActivatedRoute} from '@angular/router';
-
 
 @Component({
   selector: 'app-page',
@@ -19,18 +18,18 @@ export class PagePage implements OnInit {
     public toastCtrl: ToastController,
     private route: ActivatedRoute,
   ) { }
-  title: string;
-  article: IPost;
-  url: string = window.location.href;
-  shareURL: {
+  public title: string;
+  public article: IPost;
+  public url: string = window.location.href;
+  public shareURL: {
     twitter: string;
   };
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  ionViewWillEnter() {
-    this.wp.getPostArticle(Number(this.route.snapshot.paramMap.get('postID'))).subscribe(data => {
+  public ionViewWillEnter() {
+    this.wp.getPostArticle(Number(this.route.snapshot.paramMap.get('postID'))).subscribe((data) => {
       this.title = !this.title ? data.title : this.title;
       this.article = data;
       // this.shareURL = this.createShareURL(this.url, data);
@@ -40,15 +39,15 @@ export class PagePage implements OnInit {
     });
   }
 
-  viewAuthor(author: IAuthor): void {
+  public viewAuthor(author: IAuthor): void {
     // this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
   }
 
-  viewCategory(category: ICategory): void {
+  public viewCategory(category: ICategory): void {
     // this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
   }
 
-  viewTag(tag: ITag): void {
+  public viewTag(tag: ITag): void {
     // this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
   }
 

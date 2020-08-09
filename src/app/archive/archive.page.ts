@@ -8,14 +8,14 @@ import { IPostParams } from '../../interfaces/wordpress';
   styleUrls: ['./archive.page.scss'],
 })
 export class ArchivePage implements OnInit {
-  search: IPostParams = {
+  public search: IPostParams = {
     type: 'post',
   };
   constructor(
     public navCtrl: NavController,
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }

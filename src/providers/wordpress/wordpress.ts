@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { environment } from '../../environments/environment';
-import {
-  IPost,
-  ICategory,
-  IPostParams,
-  ITag,
-  IAuthor,
-  ISite,
-} from '../../interfaces/wordpress';
+import { AlertController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+import {
+  IAuthor,
+  ICategory,
+  IPost,
+  IPostParams,
+  ISite,
+  ITag,
+} from '../../interfaces/wordpress';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +21,12 @@ export class WordpressProvider {
   constructor(
     public http: HttpClient,
     public sanitizer: DomSanitizer,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
   ) {}
 
-  errorResponse(error): void {
-    let errorTitle, errorText: string;
+  public errorResponse(error): void {
+    let errorTitle: string;
+    let errorText: string;
     switch (error.status) {
       case 401:
         errorTitle = '401 Unauthorized';
@@ -62,22 +63,22 @@ export class WordpressProvider {
     // alert.present();
   }
 
-  getSiteInfo(): Observable<ISite> {
+  public getSiteInfo(): Observable<ISite> {
     let params = new HttpParams();
     params = params.append('fields', 'name, jetpack');
     return this.http.get<ISite>(
       environment.wordpressAPI + environment.wordpressURL,
-      { params }
+      { params },
     );
   }
 
-  getPostList(page: number, search: IPostParams): Observable<any> {
+  public getPostList(page: number, search: IPostParams): Observable<any> {
     let params = new HttpParams();
     params = params.append('page', String(page));
     params = params.append('number', String(10));
     params = params.append(
       'fields',
-      'ID, date, excerpt, post_thumbnail, title, author'
+      'ID, date, excerpt, post_thumbnail, title, author',
     );
     params = params.append('type', search.type);
 
@@ -104,11 +105,11 @@ export class WordpressProvider {
       .pipe(map((res) => this.loopPosts(res.posts)));
   }
 
-  getPostArticle(pageID: number): Observable<any> {
+  public getPostArticle(pageID: number): Observable<any> {
     let params = new HttpParams();
     params = params.append(
       'fields',
-      'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags'
+      'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags',
     );
 
     return this.http
@@ -117,12 +118,12 @@ export class WordpressProvider {
           environment.wordpressURL +
           '/posts/' +
           pageID,
-        { params }
+        { params },
       )
       .pipe(map((res) => this.createArticle(res)));
   }
 
-  getCategoryList(): Observable<ICategory[]> {
+  public getCategoryList(): Observable<ICategory[]> {
     return this.http
       .get<{
         categories: ICategory[];
@@ -130,27 +131,27 @@ export class WordpressProvider {
       .pipe(map((res) => res.categories));
   }
 
-  getCategory(key: string): Observable<ICategory> {
+  public getCategory(key: string): Observable<ICategory> {
     return this.http.get<ICategory>(
       environment.wordpressAPI +
         environment.wordpressURL +
         '/categories/slug:' +
-        key
+        key,
     );
   }
 
-  getTag(key: string): Observable<ITag> {
+  public getTag(key: string): Observable<ITag> {
     return this.http.get<ITag>(
-      environment.wordpressAPI + environment.wordpressURL + '/tags/slug:' + key
+      environment.wordpressAPI + environment.wordpressURL + '/tags/slug:' + key,
     );
   }
 
-  getAuthorList(key: string): Observable<IAuthor[]> {
+  public getAuthorList(key: string): Observable<IAuthor[]> {
     let params = new HttpParams();
     params = params.append('search', key);
 
     return this.http.get<IAuthor[]>(
-      environment.wordpressAPI + environment.wordpressURL + '/users'
+      environment.wordpressAPI + environment.wordpressURL + '/users',
     );
   }
 
@@ -206,7 +207,7 @@ export class WordpressProvider {
       '(?!<\\/?(' +
         arrowTag +
         ')(>|\\s[^>]*>))<("[^"]*"|\\\'[^\\\']*\\\'|[^\\\'">])*>',
-      'gim'
+      'gim',
     );
 
     str = str.replace(pattern, '');
