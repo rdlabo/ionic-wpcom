@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import { NavController, NavParams, ToastController } from '@ionic/angular';
+import { IAuthor, ICategory, IPost, ITag } from '../../interfaces/wordpress';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { IPost, ICategory, ITag, IAuthor } from '../../interfaces/wordpress';
-import {Router,ActivatedRoute} from '@angular/router';
-
 
 @Component({
   selector: 'app-page',
@@ -14,42 +13,42 @@ export class PagePage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    //public navParams: NavParams,
+    // public navParams: NavParams,
     public wp: WordpressProvider,
     public toastCtrl: ToastController,
     private route: ActivatedRoute,
   ) { }
-
-  ngOnInit() {
-  }
-  title: string;
-  article: IPost;
-  url: string = window.location.href;
-  shareURL: {
+  public title: string;
+  public article: IPost;
+  public url: string = window.location.href;
+  public shareURL: {
     twitter: string;
   };
 
-  ionViewWillEnter() {
-    this.wp.getPostArticle(Number(this.route.snapshot.paramMap.get('postID'))).subscribe(data => {
+  public ngOnInit() {
+  }
+
+  public ionViewWillEnter() {
+    this.wp.getPostArticle(Number(this.route.snapshot.paramMap.get('postID'))).subscribe((data) => {
       this.title = !this.title ? data.title : this.title;
       this.article = data;
-      //this.shareURL = this.createShareURL(this.url, data);
+      // this.shareURL = this.createShareURL(this.url, data);
       setTimeout(() => {
-        //this.trimArticle();
+        // this.trimArticle();
       }, 100);
     });
   }
 
-  viewAuthor(author: IAuthor): void {
-    //this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
+  public viewAuthor(author: IAuthor): void {
+    // this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
   }
 
-  viewCategory(category: ICategory): void {
-    //this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
+  public viewCategory(category: ICategory): void {
+    // this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
   }
 
-  viewTag(tag: ITag): void {
-    //this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
+  public viewTag(tag: ITag): void {
+    // this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
   }
 
   // addClipboard(): void {

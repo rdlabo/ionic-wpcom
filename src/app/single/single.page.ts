@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, ToastController, AlertController } from '@ionic/angular';
+import {ActivatedRoute, Router} from '@angular/router';
+import { AlertController, NavController, NavParams, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { WordpressProvider } from '../../providers/wordpress/wordpress';
-import { IPost, ICategory, ITag, IAuthor, IStragePost } from '../../interfaces/wordpress';
 import { environment } from '../../environments/environment';
-import {Router,ActivatedRoute} from '@angular/router';
+import { IAuthor, ICategory, IPost, IStragePost, ITag } from '../../interfaces/wordpress';
+import { WordpressProvider } from '../../providers/wordpress/wordpress';
 
 @Component({
   selector: 'app-single',
@@ -16,7 +16,7 @@ export class SinglePage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    //public navParams: NavParams,
+    // public navParams: NavParams,
     public router: Router,
     public route: ActivatedRoute,
     public storage: Storage,
@@ -25,22 +25,21 @@ export class SinglePage implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  public title: string;
+  public article: IPost;
+  public url: string = window.location.href;
+  public shareURL: {
+    twitter: string;
+  };
+  public noImageURL: string = environment.noImageURL;
+  public bookmarked = false;
+
+  public ngOnInit() {
 
   }
 
-
-  title: string;
-  article: IPost;
-  url: string = window.location.href;
-  shareURL: {
-    twitter: string;
-  };
-  noImageURL: string = environment.noImageURL;
-  bookmarked: boolean = false;
-
-  ionViewWillEnter() {
-    this.wp.getPostArticle(Number(this.route.snapshot.paramMap.get('postID'))).subscribe(data => {
+  public ionViewWillEnter() {
+    this.wp.getPostArticle(Number(this.route.snapshot.paramMap.get('postID'))).subscribe((data) => {
       this.title = !this.title ? data.title : this.title;
       this.article = data;
       this.shareURL = this.createShareURL(location.href, data);
@@ -51,22 +50,22 @@ export class SinglePage implements OnInit {
     });
   }
 
-  viewAuthor(author: IAuthor): void {
-    //this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
-    //this.navCtrl.navigateRoot('Author', { title: author.name, key: author.ID });
+  public viewAuthor(author: IAuthor): void {
+    // this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
+    // this.navCtrl.navigateRoot('Author', { title: author.name, key: author.ID });
   }
 
-  viewCategory(category: ICategory): void {
-    //this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
-    //this.navCtrl.navigateRoot('Category', { title: category.name, key: category.slug });
+  public viewCategory(category: ICategory): void {
+    // this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
+    // this.navCtrl.navigateRoot('Category', { title: category.name, key: category.slug });
   }
 
-  viewTag(tag: ITag): void {
-    //this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
-    //this.navCtrl.navigateRoot('Tag', { title: tag.name, key: tag.slug });
+  public viewTag(tag: ITag): void {
+    // this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
+    // this.navCtrl.navigateRoot('Tag', { title: tag.name, key: tag.slug });
   }
 
-  async addClipboard():Promise<void> {
+  public async addClipboard(): Promise<void> {
     const body = document.body;
     const textArea = document.createElement('textarea');
     textArea.value = location.href;
@@ -83,10 +82,10 @@ export class SinglePage implements OnInit {
   }
 
   private checkBookmarked() {
-    this.storage.get('bookmarks').then(data => {
+    this.storage.get('bookmarks').then((data) => {
       if (data) {
         const bookmarks: Array<IStragePost> = JSON.parse(data);
-        Array.prototype.forEach.call(bookmarks, node => {
+        Array.prototype.forEach.call(bookmarks, (node) => {
           if (node.domain === environment.wordpressURL && node.postID === this.route.snapshot.paramMap.get('postID')) {
             this.bookmarked = true;
           }
@@ -95,7 +94,7 @@ export class SinglePage implements OnInit {
     });
   }
 
-  async changeBookmark(): Promise<void>  {
+  public async changeBookmark(): Promise<void>  {
     if (!this.article) {
       return;
     }
@@ -121,7 +120,7 @@ export class SinglePage implements OnInit {
     }
   }
 
-  async hidden(): Promise<void> {
+  public async hidden(): Promise<void> {
     const alert = await this.alertCtrl.create({
       header: '非表示にしますか？',
       message: 'この記事を非表示にしますか？？',
@@ -150,16 +149,16 @@ export class SinglePage implements OnInit {
   }
 
   private deleteLocalStrage(key: string) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let registerBookmarks: Array<IStragePost> = [];
-      this.storage.get(key).then(data => {
+      this.storage.get(key).then((data) => {
         if (data) {
           registerBookmarks = JSON.parse(data);
         } else {
           registerBookmarks = [];
         }
 
-        const createBookmarks = registerBookmarks.filter(e => {
+        const createBookmarks = registerBookmarks.filter((e) => {
           console.log([e.domain, environment.wordpressURL, String(e.postID), String(this.route.snapshot.paramMap.get('postID'))]);
           console.log(
             e.domain === environment.wordpressURL && String(e.postID) !== String(this.route.snapshot.paramMap.get('postID')),
@@ -177,7 +176,7 @@ export class SinglePage implements OnInit {
   }
 
   private saveLocalStrage(key: string) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const now = new Date();
       const bookmark: Array<IStragePost> = [
         {
@@ -190,7 +189,7 @@ export class SinglePage implements OnInit {
 
       let registerBookmarks: Array<IStragePost> = [];
 
-      this.storage.get(key).then(data => {
+      this.storage.get(key).then((data) => {
         if (data) {
           registerBookmarks = JSON.parse(data);
         } else {
@@ -209,20 +208,20 @@ export class SinglePage implements OnInit {
   }
 
   private trimArticle() {
-    Array.prototype.forEach.call(document.querySelectorAll('article iframe'), function(node) {
+    Array.prototype.forEach.call(document.querySelectorAll('article iframe'), (node) => {
       node.setAttribute('width', '100%');
     });
 
-    Array.prototype.forEach.call(document.querySelectorAll('article iframe.wp-embedded-content'), function(node) {
+    Array.prototype.forEach.call(document.querySelectorAll('article iframe.wp-embedded-content'), (node) => {
       node.style.display = 'none';
     });
 
-    Array.prototype.forEach.call(document.querySelectorAll('article a'), function(node) {
+    Array.prototype.forEach.call(document.querySelectorAll('article a'), (node) => {
       node.setAttribute('target', '_blank');
       node.setAttribute('rel', 'noopener');
     });
 
-    Array.prototype.forEach.call(document.querySelectorAll('article div[data-shortcode=caption]'), function(node) {
+    Array.prototype.forEach.call(document.querySelectorAll('article div[data-shortcode=caption]'), (node) => {
       node.style.width = '100%';
     });
   }

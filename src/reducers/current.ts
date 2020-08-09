@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { ICurrent } from '../interfaces/store';
 
 export class CreateMehod implements Action {
-  readonly type = 'CURRENT';
+  public readonly type = 'CURRENT';
   constructor(public payload: ICurrent) {}
 }
 export type CustomAction = CreateMehod;

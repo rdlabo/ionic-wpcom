@@ -1,15 +1,15 @@
-import { Component, ViewChild, Output, EventEmitter } from "@angular/core";
-//import { Nav, LoadingController } from '@ionic/angular';
-import { NavController } from "@ionic/angular";
-import { Store } from "@ngrx/store";
-import { Observable } from "rxjs";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+// import { Nav, LoadingController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import { environment } from "../../../environments/environment";
-import { IPost, ICategory } from "../../../interfaces/wordpress";
-import { IAppState, ICurrent } from "../../../interfaces/store";
-import { WordpressProvider } from "../../../providers/wordpress/wordpress";
+import { environment } from '../../../environments/environment';
+import { IAppState, ICurrent } from '../../../interfaces/store';
+import { ICategory, IPost } from '../../../interfaces/wordpress';
+import { WordpressProvider } from '../../../providers/wordpress/wordpress';
 
-export interface InterfacePage {
+export interface IPage {
   ID: string;
   title: string;
   component: any;
@@ -18,49 +18,49 @@ export interface InterfacePage {
 }
 
 @Component({
-  selector: "sidebar",
-  templateUrl: "./sidebar.component.html",
-  styleUrls: ["./sidebar.component.scss"],
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss'],
   providers: [WordpressProvider],
 })
-export class SidebarComponent {
-  //@ViewChild() nav: NavController;
-  @Output() setRootPage = new EventEmitter();
+export class SidebarComponent implements OnInit {
+  // @ViewChild() nav: NavController;
+  @Output() public setRootPage = new EventEmitter();
 
-  pages: Array<InterfacePage>;
-  categories: Array<InterfacePage>;
-  currentStore$: Observable<ICurrent>;
+  public pages: Array<IPage>;
+  public categories: Array<IPage>;
+  public currentStore$: Observable<ICurrent>;
 
   constructor(public wp: WordpressProvider, public store: Store<IAppState>) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.initializeMenu();
   }
 
-  openPage(page: InterfacePage): void {
+  public openPage(page: IPage): void {
     this.setRootPage.emit(page);
   }
 
   private initializeMenu() {
     this.pages = [
-      { ID: "default", title: "最近の投稿", component: "archive", params: {} },
+      { ID: 'default', title: '最近の投稿', component: 'archive', params: {} },
       {
-        ID: "bookmark",
-        title: "お気に入り",
-        component: "bookmark",
+        ID: 'bookmark',
+        title: 'お気に入り',
+        component: 'bookmark',
         params: {},
       },
     ];
 
     this.categories = [];
-    this.wp.getPostList(0, { type: "page" }).subscribe(
+    this.wp.getPostList(0, { type: 'page' }).subscribe(
       (data) => {
         Array.prototype.forEach.call(data, (page: IPost) => {
           if (environment.excludePages.indexOf(page.ID) < 0) {
             this.pages.push({
               ID: String(page.ID),
               title: page.title,
-              component: "page",
+              component: 'page',
               params: {
                 postID: page.ID,
                 title: page.title,
@@ -69,17 +69,17 @@ export class SidebarComponent {
           }
         });
       },
-      (error) => {}
+      (error) => {},
     );
 
     this.wp.getCategoryList().subscribe(
       (data) => {
         Array.prototype.forEach.call(data, (cat: ICategory) => {
-          if (cat.post_count > 0 && cat.parent == 0) {
+          if (cat.post_count > 0 && cat.parent === 0) {
             this.categories.push({
               ID: cat.slug,
               title: cat.name,
-              component: "category",
+              component: 'category',
               params: {
                 title: cat.name,
                 key: cat.slug,
@@ -88,20 +88,20 @@ export class SidebarComponent {
           }
         });
       },
-      (error) => {}
+      (error) => {},
     );
 
-    this.currentStore$ = this.store.select("current");
+    this.currentStore$ = this.store.select('current');
     this.currentStore$.subscribe((data) => {
-      this.pages = this.checkCurrentPage(this.pages, "postID", data);
-      this.categories = this.checkCurrentPage(this.categories, "key", data);
+      this.pages = this.checkCurrentPage(this.pages, 'postID', data);
+      this.categories = this.checkCurrentPage(this.categories, 'key', data);
     });
   }
 
   private checkCurrentPage(
-    pages: Array<InterfacePage>,
+    pages: Array<IPage>,
     label,
-    currentData: ICurrent
+    currentData: ICurrent,
   ) {
     const checkedPage = [];
     if (pages[0] && currentData.page) {
@@ -115,7 +115,7 @@ export class SidebarComponent {
           title: page.title,
           component: page.component,
           params: page.params,
-          active: active,
+          active,
         });
       });
       return checkedPage;
@@ -123,4 +123,6 @@ export class SidebarComponent {
       return pages;
     }
   }
+
+  public trackByFn = (index, item): number => item.ID;
 }
