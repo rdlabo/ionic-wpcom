@@ -123,4 +123,6 @@ export class SidebarComponent {
       return pages;
     }
   }
+
+  public trackByFn = (index, item): number => item.ID;
 }
