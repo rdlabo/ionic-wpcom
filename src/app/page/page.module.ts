@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SinglePageRoutingModule } from './single-routing.module';
+import { PagePageRoutingModule } from './page-routing.module';
 
-import { SinglePage } from './single.page';
+import { PagePage } from './page.page';
 
 import { SharedModule } from "../_shared/shared.module";
 import { PipesModule } from '../../pipes/pipes.module';
@@ -18,8 +18,8 @@ import { PipesModule } from '../../pipes/pipes.module';
     IonicModule,
     SharedModule,
     PipesModule,
-    SinglePageRoutingModule
+    PagePageRoutingModule
   ],
-  declarations: [SinglePage]
+  declarations: [PagePage]
 })
-export class SinglePageModule {}
+export class PagePageModule {}

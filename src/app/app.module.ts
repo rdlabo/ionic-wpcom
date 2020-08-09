@@ -9,12 +9,20 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {SharedModule} from "./_shared/shared.module";
+import {SidebarComponent} from "./_shared/sidebar/sidebar.component"
+
 
 import {HttpClientModule} from '@angular/common/http';
 import {IonicStorageModule} from '@ionic/storage';
+import { StoreModule } from '@ngrx/store';
+import { reducers } from '../reducers';
+
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    SidebarComponent
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -23,6 +31,10 @@ import {IonicStorageModule} from '@ionic/storage';
     SharedModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
+    StoreModule.forRoot(reducers)
+  ],
+  exports:[
+    SidebarComponent,
   ],
   providers: [
     StatusBar,

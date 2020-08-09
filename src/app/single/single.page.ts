@@ -52,15 +52,18 @@ export class SinglePage implements OnInit {
   }
 
   viewAuthor(author: IAuthor): void {
-    this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
+    //this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
+    //this.navCtrl.navigateRoot('Author', { title: author.name, key: author.ID });
   }
 
   viewCategory(category: ICategory): void {
-    this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
+    //this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
+    //this.navCtrl.navigateRoot('Category', { title: category.name, key: category.slug });
   }
 
   viewTag(tag: ITag): void {
-    this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
+    //this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
+    //this.navCtrl.navigateRoot('Tag', { title: tag.name, key: tag.slug });
   }
 
   async addClipboard():Promise<void> {

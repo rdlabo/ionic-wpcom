@@ -19,6 +19,10 @@ const routes: Routes = [
     path: 'archive/single/:postID',
     loadChildren: () => import('./single/single.module').then( m => m.SinglePageModule)
   },
+  {
+    path: 'page/:postID',
+    loadChildren: () => import('./page/page.module').then( m => m.PagePageModule)
+  },
 ];
 
 @NgModule({

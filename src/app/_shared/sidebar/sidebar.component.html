@@ -1,0 +1,13 @@
+<ion-content>
+  <ion-list class="side-menu" lines="none" inset>
+    <ion-list-header>メイン</ion-list-header>
+    <ion-item menuClose *ngFor="let p of pages;trackBy:p?.ID" (click)="openPage(p)" [ngClass]="{'active': p.active}">
+      <ion-label [innerHTML]="p.title"></ion-label>
+    </ion-item>
+    <ion-item-divider></ion-item-divider>
+    <ion-list-header>カテゴリ</ion-list-header>
+    <ion-item menuClose *ngFor="let p of categories;trackBy:p?.ID" (click)="openPage(p)"  [ngClass]="{'active': p.active}">
+      <ion-label [innerHTML]="p.title"></ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
