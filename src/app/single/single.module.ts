@@ -8,7 +8,7 @@ import { SinglePageRoutingModule } from './single-routing.module';
 
 import { SinglePage } from './single.page';
 
-import { SharedModule } from "../_shared/shared.module";
+import { SharedModule } from '../_shared/shared.module';
 import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({

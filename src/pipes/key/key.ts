@@ -13,7 +13,7 @@ export class KeyPipe implements PipeTransform {
   transform(value, args: string[]) {
     const keys = [];
     for (const key of value) {
-      keys.push({ key: key, value: value[key] });
+      keys.push({ key, value: value[key] });
     }
     return keys;
   }

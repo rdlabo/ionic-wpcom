@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { IPost, ICategory, ITag, IAuthor, IStragePost } from '../../interfaces/wordpress';
 import { environment } from '../../environments/environment';
-import {Router,ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-single',
@@ -16,17 +16,13 @@ export class SinglePage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    //public navParams: NavParams,
+    // public navParams: NavParams,
     public router: Router,
     public route: ActivatedRoute,
     public storage: Storage,
     public wp: WordpressProvider,
     public toastCtrl: ToastController,
   ) {
-  }
-
-  ngOnInit() {
-
   }
 
 
@@ -37,7 +33,11 @@ export class SinglePage implements OnInit {
     twitter: string;
   };
   noImageURL: string = environment.noImageURL;
-  bookmarked: boolean = false;
+  bookmarked = false;
+
+  ngOnInit() {
+
+  }
 
   ionViewWillEnter() {
     this.wp.getPostArticle(Number(this.route.snapshot.paramMap.get('postID'))).subscribe(data => {
@@ -52,21 +52,21 @@ export class SinglePage implements OnInit {
   }
 
   viewAuthor(author: IAuthor): void {
-    //this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
-    //this.navCtrl.navigateRoot('Author', { title: author.name, key: author.ID });
+    // this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
+    // this.navCtrl.navigateRoot('Author', { title: author.name, key: author.ID });
   }
 
   viewCategory(category: ICategory): void {
-    //this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
-    //this.navCtrl.navigateRoot('Category', { title: category.name, key: category.slug });
+    // this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
+    // this.navCtrl.navigateRoot('Category', { title: category.name, key: category.slug });
   }
 
   viewTag(tag: ITag): void {
-    //this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
-    //this.navCtrl.navigateRoot('Tag', { title: tag.name, key: tag.slug });
+    // this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
+    // this.navCtrl.navigateRoot('Tag', { title: tag.name, key: tag.slug });
   }
 
-  async addClipboard():Promise<void> {
+  async addClipboard(): Promise<void> {
     const body = document.body;
     const textArea = document.createElement('textarea');
     textArea.value = location.href;
@@ -209,20 +209,20 @@ export class SinglePage implements OnInit {
   }
 
   private trimArticle() {
-    Array.prototype.forEach.call(document.querySelectorAll('article iframe'), function(node) {
+    Array.prototype.forEach.call(document.querySelectorAll('article iframe'), (node) => {
       node.setAttribute('width', '100%');
     });
 
-    Array.prototype.forEach.call(document.querySelectorAll('article iframe.wp-embedded-content'), function(node) {
+    Array.prototype.forEach.call(document.querySelectorAll('article iframe.wp-embedded-content'), (node) => {
       node.style.display = 'none';
     });
 
-    Array.prototype.forEach.call(document.querySelectorAll('article a'), function(node) {
+    Array.prototype.forEach.call(document.querySelectorAll('article a'), (node) => {
       node.setAttribute('target', '_blank');
       node.setAttribute('rel', 'noopener');
     });
 
-    Array.prototype.forEach.call(document.querySelectorAll('article div[data-shortcode=caption]'), function(node) {
+    Array.prototype.forEach.call(document.querySelectorAll('article div[data-shortcode=caption]'), (node) => {
       node.style.width = '100%';
     });
   }

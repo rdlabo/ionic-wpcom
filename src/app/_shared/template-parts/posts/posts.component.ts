@@ -7,7 +7,7 @@ import { environment } from '../../../../environments/environment';
 
 import { IPost, IPostParams, IStragePost } from '../../../../interfaces/wordpress';
 import { WordpressProvider } from '../../../../providers/wordpress/wordpress';
-//import {formatNumber} from "@angular/common";
+// import {formatNumber} from "@angular/common";
 import {Router} from '@angular/router';
 
 
@@ -19,7 +19,7 @@ import {Router} from '@angular/router';
 })
 export class PostsComponent implements OnChanges, OnInit, OnDestroy {
   @Input() search: IPostParams;
-  page: number = 1;
+  page = 1;
   posts: Array<IPost> = [];
   subject;
   Loaded: boolean;
@@ -49,9 +49,9 @@ export class PostsComponent implements OnChanges, OnInit, OnDestroy {
           const hiddens: Array<IStragePost> = JSON.parse(data);
           console.log(hiddens);
           this.posts = this.posts.filter(v => {
-            let flg: boolean = true;
+            let flg = true;
             Array.prototype.forEach.call(hiddens, node => {
-              if (node.domain == environment.wordpressURL && v.ID == node.article.ID) {
+              if (node.domain === environment.wordpressURL && v.ID === node.article.ID) {
                 flg = false;
               }
             });
@@ -76,7 +76,7 @@ export class PostsComponent implements OnChanges, OnInit, OnDestroy {
         this.page++;
         this.posts = this.posts.concat(data);
         if (data.length > 0) {
-          console.log('infiniteScroll',infiniteScroll)
+          console.log('infiniteScroll', infiniteScroll);
           infiniteScroll.target.complete();
         } else {
           infiniteScroll.target.enable(false);

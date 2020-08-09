@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ToastController } from '@ionic/angular';
 import { WordpressProvider } from '../../providers/wordpress/wordpress';
 import { IPost, ICategory, ITag, IAuthor } from '../../interfaces/wordpress';
-import {Router,ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -14,14 +14,11 @@ export class PagePage implements OnInit {
 
   constructor(
     public navCtrl: NavController,
-    //public navParams: NavParams,
+    // public navParams: NavParams,
     public wp: WordpressProvider,
     public toastCtrl: ToastController,
     private route: ActivatedRoute,
   ) { }
-
-  ngOnInit() {
-  }
   title: string;
   article: IPost;
   url: string = window.location.href;
@@ -29,27 +26,30 @@ export class PagePage implements OnInit {
     twitter: string;
   };
 
+  ngOnInit() {
+  }
+
   ionViewWillEnter() {
     this.wp.getPostArticle(Number(this.route.snapshot.paramMap.get('postID'))).subscribe(data => {
       this.title = !this.title ? data.title : this.title;
       this.article = data;
-      //this.shareURL = this.createShareURL(this.url, data);
+      // this.shareURL = this.createShareURL(this.url, data);
       setTimeout(() => {
-        //this.trimArticle();
+        // this.trimArticle();
       }, 100);
     });
   }
 
   viewAuthor(author: IAuthor): void {
-    //this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
+    // this.navCtrl.setRoot('Author', { title: author.name, key: author.ID });
   }
 
   viewCategory(category: ICategory): void {
-    //this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
+    // this.navCtrl.setRoot('Category', { title: category.name, key: category.slug });
   }
 
   viewTag(tag: ITag): void {
-    //this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
+    // this.navCtrl.setRoot('Tag', { title: tag.name, key: tag.slug });
   }
 
   // addClipboard(): void {

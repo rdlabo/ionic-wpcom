@@ -1,37 +1,37 @@
-import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "home",
+    path: 'home',
     loadChildren: () =>
-      import("./home/home.module").then((m) => m.HomePageModule),
+      import('./home/home.module').then((m) => m.HomePageModule),
   },
   {
-    path: "",
-    redirectTo: "archive",
-    pathMatch: "full",
+    path: '',
+    redirectTo: 'archive',
+    pathMatch: 'full',
   },
   {
-    path: "archive",
+    path: 'archive',
     loadChildren: () =>
-      import("./archive/archive.module").then((m) => m.ArchivePageModule),
+      import('./archive/archive.module').then((m) => m.ArchivePageModule),
   },
   {
-    path: "archive/single/:postID",
+    path: 'archive/single/:postID',
     loadChildren: () =>
-      import("./single/single.module").then((m) => m.SinglePageModule),
+      import('./single/single.module').then((m) => m.SinglePageModule),
   },
   {
-    path: "page/:postID",
+    path: 'page/:postID',
     loadChildren: () =>
-      import("./page/page.module").then((m) => m.PagePageModule),
+      import('./page/page.module').then((m) => m.PagePageModule),
   },
   {
-    //path: "category",
-    path: "category:key",
+    // path: "category",
+    path: 'category:key',
     loadChildren: () =>
-      import("./category/category.module").then((m) => m.CategoryPageModule),
+      import('./category/category.module').then((m) => m.CategoryPageModule),
   },
 ];
 

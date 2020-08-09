@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { ArchivePageRoutingModule } from './archive-routing.module';
-import { SharedModule } from "../_shared/shared.module";
+import { SharedModule } from '../_shared/shared.module';
 
 import { ArchivePage } from './archive.page';
 

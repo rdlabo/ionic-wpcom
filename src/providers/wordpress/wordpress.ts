@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { AlertController } from "@ionic/angular";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { DomSanitizer } from "@angular/platform-browser";
-import { environment } from "../../environments/environment";
+import { Injectable } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from '../../environments/environment';
 import {
   IPost,
   ICategory,
@@ -10,12 +10,12 @@ import {
   ITag,
   IAuthor,
   ISite,
-} from "../../interfaces/wordpress";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+} from '../../interfaces/wordpress';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class WordpressProvider {
   constructor(
@@ -28,29 +28,29 @@ export class WordpressProvider {
     let errorTitle, errorText: string;
     switch (error.status) {
       case 401:
-        errorTitle = "401 Unauthorized";
+        errorTitle = '401 Unauthorized';
         errorText =
-          "アクセスが禁止されています。WordPress.comの公開範囲か、JetPackでのRestAPIの許可を確認してください";
+          'アクセスが禁止されています。WordPress.comの公開範囲か、JetPackでのRestAPIの許可を確認してください';
         break;
       case 404:
-        errorTitle = "404 Not Found";
+        errorTitle = '404 Not Found';
         errorText =
-          "URLが間違っています。WordPress.comのURLか、JetPackの連携を確認してください";
+          'URLが間違っています。WordPress.comのURLか、JetPackの連携を確認してください';
         break;
       case 500:
-        errorTitle = "500 Internal Server Error";
+        errorTitle = '500 Internal Server Error';
         errorText =
-          "アクセスができませんでした。インターネットへの接続を確認してください。";
+          'アクセスができませんでした。インターネットへの接続を確認してください。';
         break;
       case 503:
-        errorTitle = "503 Service Unavailable";
+        errorTitle = '503 Service Unavailable';
         errorText =
-          "サーバにアクセスが集中しているためアクセスができませんでした。しばらく時間を置いてから再アクセス下さい。";
+          'サーバにアクセスが集中しているためアクセスができませんでした。しばらく時間を置いてから再アクセス下さい。';
         break;
       default:
-        errorTitle = "Server Error";
+        errorTitle = 'Server Error';
         errorText =
-          "アクセスができませんでした。" + error.status + "番のエラーです。";
+          'アクセスができませんでした。' + error.status + '番のエラーです。';
         break;
     }
 
@@ -64,42 +64,42 @@ export class WordpressProvider {
 
   getSiteInfo(): Observable<ISite> {
     let params = new HttpParams();
-    params = params.append("fields", "name, jetpack");
+    params = params.append('fields', 'name, jetpack');
     return this.http.get<ISite>(
       environment.wordpressAPI + environment.wordpressURL,
-      { params: params }
+      { params }
     );
   }
 
   getPostList(page: number, search: IPostParams): Observable<any> {
     let params = new HttpParams();
-    params = params.append("page", String(page));
-    params = params.append("number", String(10));
+    params = params.append('page', String(page));
+    params = params.append('number', String(10));
     params = params.append(
-      "fields",
-      "ID, date, excerpt, post_thumbnail, title, author"
+      'fields',
+      'ID, date, excerpt, post_thumbnail, title, author'
     );
-    params = params.append("type", search.type);
+    params = params.append('type', search.type);
 
     if (search.categorySlug) {
-      params = params.append("category", search.categorySlug);
+      params = params.append('category', search.categorySlug);
     }
     if (search.tagSlug) {
-      params = params.append("tag", search.tagSlug);
+      params = params.append('tag', search.tagSlug);
     }
     if (search.authorID) {
-      params = params.append("author", String(search.authorID));
+      params = params.append('author', String(search.authorID));
     }
     if (search.search) {
-      params = params.append("search", search.search);
+      params = params.append('search', search.search);
     }
 
-    //console.log(params);
+    // console.log(params);
     return this.http
       .get<{
         posts: IPost[];
-      }>(environment.wordpressAPI + environment.wordpressURL + "/posts", {
-        params: params,
+      }>(environment.wordpressAPI + environment.wordpressURL + '/posts', {
+        params,
       })
       .pipe(map((res) => this.loopPosts(res.posts)));
   }
@@ -107,17 +107,17 @@ export class WordpressProvider {
   getPostArticle(pageID: number): Observable<any> {
     let params = new HttpParams();
     params = params.append(
-      "fields",
-      "ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags"
+      'fields',
+      'ID, content, date, excerpt, post_thumbnail, title, categories, short_URL, author, tags'
     );
 
     return this.http
       .get<IPost>(
         environment.wordpressAPI +
           environment.wordpressURL +
-          "/posts/" +
+          '/posts/' +
           pageID,
-        { params: params }
+        { params }
       )
       .pipe(map((res) => this.createArticle(res)));
   }
@@ -126,7 +126,7 @@ export class WordpressProvider {
     return this.http
       .get<{
         categories: ICategory[];
-      }>(environment.wordpressAPI + environment.wordpressURL + "/categories")
+      }>(environment.wordpressAPI + environment.wordpressURL + '/categories')
       .pipe(map((res) => res.categories));
   }
 
@@ -134,23 +134,23 @@ export class WordpressProvider {
     return this.http.get<ICategory>(
       environment.wordpressAPI +
         environment.wordpressURL +
-        "/categories/slug:" +
+        '/categories/slug:' +
         key
     );
   }
 
   getTag(key: string): Observable<ITag> {
     return this.http.get<ITag>(
-      environment.wordpressAPI + environment.wordpressURL + "/tags/slug:" + key
+      environment.wordpressAPI + environment.wordpressURL + '/tags/slug:' + key
     );
   }
 
   getAuthorList(key: string): Observable<IAuthor[]> {
     let params = new HttpParams();
-    params = params.append("search", key);
+    params = params.append('search', key);
 
     return this.http.get<IAuthor[]>(
-      environment.wordpressAPI + environment.wordpressURL + "/users"
+      environment.wordpressAPI + environment.wordpressURL + '/users'
     );
   }
 
@@ -173,20 +173,20 @@ export class WordpressProvider {
       title: params.title,
       excerpt: params.excerpt,
     };
-    params.title = <string>this.sanitizer.bypassSecurityTrustHtml(params.title);
-    params.content = <string>(
+    params.title = this.sanitizer.bypassSecurityTrustHtml(params.title) as string;
+    params.content = (
       this.sanitizer.bypassSecurityTrustHtml(params.content)
-    );
+    ) as string;
 
     if (params.excerpt.length > 80) {
       params.excerpt = params.excerpt.substr(0, 80);
-      params.excerpt = <string>(
+      params.excerpt = (
         this.sanitizer.bypassSecurityTrustHtml(params.excerpt)
-      );
+      ) as string;
     } else {
-      params.excerpt = <string>(
+      params.excerpt = (
         this.sanitizer.bypassSecurityTrustHtml(this.removeTag(params.excerpt))
-      );
+      ) as string;
     }
 
     return params;
@@ -196,20 +196,20 @@ export class WordpressProvider {
     if (
       Array.isArray
         ? Array.isArray(arrowTag)
-        : Object.prototype.toString.call(arrowTag) === "[object Array]"
+        : Object.prototype.toString.call(arrowTag) === '[object Array]'
     ) {
-      arrowTag = arrowTag.join("|");
+      arrowTag = arrowTag.join('|');
     }
 
-    arrowTag = arrowTag ? arrowTag : "";
+    arrowTag = arrowTag ? arrowTag : '';
     const pattern = new RegExp(
-      "(?!<\\/?(" +
+      '(?!<\\/?(' +
         arrowTag +
-        ")(>|\\s[^>]*>))<(\"[^\"]*\"|\\'[^\\']*\\'|[^\\'\">])*>",
-      "gim"
+        ')(>|\\s[^>]*>))<("[^"]*"|\\\'[^\\\']*\\\'|[^\\\'">])*>',
+      'gim'
     );
 
-    str = str.replace(pattern, "");
-    return str.replace(/\s+/g, "");
+    str = str.replace(pattern, '');
+    return str.replace(/\s+/g, '');
   }
 }
