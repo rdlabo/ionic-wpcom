@@ -40,7 +40,11 @@ export class AppComponent {
       this.navCtrl.navigateRoot(`${$event.component}`);
       return;
     }
-    this.navCtrl.navigateRoot(`${$event.component}/${$event.params.postID}`);
+    /**
+     * このリンクがページとカテゴリ共通になってる
+     */
+    console.log(`/${$event.component}/${$event.params.postID}`);
+    this.navCtrl.navigateRoot(`/${$event.component}/${$event.params.postID}`);
   }
   //
   // handlesetSearchKeyword(keyword) {
