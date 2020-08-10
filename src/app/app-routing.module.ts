@@ -29,7 +29,7 @@ const routes: Routes = [
   },
   {
     // path: "category",
-    path: 'category/:keyID',
+    path: 'category/:categorySlug',
     loadChildren: () =>
       import('./category/category.module').then((m) => m.CategoryPageModule),
   },

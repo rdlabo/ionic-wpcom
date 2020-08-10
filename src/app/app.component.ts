@@ -36,15 +36,21 @@ export class AppComponent {
   }
 
   public handlesetRootPage($event) {
-    if ($event.params.postID === undefined) {
-      this.navCtrl.navigateRoot(`${$event.component}`);
+    if ($event.component === 'category') {
+      console.log("AppComponent -> handlesetRootPage -> $event.component", $event.component)
+      this.navCtrl.navigateRoot(`${$event.component}/${$event.params.key}`);
       return;
     }
-    /**
-     * このリンクがページとカテゴリ共通になってる
-     */
-    console.log(`/${$event.component}/${$event.params.postID}`);
-    this.navCtrl.navigateRoot(`/${$event.component}/${$event.params.postID}`);
+    if ($event.params.postID !== undefined) {
+    console.log("AppComponent -> handlesetRootPage -> $event.params.postID", $event.params.postID)
+      this.navCtrl.navigateRoot(`/${$event.component}/${$event.params.postID}`);
+      return;
+    }
+
+    console.log('カテゴリ？',`/${$event.component}/${$event.params.postID}`);
+    this.navCtrl.navigateRoot(`${$event.component}`);
+
+    //this.navCtrl.navigateRoot(`/${$event.component}/${$event.params.postID}`);
   }
   //
   // handlesetSearchKeyword(keyword) {
