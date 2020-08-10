@@ -1,85 +1,86 @@
-import { Component } from '@angular/core';
-
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { NavController, Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { Store } from '@ngrx/store';
 
-// import {DELETE as DELETE1, REGISTER as REGISTER1} from "../../_old/src/reducers/search";
-// import {REGISTER as REGISTER2} from "../../_old/src/reducers/current";
+import { REGISTER as REGISTER1, DELETE as DELETE1 } from '../reducers/search';
+import { REGISTER as REGISTER2 } from '../reducers/current';
 
-import { IAppState } from '../interfaces/store';
-import { ISite } from '../interfaces/wordpress';
 import { WordpressProvider } from '../providers/wordpress/wordpress';
+import { ISite } from '../interfaces/wordpress';
+import { IAppState } from '@/interfaces/store';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+  templateUrl: 'app.html',
+  providers: [WordpressProvider],
 })
-export class AppComponent {
-  // rootPage = 'Archive';
-  public intervalCurrentPage: number;
+export class MyApp {
+  @ViewChild(Nav) nav: Nav;
+
+  rootPage = 'Archive';
+  intervalCurrentPage: number;
 
   constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
-    private navCtrl: NavController,
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    public wp: WordpressProvider,
     public store: Store<IAppState>,
+    public loadingCtrl: LoadingController,
   ) {
     this.initializeApp();
   }
 
-  public ionViewDidLeave() {
+  ngOnInit() {
+    const loading = this.loadingCtrl.create({ content: 'Loading...' });
+    loading.present();
+    this.wp.getSiteInfo().subscribe(
+      (data: ISite) => {
+        loading.dismiss();
+      },
+      error => {
+        loading.dismiss();
+        this.wp.errorResponse(error);
+      },
+    );
+  }
+
+  ionViewDidLeave() {
     clearInterval(this.intervalCurrentPage);
   }
 
-  public handlesetRootPage($event) {
-    if ($event.component === 'category') {
-      console.log("AppComponent -> handlesetRootPage -> $event.component", $event.component)
-      this.navCtrl.navigateRoot(`${$event.component}/${$event.params.key}`);
-      return;
-    }
-    if ($event.params.postID !== undefined) {
-    console.log("AppComponent -> handlesetRootPage -> $event.params.postID", $event.params.postID)
-      this.navCtrl.navigateRoot(`/${$event.component}/${$event.params.postID}`);
-      return;
-    }
-
-    console.log('カテゴリ？',`/${$event.component}/${$event.params.postID}`);
-    this.navCtrl.navigateRoot(`${$event.component}`);
-
-    //this.navCtrl.navigateRoot(`/${$event.component}/${$event.params.postID}`);
+  handlesetRootPage($event) {
+    this.nav.setRoot($event.component, $event.params);
   }
-  //
-  // handlesetSearchKeyword(keyword) {
-  //   this.store.dispatch({ type: REGISTER1, payload: { keyword: keyword } });
-  // }
-  //
-  // handlestartSearch() {
-  //   if (this.nav.getActive().id != 'Search') {
-  //     this.nav.setRoot('Search');
-  //   }
-  // }
-  //
-  // handlecancelSearchKeyword() {
-  //   this.store.dispatch({ type: DELETE1 });
-  // }
-  //
+
+  handlesetSearchKeyword(keyword) {
+    this.store.dispatch({ type: REGISTER1, payload: { keyword: keyword } });
+  }
+
+  handlestartSearch() {
+    if (this.nav.getActive().id != 'Search') {
+      this.nav.setRoot('Search');
+    }
+  }
+
+  handlecancelSearchKeyword() {
+    this.store.dispatch({ type: DELETE1 });
+  }
+
   private initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
 
-    // this.intervalCurrentPage = window.setInterval(() => {
-    //   // if (this.nav.getActive()) {
-    //   //   this.store.dispatch({
-    //   //     type: REGISTER2,
-    //   //     payload: { page: this.nav.getActive().id, opt: this.nav.getActive().data },
-    //   //   });
-    //   // }
-    // }, 1000);
+    this.intervalCurrentPage = window.setInterval(() => {
+      if (this.nav.getActive()) {
+        this.store.dispatch({
+          type: REGISTER2,
+          payload: { page: this.nav.getActive().id, opt: this.nav.getActive().data },
+        });
+      }
+    }, 1000);
   }
 }

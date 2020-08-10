@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title><span [innerHTML]="title"></span></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <header class="article-header" padding *ngIf="title">
+    <h2 [innerHTML]="title"></h2>
+  </header>
+  <article padding *ngIf="!article"><ion-spinner color="primary"></ion-spinner></article>
+  <article padding class="article-content" *ngIf="article">
+    <section class="main" [innerHTML]="article?.content"></section>
+    <div>
+      <dl class="attribute">
+        <dt><ion-icon name="globe"></ion-icon> 元記事</dt>
+        <dd>
+          <a href="{{article.short_URL}}" target="_blank">{{article.short_URL}}</a>
+        </dd>
+      </dl>
+      <dl class="attribute">
+        <dt><ion-icon name="person"></ion-icon> 執筆者</dt>
+        <dd class="profile clickeble" (tap)="viewAuthor(article.author)">
+          <img src="{{article.author.avatar_URL}}" class="radius" alt="{{article.author.name}}" /><a>{{article.author.name}}</a>
+        </dd>
+      </dl>
+    </div>
+  </article>
+  <wp-footer></wp-footer>
+</ion-content>
+
+<ion-footer>
+  <ul class="social-share">
+    <li><a href="{{shareURL?.twitter}}" title="ツイート" target="_blank" rel="noopener"><button ion-button block><ion-icon name="logo-twitter"></ion-icon> ツイート</button></a></li>
+    <li><button ion-button (tap)="addClipboard();" block><ion-icon name="clipboard"></ion-icon> URLコピー</button></li>
+  </ul>
+</ion-footer>
