@@ -1,5 +1,3 @@
-// src/environments/environment.prod.ts
-
 export const environment = {
   production: true,
   wordpressURL: 'rdlabo630094126.wordpress.com',

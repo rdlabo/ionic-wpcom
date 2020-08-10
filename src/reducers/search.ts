@@ -1,13 +1,13 @@
 import { Action } from '@ngrx/store';
-import { ISearch } from '@/interfaces/store';
+import { ISearch } from '../interfaces/store';
 
 export class CreateAction implements Action {
-  readonly type = 'SEARCH';
+  public readonly type = 'SEARCH';
   constructor(public payload: ISearch) {}
 }
 
 export class DeleteAction implements Action {
-  readonly type = 'SEARCH_DELETE';
+  public readonly type = 'SEARCH_DELETE';
   constructor(public payload: ISearch) {}
 }
 export type CustomAction = CreateAction | DeleteAction;

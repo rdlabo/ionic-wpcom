@@ -1,5 +1,7 @@
+html,body{
+  font-size: 16px;
+}
 ng-component {
-
   background-color:color($colors,primary);
 
   // bug対策
@@ -94,6 +96,7 @@ ng-component {
       display:none;
     }
   }
+
   header.article-header{
     border-bottom: 1px solid color($colors,dark);
     max-width:740px;
@@ -142,10 +145,10 @@ ng-component {
         padding:10px 20px;
       }
 
-      img {
-        border:1px solid color($colors,light);
-        max-width:100%;
-      }
+      //img {
+      //  border:1px solid color($colors,light);
+      //  max-width:100%;
+      //}
 
       .alignright {
         float: right;
@@ -206,37 +209,6 @@ ng-component {
       }
     }
   }
-
-  ul.social-share {
-    list-style-type:none;
-    display:flex;
-    margin:0;padding:0;
-
-    li {
-      width:50%;
-      border-right: 1px solid color($colors,white);
-
-      &:last-child{
-        border-right: none;
-      }
-
-      button {
-        border-radius:0;
-        font-size:1.3rem;
-        margin:0;
-        min-height:42px;
-        ion-icon{
-          position:relative;
-          top:1px;
-          margin-right:0.5rem;
-        }
-      }
-
-      a {
-        text-decoration:none;
-      }
-    }
-  }
 }
 
 ng-component {
@@ -251,4 +223,10 @@ ng-component {
       padding-top:30px;
     }
   }
+}
+img {
+  border:1px solid var(--ion-color-light);
+  width: 100%;
+  max-width:100%;
+  height: auto;
 }
