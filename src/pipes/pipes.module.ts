@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { MydatePipe } from './mydate/mydate';
 import { KeyPipe } from './key/key';
+import { MydatePipe } from './mydate/mydate';
 
 @NgModule({
   declarations: [MydatePipe, KeyPipe],

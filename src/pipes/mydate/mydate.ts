@@ -13,7 +13,7 @@ export class MydatePipe implements PipeTransform {
   /**
    * Takes a value and makes it lowercase.
    */
-  transform(value: string) {
+  public transform(value: string) {
     let timeBefore;
     const date = new Date(value);
     timeBefore =

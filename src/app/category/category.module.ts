@@ -5,9 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { SharedModule } from '../_shared/shared.module';
-import { ArchivePageRoutingModule } from './archive-routing.module';
-
-import { ArchivePage } from './archive.page';
+import { CategoryPageRoutingModule } from './category-routing.module';
+import { CategoryPage } from './category.page';
 
 @NgModule({
   imports: [
@@ -15,8 +14,8 @@ import { ArchivePage } from './archive.page';
     FormsModule,
     IonicModule,
     SharedModule,
-    ArchivePageRoutingModule,
+    CategoryPageRoutingModule,
   ],
-  declarations: [ArchivePage],
+  declarations: [CategoryPage],
 })
-export class ArchivePageModule {}
+export class CategoryPageModule {}
