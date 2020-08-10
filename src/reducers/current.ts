@@ -1,8 +1,8 @@
 import { Action } from '@ngrx/store';
-import { ICurrent } from '../interfaces/store';
+import { ICurrent } from '@/interfaces/store';
 
 export class CreateMehod implements Action {
-  public readonly type = 'CURRENT';
+  readonly type = 'CURRENT';
   constructor(public payload: ICurrent) {}
 }
 export type CustomAction = CreateMehod;
